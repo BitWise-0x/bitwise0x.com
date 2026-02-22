@@ -35,6 +35,11 @@ export default function Home({ posts }: { posts: CoreContent<Blog>[] }) {
                         {title}
                       </Link>
                     </h2>
+                    <div className="mt-2 flex flex-wrap">
+                      {tags.map((tag) => (
+                        <Tag key={tag} text={tag} />
+                      ))}
+                    </div>
                   </div>
                   <div className="flex flex-col gap-4 sm:flex-row sm:gap-6">
                     {showThumbnail && (
@@ -67,7 +72,7 @@ export default function Home({ posts }: { posts: CoreContent<Blog>[] }) {
                           {title}
                         </Link>
                       </h2>
-                      <div className="flex flex-wrap">
+                      <div className="hidden flex-wrap sm:flex">
                         {tags.map((tag) => (
                           <Tag key={tag} text={tag} />
                         ))}

@@ -122,7 +122,7 @@ export default function ListLayoutWithTags({
                 const { path, date, title, summary, tags, heroImage } = post
                 const showThumbnail = heroImage && !heroImage.includes('social-banner')
                 return (
-                  <li key={path} className="py-5">
+                  <li key={path} className="py-8">
                     <article>
                       <div className="mb-3 sm:hidden">
                         <p className="text-muted text-base leading-6 font-medium">
@@ -135,6 +135,11 @@ export default function ListLayoutWithTags({
                             {title}
                           </Link>
                         </h2>
+                        <div className="mt-2 flex flex-wrap">
+                          {tags?.map((tag) => (
+                            <Tag key={tag} text={tag} />
+                          ))}
+                        </div>
                       </div>
                       <div className="flex flex-col gap-4 sm:flex-row sm:gap-6">
                         {showThumbnail && (
@@ -167,7 +172,7 @@ export default function ListLayoutWithTags({
                               {title}
                             </Link>
                           </h2>
-                          <div className="flex flex-wrap">
+                          <div className="hidden flex-wrap sm:flex">
                             {tags?.map((tag) => (
                               <Tag key={tag} text={tag} />
                             ))}

@@ -41,15 +41,14 @@ export async function generateMetadata(props: {
   const publishedAt = new Date(post.date).toISOString()
   const modifiedAt = new Date(post.lastmod || post.date).toISOString()
   const authors = authorDetails.map((author) => author.name)
-  let imageList = [siteMetadata.socialBanner]
-  if (post.images) {
-    imageList = typeof post.images === 'string' ? [post.images] : post.images
-  }
-  const ogImages = imageList.map((img) => ({
-    url: img.includes('http') ? img : siteMetadata.siteUrl + img,
-    width: 1200,
-    height: 630,
-  }))
+  const heroImage = post.heroImage || siteMetadata.socialBanner
+  const ogImages = [
+    {
+      url: heroImage.includes('http') ? heroImage : siteMetadata.siteUrl + heroImage,
+      width: 1200,
+      height: 630,
+    },
+  ]
 
   return {
     title: post.title,
@@ -73,7 +72,7 @@ export async function generateMetadata(props: {
       card: 'summary_large_image',
       title: post.title,
       description: post.summary,
-      images: imageList,
+      images: [heroImage],
     },
   }
 }

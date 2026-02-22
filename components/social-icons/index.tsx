@@ -55,7 +55,7 @@ const SocialIcon = ({ kind, href, size = 8 }: SocialIconProps) => {
       href={href}
     >
       <span className="sr-only">{kind}</span>
-      <SocialSvg className={`prose-summary fill-current ${sizeClasses[size] || 'h-8 w-8'}`} />
+      <SocialSvg className={`fill-current ${sizeClasses[size] || 'h-8 w-8'}`} />
     </a>
   )
 }

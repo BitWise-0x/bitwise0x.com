@@ -110,7 +110,7 @@
     & a {
       color: var(--color-primary-500);
       &:hover {
-        color: var(--color-primary-400);
+        color: var(--color-primary-600);
       }
       & code {
         color: var(--color-primary-400);
@@ -133,7 +133,7 @@ a.text-heading:hover {
   color: var(--color-gray-100);
 }
 :is(.dark, .dark *) a.text-heading:hover {
-  color: var(--color-primary-400);
+  color: var(--color-primary-500);
 }
 
 .text-muted {
@@ -157,7 +157,7 @@ a.text-heading:hover {
   color: var(--color-primary-600);
 }
 :is(.dark, .dark *) .text-link:hover {
-  color: var(--color-primary-400);
+  color: var(--color-primary-500);
 }
 
 /* Semantic backgrounds */

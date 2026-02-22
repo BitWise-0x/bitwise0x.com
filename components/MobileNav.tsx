@@ -31,7 +31,7 @@ const MobileNav = () => {
       <button
         aria-label="Toggle Menu"
         onClick={onToggleNav}
-        className="text-heading hover:text-primary-500 dark:hover:text-primary-400 sm:hidden"
+        className="text-heading hover:text-primary-500 dark:hover:text-primary-500 sm:hidden"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -89,7 +89,7 @@ const MobileNav = () => {
               </nav>
 
               <button
-                className="text-heading hover:text-primary-500 dark:hover:text-primary-400 fixed top-7 right-4 z-80 h-16 w-16 p-4"
+                className="text-heading hover:text-primary-500 dark:hover:text-primary-500 fixed top-7 right-4 z-80 h-16 w-16 p-4"
                 aria-label="Toggle Menu"
                 onClick={onToggleNav}
               >

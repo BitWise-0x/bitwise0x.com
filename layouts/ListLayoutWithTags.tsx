@@ -7,6 +7,7 @@ import { CoreContent } from 'pliny/utils/contentlayer'
 import type { Blog } from 'contentlayer/generated'
 import Link from '@/components/Link'
 import Tag from '@/components/Tag'
+import Image from '@/components/Image'
 import siteMetadata from '@/data/siteMetadata'
 import tagData from 'app/tag-data.json'
 
@@ -121,21 +122,50 @@ export default function ListLayoutWithTags({
           <div className="pt-12">
             <ul>
               {displayPosts.map((post) => {
-                const { path, date, title, summary, tags } = post
+                const { path, date, title, summary, tags, heroImage } = post
+                const showThumbnail = heroImage && !heroImage.includes('social-banner')
                 return (
                   <li key={path} className="py-5">
-                    <article className="flex flex-col space-y-2 xl:space-y-0">
-                      <dl>
-                        <dt className="sr-only">Published on</dt>
+                    <article>
+                      <div className="mb-3 sm:hidden">
                         <dd className="text-muted text-base leading-6 font-medium">
                           <time dateTime={date} suppressHydrationWarning>
                             {formatDate(date, siteMetadata.locale)}
                           </time>
                         </dd>
-                      </dl>
-                      <div className="space-y-3">
-                        <div>
-                          <h2 className="text-2xl leading-8 font-bold tracking-tight">
+                        <h2 className="mt-2 text-2xl leading-8 font-bold tracking-tight">
+                          <Link href={`/${path}`} className="text-heading">
+                            {title}
+                          </Link>
+                        </h2>
+                      </div>
+                      <div className="flex flex-col gap-4 sm:flex-row sm:gap-6">
+                        {showThumbnail && (
+                          <Link
+                            href={`/${path}`}
+                            className="shrink-0"
+                            aria-hidden="true"
+                            tabIndex={-1}
+                          >
+                            <Image
+                              src={heroImage}
+                              alt=""
+                              width={280}
+                              height={158}
+                              className="w-full rounded-md object-cover sm:w-[280px]"
+                            />
+                          </Link>
+                        )}
+                        <div className="space-y-2">
+                          <dl className="hidden sm:block">
+                            <dt className="sr-only">Published on</dt>
+                            <dd className="text-muted text-base leading-6 font-medium">
+                              <time dateTime={date} suppressHydrationWarning>
+                                {formatDate(date, siteMetadata.locale)}
+                              </time>
+                            </dd>
+                          </dl>
+                          <h2 className="hidden text-2xl leading-8 font-bold tracking-tight sm:block">
                             <Link href={`/${path}`} className="text-heading">
                               {title}
                             </Link>
@@ -145,8 +175,8 @@ export default function ListLayoutWithTags({
                               <Tag key={tag} text={tag} />
                             ))}
                           </div>
+                          <div className="prose prose-summary max-w-none">{summary}</div>
                         </div>
-                        <div className="prose prose-summary max-w-none">{summary}</div>
                       </div>
                     </article>
                   </li>

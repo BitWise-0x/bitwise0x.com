@@ -15,14 +15,14 @@
     <animate attributeName="cy"
       values="43;43;38;43;43"
       keyTimes="0;0.80;0.85;0.90;1"
-      dur="5s"
+      dur="4s"
       repeatCount="indefinite"
       calcMode="spline"
       keySplines="0 0 1 1;0.42 0 0.58 1;0.42 0 0.58 1;0 0 1 1" />
     <animate attributeName="opacity"
       values="0.5;0.5;0.9;0.5;0.5"
       keyTimes="0;0.80;0.85;0.90;1"
-      dur="5s"
+      dur="4s"
       repeatCount="indefinite" />
   </circle>
 
@@ -30,14 +30,14 @@
     <animate attributeName="cy"
       values="43;43;38;43;43"
       keyTimes="0;0.815;0.865;0.915;1"
-      dur="5s"
+      dur="4s"
       repeatCount="indefinite"
       calcMode="spline"
       keySplines="0 0 1 1;0.42 0 0.58 1;0.42 0 0.58 1;0 0 1 1" />
     <animate attributeName="opacity"
       values="0.7;0.7;1;0.7;0.7"
       keyTimes="0;0.815;0.865;0.915;1"
-      dur="5s"
+      dur="4s"
       repeatCount="indefinite" />
   </circle>
 
@@ -45,14 +45,14 @@
     <animate attributeName="cy"
       values="43;43;38;43;43"
       keyTimes="0;0.83;0.88;0.93;1"
-      dur="5s"
+      dur="4s"
       repeatCount="indefinite"
       calcMode="spline"
       keySplines="0 0 1 1;0.42 0 0.58 1;0.42 0 0.58 1;0 0 1 1" />
     <animate attributeName="opacity"
       values="1;1;0.6;1;1"
       keyTimes="0;0.83;0.88;0.93;1"
-      dur="5s"
+      dur="4s"
       repeatCount="indefinite" />
   </circle>
 </svg>

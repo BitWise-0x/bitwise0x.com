@@ -49,15 +49,13 @@ const SocialIcon = ({ kind, href, size = 8 }: SocialIconProps) => {
 
   return (
     <a
-      className="text-sm text-gray-500 transition hover:text-gray-600"
+      className="text-muted hover:text-primary-500 dark:hover:text-primary-400 text-sm transition"
       target="_blank"
       rel="noopener noreferrer"
       href={href}
     >
       <span className="sr-only">{kind}</span>
-      <SocialSvg
-        className={`hover:text-primary-500 dark:hover:text-primary-400 prose-summary fill-current ${sizeClasses[size] || 'h-8 w-8'}`}
-      />
+      <SocialSvg className={`prose-summary fill-current ${sizeClasses[size] || 'h-8 w-8'}`} />
     </a>
   )
 }

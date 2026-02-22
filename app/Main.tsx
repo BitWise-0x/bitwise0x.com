@@ -25,9 +25,9 @@ export default function Home({ posts }: { posts: CoreContent<Blog>[] }) {
                 <article>
                   {/* Mobile: date + title before thumbnail */}
                   <div className="mb-3 sm:hidden">
-                    <dd className="text-muted text-base leading-6 font-medium">
+                    <p className="text-muted text-base leading-6 font-medium">
                       <time dateTime={date}>{formatDate(date, siteMetadata.locale)}</time>
-                    </dd>
+                    </p>
                     <h2 className="mt-2 text-2xl leading-8 font-bold tracking-tight">
                       <Link href={`/blog/${slug}`} className="text-heading">
                         {title}

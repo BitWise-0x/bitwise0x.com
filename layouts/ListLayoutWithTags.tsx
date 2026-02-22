@@ -89,10 +89,7 @@ export default function ListLayoutWithTags({
               {pathname.startsWith('/blog') ? (
                 <h3 className="text-primary-500 font-bold uppercase">All Posts</h3>
               ) : (
-                <Link
-                  href={`/blog`}
-                  className="hover:text-primary-500 dark:hover:text-primary-500 font-bold text-gray-700 uppercase dark:text-gray-300"
-                >
+                <Link href={`/blog`} className="text-heading font-bold uppercase">
                   All Posts
                 </Link>
               )}
@@ -107,7 +104,7 @@ export default function ListLayoutWithTags({
                       ) : (
                         <Link
                           href={`/tags/${slug(t)}`}
-                          className="hover:text-primary-500 dark:hover:text-primary-500 px-3 py-2 text-sm font-medium text-gray-500 uppercase dark:text-gray-300"
+                          className="text-muted hover:text-primary-500 px-3 py-2 text-sm font-medium uppercase"
                           aria-label={`View posts tagged ${t}`}
                         >
                           {`${t} (${tagCounts[t]})`}
@@ -120,7 +117,7 @@ export default function ListLayoutWithTags({
             </div>
           </div>
           <div className="pt-12">
-            <ul>
+            <ul className="divide-theme divide-y">
               {displayPosts.map((post) => {
                 const { path, date, title, summary, tags, heroImage } = post
                 const showThumbnail = heroImage && !heroImage.includes('social-banner')
@@ -128,11 +125,11 @@ export default function ListLayoutWithTags({
                   <li key={path} className="py-5">
                     <article>
                       <div className="mb-3 sm:hidden">
-                        <dd className="text-muted text-base leading-6 font-medium">
+                        <p className="text-muted text-base leading-6 font-medium">
                           <time dateTime={date} suppressHydrationWarning>
                             {formatDate(date, siteMetadata.locale)}
                           </time>
-                        </dd>
+                        </p>
                         <h2 className="mt-2 text-2xl leading-8 font-bold tracking-tight">
                           <Link href={`/${path}`} className="text-heading">
                             {title}

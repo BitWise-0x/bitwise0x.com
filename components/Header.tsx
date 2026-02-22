@@ -37,15 +37,10 @@ const Header = () => {
             .filter((link) => link.href !== '/')
             .map((link, index, array) => (
               <div key={link.title} className="flex items-center">
-                <Link
-                  href={link.href}
-                  className="hover:text-primary-500 dark:hover:text-primary-400 text-heading m-1 font-medium"
-                >
+                <Link href={link.href} className="text-heading m-1 font-medium">
                   {link.title}
                 </Link>
-                {index < array.length - 1 && (
-                  <span className="mx-2 text-gray-400 dark:text-gray-600">|</span>
-                )}
+                {index < array.length - 1 && <span className="text-muted mx-2">|</span>}
               </div>
             ))}
         </div>

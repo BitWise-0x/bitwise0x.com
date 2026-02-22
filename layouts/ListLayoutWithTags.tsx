@@ -122,7 +122,7 @@ export default function ListLayoutWithTags({
                 const { path, date, title, summary, tags, heroImage } = post
                 const showThumbnail = heroImage && !heroImage.includes('social-banner')
                 return (
-                  <li key={path} className="py-8">
+                  <li key={path} className="py-12">
                     <article>
                       <div className="mb-3 sm:hidden">
                         <p className="text-muted text-base leading-6 font-medium">
@@ -158,7 +158,7 @@ export default function ListLayoutWithTags({
                             />
                           </Link>
                         )}
-                        <div className="space-y-2">
+                        <div className="space-y-3">
                           <dl className="hidden sm:block">
                             <dt className="sr-only">Published on</dt>
                             <dd className="text-muted text-base leading-6 font-medium">

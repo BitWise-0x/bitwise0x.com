@@ -42,6 +42,18 @@ const icon = fromHtmlIsomorphic(
   { fragment: true }
 )
 
+/**
+ * Extract the first image src from MDX body content.
+ * Matches <Image src="...">, <ZoomableImage src="...">, and ![alt](src) patterns.
+ */
+function extractFirstImage(raw: string): string | null {
+  const componentMatch = raw.match(/<(?:Image|ZoomableImage)\s[^>]*src=["']([^"']+)["']/)
+  if (componentMatch) return componentMatch[1]
+  const markdownMatch = raw.match(/!\[.*?\]\(([^)]+)\)/)
+  if (markdownMatch) return markdownMatch[1]
+  return null
+}
+
 const computedFields: ComputedFields = {
   readingTime: { type: 'json', resolve: (doc) => readingTime(doc.body.raw) },
   slug: {
@@ -114,10 +126,21 @@ export const Blog = defineDocumentType(() => ({
   },
   computedFields: {
     ...computedFields,
+    heroImage: {
+      type: 'string',
+      resolve: (doc) => {
+        if (doc.images && doc.images.length > 0) return doc.images[0]
+        return extractFirstImage(doc.body.raw) || siteMetadata.socialBanner
+      },
+    },
     structuredData: {
       type: 'json',
       resolve: (doc) => {
         const rt = readingTime(doc.body.raw)
+        const image =
+          doc.images && doc.images.length > 0
+            ? doc.images[0]
+            : extractFirstImage(doc.body.raw) || siteMetadata.socialBanner
         return {
           '@context': 'https://schema.org',
           '@type': 'BlogPosting',
@@ -125,7 +148,7 @@ export const Blog = defineDocumentType(() => ({
           datePublished: doc.date,
           dateModified: doc.lastmod || doc.date,
           description: doc.summary,
-          image: doc.images ? doc.images[0] : siteMetadata.socialBanner,
+          image,
           url: `${siteMetadata.siteUrl}/${doc._raw.flattenedPath}`,
           ...(doc.tags && doc.tags.length > 0 && { keywords: doc.tags }),
           wordCount: rt.words,

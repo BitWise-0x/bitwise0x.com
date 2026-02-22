@@ -30,7 +30,9 @@ export default function PostLayout({ content, next, prev, children }: LayoutProp
                 <div>
                   <dt className="sr-only">Published on</dt>
                   <dd className="text-muted text-base leading-6 font-medium">
-                    <time dateTime={date}>{formatDate(date, siteMetadata.locale)}</time>
+                    <time dateTime={date} suppressHydrationWarning>
+                      {formatDate(date, siteMetadata.locale)}
+                    </time>
                   </dd>
                 </div>
               </dl>

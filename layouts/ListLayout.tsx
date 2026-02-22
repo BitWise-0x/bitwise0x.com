@@ -120,7 +120,9 @@ export default function ListLayout({
                   <dl>
                     <dt className="sr-only">Published on</dt>
                     <dd className="text-muted text-base leading-6 font-medium">
-                      <time dateTime={date}>{formatDate(date, siteMetadata.locale)}</time>
+                      <time dateTime={date} suppressHydrationWarning>
+                        {formatDate(date, siteMetadata.locale)}
+                      </time>
                     </dd>
                   </dl>
                   <div className="space-y-3 xl:col-span-3">

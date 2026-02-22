@@ -126,13 +126,13 @@
 .text-heading {
   color: var(--color-gray-900);
 }
-.text-heading:hover {
+a.text-heading:hover {
   color: var(--color-primary-500);
 }
 :is(.dark, .dark *) .text-heading {
   color: var(--color-gray-100);
 }
-:is(.dark, .dark *) .text-heading:hover {
+:is(.dark, .dark *) a.text-heading:hover {
   color: var(--color-primary-400);
 }
 

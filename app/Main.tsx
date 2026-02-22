@@ -26,7 +26,9 @@ export default function Home({ posts }: { posts: CoreContent<Blog>[] }) {
                   {/* Mobile: date + title before thumbnail */}
                   <div className="mb-3 sm:hidden">
                     <p className="text-muted text-base leading-6 font-medium">
-                      <time dateTime={date}>{formatDate(date, siteMetadata.locale)}</time>
+                      <time dateTime={date} suppressHydrationWarning>
+                        {formatDate(date, siteMetadata.locale)}
+                      </time>
                     </p>
                     <h2 className="mt-2 text-2xl leading-8 font-bold tracking-tight">
                       <Link href={`/blog/${slug}`} className="text-heading">
@@ -55,7 +57,9 @@ export default function Home({ posts }: { posts: CoreContent<Blog>[] }) {
                       <dl className="hidden sm:block">
                         <dt className="sr-only">Published on</dt>
                         <dd className="text-muted text-base leading-6 font-medium">
-                          <time dateTime={date}>{formatDate(date, siteMetadata.locale)}</time>
+                          <time dateTime={date} suppressHydrationWarning>
+                            {formatDate(date, siteMetadata.locale)}
+                          </time>
                         </dd>
                       </dl>
                       <h2 className="hidden text-2xl leading-8 font-bold tracking-tight sm:block">

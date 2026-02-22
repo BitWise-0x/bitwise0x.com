@@ -50,7 +50,7 @@ export default function PostLayout({
                 <div>
                   <dt className="sr-only">Published on</dt>
                   <dd className="text-muted text-base leading-6 font-medium">
-                    <time dateTime={date}>
+                    <time dateTime={date} suppressHydrationWarning>
                       {new Date(date).toLocaleDateString(siteMetadata.locale, postDateTemplate)}
                     </time>
                   </dd>

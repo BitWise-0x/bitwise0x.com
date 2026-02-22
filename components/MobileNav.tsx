@@ -28,12 +28,16 @@ const MobileNav = () => {
 
   return (
     <>
-      <button aria-label="Toggle Menu" onClick={onToggleNav} className="sm:hidden">
+      <button
+        aria-label="Toggle Menu"
+        onClick={onToggleNav}
+        className="text-heading hover:text-primary-500 dark:hover:text-primary-400 sm:hidden"
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 20 20"
           fill="currentColor"
-          className="text-heading h-8 w-8"
+          className="h-8 w-8"
         >
           <path
             fillRule="evenodd"
@@ -85,7 +89,7 @@ const MobileNav = () => {
               </nav>
 
               <button
-                className="text-heading fixed top-7 right-4 z-80 h-16 w-16 p-4"
+                className="text-heading hover:text-primary-500 dark:hover:text-primary-400 fixed top-7 right-4 z-80 h-16 w-16 p-4"
                 aria-label="Toggle Menu"
                 onClick={onToggleNav}
               >

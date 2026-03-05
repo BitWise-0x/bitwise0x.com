@@ -10,7 +10,7 @@ const projectsData: Project[] = [
     title: 'HumeChat',
     description: `Expressive Voice Intelligence platform powered by Hume AI EVI. Real-time
     voice conversations with multi-persona AI, Jungian archetype assessments, emotion
-    detection, and 3D audio visualizations. Built with Next.js 15, React 19, and Three.js.`,
+    detection, and 3D audio visualizations.`,
     imgSrc: '/static/images/projects/humechat.svg',
     href: 'https://humechat.com',
   },
@@ -24,9 +24,9 @@ const projectsData: Project[] = [
   },
   {
     title: 'Homebridge SmartRent Plugin',
-    description: `TypeScript-based Homebridge plugin enabling HomeKit integration
-    for SmartRent smart home installations. Control locks, thermostats, and switches
-    through Apple's ecosystem with native support.`,
+    description: `Homebridge plugin enabling full HomeKit integration for SmartRent
+    smart home installations. Control locks, thermostats, and switches natively
+    through Apple Home.`,
     imgSrc: '/static/images/projects/homebridge-smartrent.svg',
     href: 'https://github.com/BitWise-0x/homebridge-smartrent',
   },

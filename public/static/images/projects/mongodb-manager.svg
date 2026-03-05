@@ -4,12 +4,12 @@
       <stop offset="0%" style="stop-color:#7aa2f7;stop-opacity:1" />
       <stop offset="100%" style="stop-color:#bb9af7;stop-opacity:1" />
     </linearGradient>
+    <pattern id="dots2" x="0" y="0" width="24" height="24" patternUnits="userSpaceOnUse">
+      <circle cx="2" cy="2" r="1.2" fill="#7aa2f7" opacity="0.18"/>
+    </pattern>
   </defs>
   <rect width="544" height="306" fill="#1a1b26"/>
-
-  <!-- Subtle binary texture -->
-  <text x="30" y="38" font-family="monospace, 'Courier New', Courier" font-size="24" fill="#7aa2f7" opacity="0.06">01001101 01101111 01101110</text>
-  <text x="80" y="275" font-family="monospace, 'Courier New', Courier" font-size="24" fill="#bb9af7" opacity="0.06">01100111 01101111 01000100</text>
+  <rect width="544" height="306" fill="url(#dots2)"/>
 
   <!-- Project name -->
   <text x="272" y="110" font-family="monospace, 'Courier New', Courier" font-size="40" font-weight="700" fill="url(#grad2)" text-anchor="middle">MongoDB</text>

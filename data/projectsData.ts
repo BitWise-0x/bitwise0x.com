@@ -30,6 +30,22 @@ const projectsData: Project[] = [
     imgSrc: '/static/images/projects/homebridge-smartrent.svg',
     href: 'https://github.com/BitWise-0x/homebridge-smartrent',
   },
+  {
+    title: 'Homebridge Blink Security',
+    description: `Homebridge plugin for Amazon Blink cameras, doorbells, and sirens.
+    Brings live view, motion detection, snapshots, and arm/disarm control into
+    Apple Home via HomeKit with OAuth 2.0, 2FA, and multi-network support.`,
+    imgSrc: '/static/images/projects/homebridge-blink.svg',
+    href: 'https://github.com/BitWise-0x/homebridge-blink-security',
+  },
+  {
+    title: 'Open WebUI Ultimate Stack',
+    description: `Production-ready Open WebUI deployment with RAG, private web search,
+    OCR, local TTS, and MCP tool servers. Ships as Docker Compose and Docker Swarm stacks
+    with a curated library of tools, filters, and function pipes auto-deployed on every deploy.`,
+    imgSrc: '/static/images/projects/open-webui-stack.svg',
+    href: 'https://github.com/BitWise-0x/open-webui-ultimate-stack',
+  },
 ]
 
 export default projectsData

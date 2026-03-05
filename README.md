@@ -35,7 +35,7 @@ Open [http://localhost:3000](http://localhost:3000) to view the blog locally.
 
 <table>
 <tr>
-<td width="50%" valign="top">
+<td valign="top">
 
 ### Framework
 
@@ -48,7 +48,9 @@ Open [http://localhost:3000](http://localhost:3000) to view the blog locally.
 - **Tailwind CSS** — utility-first styling
 
 </td>
-<td width="50%" valign="top">
+</tr>
+<tr>
+<td valign="top">
 
 ### Content & Deployment
 

@@ -31,7 +31,7 @@ export default function Mermaid({ chart }: { chart: string }) {
   const [svg, setSvg] = useState('')
 
   useEffect(() => {
-    const id = `mermaid-${crypto.randomUUID().slice(0, 8)}`
+    const id = `mermaid-${Math.random().toString(36).slice(2, 10)}`
     mermaid.render(id, chart).then(async ({ svg }) => {
       const DOMPurify = (await import('dompurify')).default
       setSvg(

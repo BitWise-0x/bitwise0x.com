@@ -16,15 +16,15 @@ authors: ['default']
   height={1136}
 />
 
-The HomeKit ecosystem is more closed than it appears. Apple's Made for HomeKit certification program is the official path for hardware vendors, but it is a slow, proprietary process that leaves the vast majority of smart home devices permanently outside Apple Home. SmartRent, which provides the smart home infrastructure for a large share of managed residential properties (locks, thermostats, leak sensors, motion sensors), has no HomeKit support. Amazon Blink, a widely deployed battery-powered camera system, is in the same position. Both platforms have capable APIs. Neither has any path into HomeKit.
+The [HomeKit](https://www.apple.com/home-app/) ecosystem is more closed than it appears. Apple's Made for HomeKit certification program is the official path for hardware vendors, but it is a slow, proprietary process that leaves the vast majority of smart home devices permanently outside Apple Home. [SmartRent](https://smartrent.com), which provides the smart home infrastructure for a large share of managed residential properties (locks, thermostats, leak sensors, motion sensors), has no HomeKit support. [Amazon Blink](https://blinkforhome.com), a widely deployed battery-powered camera system, is in the same position. Both platforms have capable APIs. Neither has any path into HomeKit.
 
-Homebridge is the community's answer to this problem. It is a lightweight Node.js bridge that implements the HomeKit Accessory Protocol (HAP) and exposes a plugin system that lets anyone map a third-party API to native HomeKit accessories. I have been using it for years, and when I decided to build proper HomeKit integrations for SmartRent and Blink, writing the plugins myself was the natural approach. This post is a walkthrough of both: [homebridge-smartrent](https://github.com/BitWise-0x/homebridge-smartrent) and [homebridge-blink-security](https://github.com/BitWise-0x/homebridge-blink-security). It covers what each platform required, where the implementations diverged, and what carried across both.
+[Homebridge](https://homebridge.io) is the community's answer to this problem. It is a lightweight Node.js bridge that implements the HomeKit Accessory Protocol (HAP) and exposes a plugin system that lets anyone map a third-party API to native HomeKit accessories. I have been using it for years, and when I decided to build proper HomeKit integrations for SmartRent and Blink, writing the plugins myself was the natural approach. This post is a walkthrough of both: [homebridge-smartrent](https://github.com/BitWise-0x/homebridge-smartrent) and [homebridge-blink-security](https://github.com/BitWise-0x/homebridge-blink-security). It covers what each platform required, where the implementations diverged, and what carried across both.
 
 ## Homebridge
 
 ---
 
-Homebridge is a Node.js process that implements the HomeKit Accessory Protocol (HAP) via the `HAP-nodejs` library. From Apple Home's perspective, it appears as a single HomeKit bridge, and everything registered through it surfaces as native HomeKit accessories. Siri, automations, and the Home app all work against these accessories as if they were first-party hardware.
+Homebridge is a Node.js process that implements the HomeKit Accessory Protocol (HAP) via the [`HAP-nodejs`](https://github.com/homebridge/HAP-nodejs) library. From Apple Home's perspective, it appears as a single HomeKit bridge, and everything registered through it surfaces as native HomeKit accessories. Siri, automations, and the Home app all work against these accessories as if they were first-party hardware.
 
 The plugin system is what makes this composable. Each plugin receives a reference to the Homebridge API, which exposes `HAP-nodejs` directly. Plugins declare services and characteristics (the building blocks of the HomeKit data model), and Homebridge handles the pairing, encryption, and communication with Apple's ecosystem. A plugin author's job is narrower: discover devices, map their state to HAP services, and respond correctly when HomeKit reads or writes a characteristic.
 
@@ -211,7 +211,7 @@ The polling interval is a configuration decision with real trade-offs. At 15 sec
 
 This is the hardest part of any Homebridge camera plugin, and Blink makes it harder than most. HomeKit streams video using SRTP, a Real-time Transport Protocol variant with mandatory encryption. Blink cameras stream using IMMI, a proprietary Blink protocol. There is no direct bridge between the two.
 
-The solution is ffmpeg. `@homebridge/camera-utils` handles the HomeKit side of the camera session: HAP negotiation, SRTP key exchange, and session lifecycle. When HomeKit requests a live stream, `camera-utils` calls the plugin's `handleStreamRequest` implementation, which spawns an ffmpeg process to pull the IMMI stream and re-emit it as SRTP to the address and port HomeKit specified.
+The solution is [ffmpeg](https://ffmpeg.org). [`@homebridge/camera-utils`](https://github.com/homebridge/camera-utils) handles the HomeKit side of the camera session: HAP negotiation, SRTP key exchange, and session lifecycle. When HomeKit requests a live stream, `camera-utils` calls the plugin's `handleStreamRequest` implementation, which spawns an ffmpeg process to pull the IMMI stream and re-emit it as SRTP to the address and port HomeKit specified.
 
 ```typescript
 // Simplified ffmpeg invocation for IMMI → SRTP transcoding.
@@ -240,7 +240,7 @@ private buildFfmpegArgs(immiUrl: string, session: StreamingSession): string[] {
 A keepalive mechanism holds the IMMI session open for the duration of the HomeKit viewing session. Blink will terminate an idle IMMI session after a short timeout, so the plugin sends periodic keepalive signals while `camera-utils` reports the session as active.
 
 > [!WARNING]
-> ffmpeg must be available on the host system. The `ffmpeg-for-homebridge` package provides a bundled binary that works across common architectures, but on Raspberry Pi hardware the per-stream transcoding load is non-trivial. If your host cannot sustain it, set `enable-liveview` to `false` in the config; snapshots will still function.
+> ffmpeg must be available on the host system. The [`ffmpeg-for-homebridge`](https://github.com/homebridge/ffmpeg-for-homebridge) package provides a bundled binary that works across common architectures, but on Raspberry Pi hardware the per-stream transcoding load is non-trivial. If your host cannot sustain it, set `enable-liveview` to `false` in the config; snapshots will still function.
 
 ### OAuth 2.0 and 2FA
 
@@ -279,7 +279,7 @@ Blink represents one end of the integration spectrum: a polling-based REST API w
   height={853}
 />
 
-SmartRent is the dominant smart home infrastructure vendor for managed residential properties. Their devices (locks, thermostats, leak sensors, motion sensors, switches, and dimmers) are provisioned by property management and controlled through SmartRent's own app. There is no HomeKit support, and none appears to be planned. The web API is undocumented but has been reverse-engineered by the community; it supports both REST for commands and initial state, and a WebSocket-based real-time channel using the Phoenix protocol for push updates.
+SmartRent is the dominant smart home infrastructure vendor for managed residential properties. Their devices (locks, thermostats, leak sensors, motion sensors, switches, and dimmers) are provisioned by property management and controlled through SmartRent's own app. There is no HomeKit support, and none appears to be planned. The web API is undocumented but has been reverse-engineered by the community; it supports both REST for commands and initial state, and a WebSocket-based real-time channel using the [Phoenix](https://www.phoenixframework.org) protocol for push updates.
 
 The goal for this plugin was complete parity: every device type visible in the SmartRent app controllable and observable in Apple Home, with state that reflects reality in real time.
 
@@ -385,7 +385,7 @@ Lock jam detection is handled differently from the other state updates. SmartRen
 
 Polling for lock state is a bad experience. If someone uses a physical key or the SmartRent app to lock or unlock a door, Apple Home should reflect that within a second or two, not on the next polling interval. The Phoenix WebSocket channel makes this possible.
 
-Phoenix is a real-time framework from the Elixir ecosystem with a well-specified client protocol. The plugin implements the client-side handshake: a join message to subscribe to each device's channel, a heartbeat ping every 30 seconds to keep the connection alive, and a reconnection strategy if the socket drops.
+[Phoenix](https://www.phoenixframework.org) is a real-time framework from the [Elixir](https://elixir-lang.org) ecosystem with a well-specified client protocol. The plugin implements the client-side handshake: a join message to subscribe to each device's channel, a heartbeat ping every 30 seconds to keep the connection alive, and a reconnection strategy if the socket drops.
 
 ```typescript
 // Handling a lock state event pushed from the Phoenix channel
@@ -416,7 +416,7 @@ The persistent connection means that all registered accessories receive real-tim
 
 ---
 
-SmartRent accounts can be secured with TOTP-based two-factor authentication. The plugin handles this through the `tfaSecret` configuration field, which holds the 32-character seed that the authenticator app was initialized with. On each login, `otplib` generates a current TOTP code from that seed and includes it in the authentication request.
+SmartRent accounts can be secured with TOTP-based two-factor authentication. The plugin handles this through the `tfaSecret` configuration field, which holds the 32-character seed that the authenticator app was initialized with. On each login, [`otplib`](https://github.com/yeojz/otplib) generates a current TOTP code from that seed and includes it in the authentication request.
 
 > [!NOTE]
 > The `tfaSecret` is the TOTP seed (the shared secret your authenticator app uses), not a one-time code. If you scan a QR code when setting up 2FA, the string encoded in that QR code is the value that goes here.
@@ -485,7 +485,7 @@ Live view transcoding is expensive. On a modern x86 machine, an ffmpeg process h
 
 The Homebridge plugin model is a remarkably effective abstraction for homelab integration work. The HAP surface is well-specified, the platform plugin lifecycle covers the common operational patterns, and the community around it is active enough that most third-party APIs have at least some prior exploration to build from. The constraint it imposes, that you are responsible for translating your platform's data model into HAP's, is exactly the right constraint. The protocol details are handled; the integration logic is yours to own.
 
-Both plugins are Homebridge-verified and available to install from the Homebridge plugin registry. Source and configuration documentation are on GitHub:
+Both plugins are Homebridge-verified and available to install from the [Homebridge plugin registry](https://www.npmjs.com/search?q=homebridge-plugin). Source and configuration documentation are on GitHub:
 
 - [homebridge-smartrent](https://github.com/BitWise-0x/homebridge-smartrent)
 - [homebridge-blink-security](https://github.com/BitWise-0x/homebridge-blink-security)

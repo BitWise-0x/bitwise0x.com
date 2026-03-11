@@ -10,6 +10,7 @@ export const metadata: Metadata = genPageMetadata({
   title: 'About',
   description:
     'About BitWise — the engineer behind the blog and the backend systems explored here.',
+  path: 'about',
 })
 
 export default function Page() {

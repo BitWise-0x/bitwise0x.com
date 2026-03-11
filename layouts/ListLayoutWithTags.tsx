@@ -149,13 +149,15 @@ export default function ListLayoutWithTags({
                             aria-hidden="true"
                             tabIndex={-1}
                           >
-                            <Image
-                              src={heroImage}
-                              alt=""
-                              width={280}
-                              height={158}
-                              className="w-full rounded-md object-cover sm:w-[280px]"
-                            />
+                            <div className="relative aspect-video w-full overflow-hidden rounded-md sm:w-[280px]">
+                              <Image
+                                src={heroImage}
+                                alt=""
+                                fill
+                                sizes="(max-width: 640px) 100vw, 280px"
+                                className="object-cover"
+                              />
+                            </div>
                           </Link>
                         )}
                         <div className="space-y-3">

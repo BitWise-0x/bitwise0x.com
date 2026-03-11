@@ -1,0 +1,271 @@
+---
+title: 'The Open WebUI Ultimate Stack: A Production Deployment for the LLM Interface Era'
+date: '2026-03-10'
+lastmod: '2026-03-10'
+tags:
+  [
+    'ai',
+    'llm',
+    'docker',
+    'open-webui',
+    'projects',
+    'orchestration',
+    'rag',
+    'mcp',
+    'generative-ai',
+    'swarm',
+  ]
+draft: false
+summary: 'A production-ready Docker deployment for Open WebUI with RAG, private search, OCR, MCP tooling, and 35 auto-deployed tools, filters, and function pipes.'
+images: ['/static/images/blog/open-webui-ultimate-stack/hero.jpg']
+authors: ['default']
+---
+
+<Image
+  src="/static/images/blog/open-webui-ultimate-stack/hero.jpg"
+  alt="Small humanoid robot sitting on a bench reading a tablet"
+  width={800}
+  height={450}
+/>
+
+The conversation around large language models has quietly shifted. The question is no longer which model to use, but what you can actually do with one once you have access. The model itself is increasingly a commodity. What matters is the interface, the tooling, and the infrastructure that surrounds it. A raw API key is powerful, but without retrieval-augmented generation, private search, document parsing, and extensible tool use, it remains an expensive autocomplete.
+
+[Open WebUI](https://openwebui.com) has emerged as the most capable open-source web interface for LLMs. It supports multiple model backends, from [Ollama](https://ollama.com) to any OpenAI-compatible API, and ships with an extension system that turns it from a chat frontend into a genuine platform. But the default deployment is minimal by design: a single container, SQLite for persistence, no search augmentation, no OCR pipeline, no pre-configured tools. The gap between a working installation and a production-ready platform is significant.
+
+I spent months running Open WebUI in various configurations, progressively layering services around it as my needs grew: PostgreSQL for durability, then pgvector for proper RAG, then SearXNG for private search augmentation, then Tika for document parsing. Each addition required its own configuration, its own health checks, its own secrets. The tools I wanted to use had to be installed manually through the admin panel after every redeployment. It became clear that the real work was not in Open WebUI itself but in the operational scaffolding around it.
+
+[open-webui-ultimate-stack](https://github.com/BitWise-0x/open-webui-ultimate-stack) is the result of consolidating that scaffolding into a single, reproducible deployment. It is not a fork of Open WebUI. It is a composition: eight services wired together with health checks, secrets management, and automated tool deployment, designed to run Open WebUI the way it was meant to be run. The stack ships with 35 tools, filters, and function pipes that are automatically deployed on every startup, covering everything from academic research to image generation to multi-model orchestration.
+
+## What Open WebUI Brings to the Table
+
+---
+
+Open WebUI is worth understanding on its own terms before discussing what sits around it. The project, maintained at [open-webui/open-webui](https://github.com/open-webui/open-webui), provides a polished web interface for interacting with language models. It handles multi-model routing, conversation management, and document upload with RAG out of the box. But the feature that sets it apart from the growing field of LLM frontends is its extension system.
+
+Open WebUI supports three types of extensions. **Tools** are functions the model can invoke during a conversation through native function calling. A tool might search Wikipedia, generate an image, or query an API. The model decides when and how to use it based on the conversation context. **Filters** are pipeline processors that intercept every message, either before it reaches the model (inlet) or after the model responds (outlet). They can rewrite prompts, strip reasoning tokens, route queries to different models, or format citations. **Function pipes** are the most powerful type: they replace or augment the entire response loop, enabling multi-model conversations, research orchestration, or generative media pipelines.
+
+This three-tier extension system is what elevates Open WebUI from a chat interface to a platform. But a platform without extensions is just potential. And extensions without the right infrastructure beneath them (vector search for RAG, a search engine for web-augmented generation, OCR for document intelligence) cannot reach their full capability.
+
+The ultimate stack addresses both sides of this equation: the infrastructure that Open WebUI needs to perform at its best, and a curated library of extensions that demonstrate what the platform can do when properly equipped.
+
+<Image
+  src="/static/images/blog/open-webui-ultimate-stack/architecture.jpg"
+  alt="Code on dark screens viewed through glasses representing the developer tooling ecosystem"
+  width={800}
+  height={450}
+/>
+
+## Architecture
+
+---
+
+Every service in the stack exists because Open WebUI benefits from it directly. There are no decorative components. The topology is straightforward: Open WebUI sits at the center, and seven supporting services fill specific gaps in its default deployment.
+
+<Mermaid chart={`
+graph TD
+    User["User / Browser"]
+
+    subgraph core["Core Services"]
+        owui["Open WebUI\nghcr.io/open-webui\n:8080 -> :3000"]
+        db["PostgreSQL 17\npgvector/pgvector:pg17\n:5432"]
+        redis["Valkey\nvalkey:9-alpine\n:6379"]
+    end
+
+    subgraph search["Search & Documents"]
+        searxng["SearXNG\nsearxng/searxng\n:8080 -> :8888"]
+        tika["Apache Tika\nTesseract OCR\n:9998"]
+    end
+
+    subgraph integrations["AI Integrations"]
+        edgetts["Edge TTS\nopenai-edge-tts\n:5050"]
+        mcpo["MCPO Server\nMCP-to-OpenAPI Proxy\n:8000"]
+    end
+
+    subgraph automation["Automation"]
+        tools["tools-init\npython:3.12-slim\none-shot deploy"]
+    end
+
+    User -->|":3000"| owui
+    owui --> db
+    owui --> redis
+    owui --> searxng
+    owui --> tika
+    owui --> edgetts
+    owui --> mcpo
+    searxng --> redis
+    tools -.->|"API push\non deploy"| owui
+
+    style core fill:#0d1b2a,stroke:#3a86ff,color:#fff
+    style search fill:#1b263b,stroke:#3a86ff,color:#fff
+    style integrations fill:#1b263b,stroke:#3a86ff,color:#fff
+    style automation fill:#1b263b,stroke:#3a86ff,color:#fff
+    style User fill:#14213d,stroke:#565f89,color:#fff
+    style owui fill:#7b2cbf,stroke:#9d4edd,color:#fff
+    style db fill:#2d6a4f,stroke:#40916c,color:#fff
+    style redis fill:#2d6a4f,stroke:#40916c,color:#fff
+    style searxng fill:#2d6a4f,stroke:#40916c,color:#fff
+    style tika fill:#2d6a4f,stroke:#40916c,color:#fff
+    style edgetts fill:#343a40,stroke:#6c757d,color:#fff
+    style mcpo fill:#343a40,stroke:#6c757d,color:#fff
+    style tools fill:#b5651d,stroke:#d4a574,color:#fff
+
+`} />
+
+**[PostgreSQL + pgvector](https://github.com/pgvector/pgvector)** replaces Open WebUI's default SQLite backend. This is not merely a durability upgrade; pgvector enables semantic vector search, which is the foundation of Open WebUI's RAG pipeline. Without it, uploaded documents can be stored but not meaningfully searched.
+
+**[Valkey](https://valkey.io)** (a Redis-compatible fork) handles WebSocket session management and serves as the caching backend for SearXNG. It keeps both services stateless from the application layer's perspective.
+
+**[SearXNG](https://docs.searxng.org)** is a privacy-respecting metasearch engine that aggregates results from over 70 sources. Open WebUI can query it for web-augmented generation, grounding model responses in current information without sending user queries to a commercial search provider.
+
+**[Apache Tika](https://tika.apache.org)** with [Tesseract OCR](https://github.com/tesseract-ocr/tesseract) extracts text from PDFs, Office documents, and images. This feeds directly into the RAG pipeline, making scanned documents and image-embedded text searchable alongside plain text uploads.
+
+**[Edge TTS](https://github.com/travisvn/openai-edge-tts)** provides local text-to-speech synthesis using Microsoft Edge voices, exposed through an OpenAI-compatible API. No external TTS service required.
+
+**[MCPO](https://github.com/open-webui/mcpo)** bridges the [Model Context Protocol](https://modelcontextprotocol.io) into Open WebUI by exposing MCP tool servers as OpenAPI-compatible REST endpoints. This is how external MCP servers (GitHub, filesystem, databases) become available to models running inside Open WebUI.
+
+**tools-init** is a one-shot Python container that runs on every deployment. It authenticates with Open WebUI's REST API and pushes all 35 tools, filters, and function pipes into the instance. More on this in the auto-deployment section below.
+
+All services communicate over a single backend network (Docker bridge for standalone, encrypted overlay for Swarm). Health checks gate startup ordering, and the tools-init container waits for Open WebUI's database health endpoint before attempting any API calls.
+
+<Image
+  src="/static/images/blog/open-webui-ultimate-stack/tools.jpg"
+  alt="Ubuntu terminal prompt on a dark screen about to execute a sudo command"
+  width={800}
+  height={450}
+/>
+
+## The Tool Ecosystem
+
+---
+
+The stack ships with 35 Python-based extensions across all three of Open WebUI's extension types. They are auto-deployed on every startup, so a fresh deployment arrives fully equipped.
+
+### Filters
+
+Seven filters handle message pre- and post-processing across the pipeline:
+
+- **clean_thinking_tags_filter** strips `<think>` blocks from reasoning model outputs, which is essential when using models like DeepSeek R1 that expose their chain-of-thought tokens in the response stream.
+- **prompt_enhancer_filter** rewrites user prompts before they reach the model, adding specificity and structure to vague queries.
+- **semantic_router_filter** classifies incoming queries and routes them to the most appropriate model, enabling automatic model selection based on content type.
+- **full_document_filter** injects full document context into prompts when documents are attached.
+- **openrouter_websearch_citations_filter** formats web search citations from [OpenRouter](https://openrouter.ai) into clean, readable references.
+
+### Tools
+
+Eighteen native tools give models the ability to reach beyond the conversation:
+
+**Research and search** tools include [arXiv](https://arxiv.org) paper search, [Wikipedia](https://www.wikipedia.org) lookup, [YouTube](https://youtube.com) search, and [Pexels](https://www.pexels.com) image search. These extend the model's knowledge to real-time sources without relying on RAG alone.
+
+**Creative and generative** tools are where the stack becomes particularly interesting. Multiple [ComfyUI](https://github.com/comfyanonymous/ComfyUI) integration tools support text-to-image, image-to-image, and image editing workflows. ACE Step tools (v1 and v1.5) handle audio generation. VibeVoice provides text-to-speech within conversations. A Wan2.2 tool enables text-to-video generation. These tools require external ComfyUI or model instances, but the integration code and workflow JSONs ship with the stack.
+
+**Utility tools** round out the set with [OpenWeatherMap](https://openweathermap.org) forecasts, a philosopher quote API, and RPG dice and character generators.
+
+### Function Pipes
+
+Ten function pipes operate at a higher level, replacing the standard response loop entirely:
+
+- **planner** decomposes complex requests into multi-step task plans before execution.
+- **multi_model_conversation_v2** runs parallel conversations across multiple models simultaneously, with full tool-calling support in each thread.
+- **research_pipe** orchestrates multi-source research, aggregating and synthesizing information from several search backends.
+- **veo3_pipe** routes to Google Gemini for video generation.
+- **flux_kontext_comfyui_pipe** drives [Flux](https://blackforestlabs.ai) Kontext image editing through ComfyUI.
+- **letta_agent** connects to [Letta](https://github.com/letta-ai/letta) autonomous agents with SSE streaming, bridging Open WebUI to long-running agentic workflows.
+- **perplexica_pipe** integrates with a local [Perplexica](https://github.com/ItzCrazyKns/Perplexica) instance for AI-powered search.
+
+### Attribution
+
+The majority of these extensions were authored by [Haervwe](https://github.com/Haervwe) from the [open-webui-tools](https://github.com/Haervwe/open-webui-tools) project. Additional contributions come from [tan-yong-sheng](https://github.com/tan-yong-sheng), pupphelper, Zed Unknown, and justinrahb. The stack curates, packages, and auto-deploys these tools, but the engineering work behind each one belongs to its respective author.
+
+> [!NOTE]
+> Every tool retains its original author metadata in its Python docstring header. The stack handles deployment logistics; authorship and credit remain with the contributors who wrote the code.
+
+## Deployment Philosophy
+
+---
+
+The stack supports two deployment targets, each with its own compose file and operational characteristics.
+
+### Standalone
+
+A single command gets you running:
+
+```bash
+git clone https://github.com/BitWise-0x/open-webui-ultimate-stack.git
+cd open-webui-ultimate-stack
+./bootstrap.sh
+```
+
+The bootstrap script handles the full setup lifecycle. It copies `env/*.env.example` files to their active counterparts, generates cryptographic secrets for `WEBUI_SECRET_KEY`, `SEARXNG_SECRET`, and `POSTGRES_PASSWORD`, then syncs the database password across all services that need it (Open WebUI, MCPO, PostgreSQL). It validates that admin credentials are configured, syncs them into the tools-init environment, and starts the stack with `docker compose up -d`.
+
+The script is idempotent. Re-running it skips existing environment files and only regenerates secrets that are still set to their placeholder value (`change_me`). This makes it safe to run after pulling upstream updates without overwriting local configuration.
+
+### Docker Swarm
+
+For production deployments across multiple nodes, `./bootstrap.sh --swarm` delegates to `deploy-swarm.sh`. This script validates that the shared filesystem (`DATA_ROOT`) is mounted and reachable, creates service directories with correct ownership (UID 999 for PostgreSQL and Valkey, UID 977 for SearXNG), and sets up the encrypted overlay network.
+
+Docker Swarm lacks `depends_on`, so the stack uses `wait-for-services.sh`, a POSIX TCP dependency gate that blocks container startup until required services are accepting connections. SearXNG waits for Valkey. MCPO waits for PostgreSQL. The tools-init container waits for Open WebUI. This ensures correct startup ordering without relying on orchestrator-level primitives.
+
+The Swarm deployment supports two replicas of Open WebUI behind a reverse proxy (Traefik labels are included in the compose file), external volumes for PostgreSQL and SearXNG data, and optional high-IOPS mounts for Valkey's append-only file.
+
+> [!TIP]
+> The bootstrap script automatically syncs the admin email and password from `env/owui.env` into `env/tools-init.env` whenever they differ. The tools-init container always authenticates correctly without manual credential management.
+
+## Key Integrations
+
+---
+
+Each ancillary service was chosen because it fills a specific gap in Open WebUI's default capabilities.
+
+### RAG with pgvector
+
+Open WebUI's default SQLite backend stores data reliably but cannot perform vector similarity search. Replacing it with [PostgreSQL 17 + pgvector](https://github.com/pgvector/pgvector) unlocks semantic search over uploaded documents, which is the core of any serious RAG implementation.
+
+The stack includes a custom PostgreSQL entrypoint (`conf/postgres/init/entrypoint.sh`) that handles the pgvector extension lifecycle automatically. On every container start, it waits for PostgreSQL to accept connections, then creates or upgrades the pgvector extension. This matters because the pgvector shared library version (shipped with the container image) can advance independently of the extension version registered in the database catalog. Without this step, a container image upgrade could leave the database with a stale extension version.
+
+### Private Search with SearXNG
+
+[SearXNG](https://docs.searxng.org) aggregates results from over 70 search engines with zero tracking. When configured as Open WebUI's search backend, it enables web-augmented generation: models can ground their responses in current search results without sending user queries to Google, Bing, or any commercial provider.
+
+The stack pins SearXNG to a specific image version, configures rate limiting via `limiter.toml`, and routes it through the same [Valkey](https://valkey.io) instance used by Open WebUI for session management. The search engine is available both internally (for model-driven queries) and externally at port 8888 for direct use.
+
+### Document Intelligence with Tika
+
+[Apache Tika](https://tika.apache.org) with the `-full` image variant includes [Tesseract OCR](https://github.com/tesseract-ocr/tesseract) and supports over a thousand document formats. PDFs, Word documents, PowerPoint presentations, and even images with embedded text are parsed into plain text that feeds directly into Open WebUI's RAG pipeline.
+
+This is particularly valuable for organizations with large document archives. Scanned PDFs, photographed whiteboards, and image-heavy reports become searchable content rather than opaque binary uploads.
+
+### MCP via MCPO
+
+The [Model Context Protocol](https://modelcontextprotocol.io) is an emerging standard for connecting LLMs to external tools and data sources. [MCPO](https://github.com/open-webui/mcpo) bridges MCP tool servers into Open WebUI by translating MCP's streaming protocol into OpenAPI-compatible REST endpoints.
+
+The stack includes a template configuration for connecting to GitHub via a personal access token and to [gitmcp.io](https://gitmcp.io) for repository-aware context. Adding new MCP servers is a matter of editing the MCPO config file and redeploying. The bridge pattern means Open WebUI does not need native MCP support; it simply sees MCPO as another tool endpoint.
+
+## Auto-Deployment: How tools-init Works
+
+---
+
+The tools-init container is the mechanism that keeps the tool library in sync with the deployment. On every `docker compose up` or `docker stack deploy`, it runs a single script (`install-tools.sh`) that pushes all extensions into Open WebUI via its REST API.
+
+The process follows four phases:
+
+1. **Wait** for Open WebUI's `/health/db` endpoint to respond, polling every five seconds with a configurable timeout.
+2. **Authenticate** via `POST /api/v1/auths/signin` using the admin credentials from the environment.
+3. **Iterate** over all `.py` files in the three extension directories (filters, tools, functions), extracting the title and description from each file's Python docstring frontmatter.
+4. **Push** each extension via `POST /api/v1/{tools,functions}/create`. If the extension already exists, the script detects the conflict and updates it via the corresponding update endpoint.
+
+This upsert pattern means adding a new tool is as simple as dropping a `.py` file into the appropriate `conf/tools/` subdirectory and redeploying. No manual API interaction, no admin panel navigation, no import/export workflows. The deployment pipeline handles it.
+
+> [!IMPORTANT]
+> The tools-init container authenticates with the same admin credentials configured in `env/owui.env`. The bootstrap script syncs these automatically, but if you change the admin password after initial deployment, you will need to update `env/tools-init.env` as well, or re-run `./bootstrap.sh` to trigger the sync.
+
+## Reflections
+
+---
+
+What makes this stack "ultimate" is not any individual service. PostgreSQL with pgvector is a standard choice. SearXNG is well-known in the privacy community. Apache Tika has been parsing documents for over a decade. The value is in the composition: eight services configured to work together, with health checks, secret management, and automated tool deployment wiring them into a coherent platform.
+
+The tool auto-deployment pattern is worth highlighting as a design principle. It separates tool authoring from deployment orchestration. A tool author writes a Python file with docstring metadata. The deployment pipeline reads that metadata, authenticates with the API, and pushes the tool. The two concerns never mix. This is the kind of operational detail that is easy to overlook, but it makes the difference between a stack you maintain and a stack that maintains itself.
+
+Open WebUI is evolving rapidly. New features, new extension types, and shifts in the MCP ecosystem will continue to reshape what a production deployment looks like. But the deployment pattern itself is stable: Docker Compose for development and single-host deployments, Docker Swarm for production clustering, bootstrap automation for both. The services around Open WebUI may change, but the principle of composing infrastructure around a capable core will not.
+
+The full stack, including all tools, deployment scripts, and documentation, is available at [BitWise-0x/open-webui-ultimate-stack](https://github.com/BitWise-0x/open-webui-ultimate-stack) under the MIT License.

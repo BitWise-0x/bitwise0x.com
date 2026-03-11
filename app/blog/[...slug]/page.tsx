@@ -64,6 +64,7 @@ export async function generateMetadata(props: {
       url: `${siteMetadata.siteUrl}/blog/${slug}`,
       images: ogImages,
       authors: authors.length > 0 ? authors : [siteMetadata.author],
+      tags: post.tags,
     },
     alternates: {
       canonical: post.canonicalUrl || `${siteMetadata.siteUrl}/blog/${slug}`,
@@ -72,7 +73,7 @@ export async function generateMetadata(props: {
       card: 'summary_large_image',
       title: post.title,
       description: post.summary,
-      images: [heroImage],
+      images: ogImages.map((img) => img.url),
     },
   }
 }

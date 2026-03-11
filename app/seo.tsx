@@ -5,17 +5,25 @@ interface PageSEOProps {
   title: string
   description?: string
   image?: string
+  path?: string
   alternates?: Metadata['alternates']
 }
 
-export function genPageMetadata({ title, description, image, ...rest }: PageSEOProps): Metadata {
+export function genPageMetadata({
+  title,
+  description,
+  image,
+  path,
+  ...rest
+}: PageSEOProps): Metadata {
+  const pageUrl = path ? `${siteMetadata.siteUrl}/${path}` : siteMetadata.siteUrl
   return {
     title,
     description: description || siteMetadata.description,
     openGraph: {
       title: `${title} | ${siteMetadata.title}`,
       description: description || siteMetadata.description,
-      url: siteMetadata.siteUrl,
+      url: pageUrl,
       siteName: siteMetadata.title,
       images: image ? [image] : [siteMetadata.socialBanner],
       locale: 'en_US',
@@ -27,6 +35,10 @@ export function genPageMetadata({ title, description, image, ...rest }: PageSEOP
       images: image ? [image] : [siteMetadata.socialBanner],
       creator: '@BitWise_0x',
     },
+    ...(path &&
+      !rest.alternates && {
+        alternates: { canonical: pageUrl },
+      }),
     ...rest,
   }
 }

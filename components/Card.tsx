@@ -20,6 +20,7 @@ const Card = ({ title, description, imgSrc, href }: CardProps) => (
               className="object-cover object-center md:h-36 lg:h-48"
               width={544}
               height={306}
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 544px"
             />
           </Link>
         ) : (

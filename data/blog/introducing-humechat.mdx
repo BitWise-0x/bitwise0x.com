@@ -1,10 +1,23 @@
 ---
 title: 'Introducing HumeChat: Voice AI with Emotional Intelligence'
 date: '2026-01-15'
-lastmod: '2026-02-15'
-tags: ['ai', 'projects', 'humechat', 'voice-ai', 'hume', 'emotion-detection', 'psychology']
+lastmod: '2026-03-30'
+tags:
+  [
+    'ai',
+    'projects',
+    'humechat',
+    'voice-ai',
+    'hume',
+    'emotion-detection',
+    'psychology',
+    'shaman',
+    'wooza',
+    'games',
+    'jungian',
+  ]
 draft: false
-summary: 'How I built a voice Ai platform with real-time emotion detection across 48 categories, custom personas, voice cloning, and a Jungian self-discovery experience.'
+summary: "How I built a voice Ai platform with real-time emotion detection across 48 categories — Jungian depth psychology, guided shamanic voice journeys, and a children's companion with voice games."
 images: ['/static/images/blog/humechat/emotion-empathy-face.jpg']
 authors: ['default']
 ---
@@ -18,23 +31,23 @@ Although voice-based AI interfaces have grown considerably in both capability an
   height={450}
 />
 
-The question that motivated this project was straightforward: what becomes possible when an AI system can detect and respond to a speaker's emotional state in real time, rather than simply processing their words? This post introduces [HumeChat](https://humechat.com), a voice AI platform I built to explore that question. It encompasses three distinct products (Playground, Archetype, and Wooza), each applying emotionally-aware voice interaction to a different context. In the sections that follow, I walk through the foundational emotion detection capability and the design thinking behind each product.
+The question that motivated this project was straightforward: what becomes possible when an AI system can detect and respond to a speaker's emotional state in real time, rather than simply processing their words? This post introduces [HumeChat](https://humechat.com), a voice AI platform I built to explore that question. It encompasses three distinct products (Archetype, Shaman, and Wooza), each applying emotionally-aware voice interaction to a different context. In the sections that follow, I walk through the foundational emotion detection capability and the design thinking behind each product.
 
 ## Why I Built HumeChat
 
 The impetus for HumeChat came from a dissatisfaction with the state of voice AI conversations. Even the most capable voice assistants operate on a fundamentally incomplete picture of the interaction: they capture the transcript but lose the affect. The frustration in someone's voice, the excitement behind a question, the hesitation that signals uncertainty: none of this informs the AI's response. I wanted to build something where emotion functions as a first-class input, shaping the conversation in real time rather than being discarded at the point of transcription.
 
-[Hume AI's](https://hume.ai) Enhanced Voice Interface (EVI) technology provided the right foundation for this. Their prosody analysis is capable of detecting 48 distinct emotions from voice alone, analyzing tone, pitch, rhythm, and pauses, and it runs continuously throughout a conversation rather than producing a single summary score after the fact. HumeChat is the platform I built on top of that capability, exploring three different applications of emotionally-aware voice interaction: Playground, which serves as an open-ended persona builder for voice AI companions; Archetype, which pairs Jungian depth psychology with real-time emotional awareness; and Wooza, a children's voice companion designed for educational contexts.
+[Hume AI's](https://hume.ai) Enhanced Voice Interface (EVI) technology provided the right foundation for this. Their prosody analysis is capable of detecting 48 distinct emotions from voice alone, analyzing tone, pitch, rhythm, and pauses, and it runs continuously throughout a conversation rather than producing a single summary score after the fact. HumeChat is the platform I built on top of that capability, exploring three different applications of emotionally-aware voice interaction: Archetype, which pairs Jungian depth psychology with real-time emotional awareness; Shaman, which offers guided voice journeys rooted in shamanic tradition and intention-setting; and Wooza, a children's voice companion with educational conversations and voice-powered games.
 
 <ZoomableImage
-  src="/static/images/blog/humechat/humechat-landing1.png"
-  alt="HumeChat landing page showing Playground, Archetype, and Wooza products"
+  src="/static/images/blog/humechat/humechat-landing.png"
+  alt="HumeChat landing page showing Archetype, Shaman, and Wooza products"
   width={800}
   height={450}
 />
 
 <ZoomableImage
-  src="/static/images/blog/humechat/about.png"
+  src="/static/images/blog/humechat/humechat-about.png"
   alt="HumeChat About page, AI Voice Interface with Emotional Intelligence"
   width={800}
   height={450}
@@ -48,7 +61,7 @@ The distinguishing characteristic of HumeChat's approach lies in treating emotio
 
 <ZoomableImage
   src="/static/images/blog/humechat/emotion-tracking2.png"
-  alt="Playground dashboard showing conversation transcript with inline emotion detection"
+  alt="Dashboard showing conversation transcript with inline emotion detection"
   width={800}
   height={450}
 />
@@ -62,38 +75,14 @@ Every message in the conversation transcript receives its own emotion breakdown.
   height={450}
 />
 
-With this emotional awareness operating as a shared foundation, let us examine how each of the three products employs it in practice, beginning with Playground.
-
-## Playground
-
-Playground represents the most open-ended of HumeChat's three products. Where the other two apply emotion detection within specific frameworks (depth psychology and children's education, respectively), Playground offers unconstrained creative freedom, allowing users to build any voice AI companion they can envision.
-
-<ZoomableImage
-  src="/static/images/blog/humechat/playground1.png"
-  alt="Playground landing, AI Persona Builder with Custom Personas and Voice Cloning"
-  width={800}
-  height={450}
-/>
-
-Each persona encompasses a configurable voice, drawn from over 159 presets spanning multiple languages and accents, or alternatively cloned from user-uploaded audio samples. The underlying language model can be selected from more than 25 options, including Claude, GPT-4, Llama, Gemini, and Groq, allowing the persona to be optimized for its intended purpose. Personality and conversational style are defined through custom system prompts, while a persistent memory system retains context across sessions, enabling the persona to learn the user's communication style and preferences over time.
-
-<ZoomableImage
-  src="/static/images/blog/humechat/playground2.png"
-  alt="Playground interface with persona selection, voice cloning, and Start Call"
-  width={800}
-  height={450}
-/>
-
-Conversations are conducted over WebSocket with sub-second latency, with reactive audio visualizations and a live transcript view accompanying each session.
-
-While Playground offers this unconstrained creative freedom in persona design, the second product, Archetype, applies a far more structured framework to the conversation experience, one grounded in the analytical psychology of Carl Jung.
+With this emotional awareness operating as a shared foundation, let us examine how each of the three products employs it in practice, beginning with Archetype.
 
 ## Archetype
 
 Archetype is the product I am most personally invested in. The premise that drew me to it was the convergence of two capabilities that had not been meaningfully combined before: depth psychology as a conversational framework, and real-time access to the speaker's emotional state. I wanted to explore what a Carl Jung persona could do when it can perceive not only what someone says but how they feel as they say it.
 
 <ZoomableImage
-  src="/static/images/blog/humechat/archetype1.png"
+  src="/static/images/blog/humechat/archetype-landing.png"
   alt="Archetype landing, Jungian Self-Discovery with Assessment and Talk to Carl Jung"
   width={800}
   height={450}
@@ -102,7 +91,7 @@ Archetype is the product I am most personally invested in. The premise that drew
 For those less familiar with Jung's framework, a brief orientation may be useful. Archetypes, in the Jungian sense, are universal psychological patterns, recurring motifs of thought and behavior that shape how individuals engage with the world. The shadow refers to the repressed or unacknowledged aspects of one's personality, while the anima and animus represent the contrasexual inner figures that influence how we relate to others. Individuation is Jung's term for the lifelong process of integrating these elements into a more complete and self-aware whole. Archetype translates these concepts into a structured self-discovery experience: archetype profiling, shadow integration, anima and animus exploration, and a four-stage individuation journey, all conducted through emotionally-aware voice conversation.
 
 <ZoomableImage
-  src="/static/images/blog/humechat/archetype.png"
+  src="/static/images/blog/humechat/archetype-about.png"
   alt="Archetype information page showing four-stage individuation journey and expectations"
   width={800}
   height={450}
@@ -140,7 +129,7 @@ The result is a full archetypal blend with percentage weightings for each archet
 
 Voice sessions with Carl Jung are personalized to the user's archetype profile and current individuation stage. Real-time emotion detection runs throughout, allowing Carl to perceive and adapt to the speaker's emotional state as the conversation unfolds, a dimension of awareness that traditional text-based interactions cannot provide.
 
-After each session, Claude Opus 4 performs a clinical analysis grounded in Jungian methodology. Each assessment is tagged with therapeutic indicators (such as "Therapeutically Substantive," "Shadow Present," and "Integration Movement") and measures affective engagement on a spectrum from intellectual to deep. Sessions are classified as "Emerging" or "Defended" based on the depth and authenticity of engagement observed.
+After each session, Claude Opus 4 performs a clinical analysis grounded in Jungian methodology. Each assessment is tagged with therapeutic indicators (such as "Therapeutically Substantive," "Shadow Present," and "Integration Movement") and measures affective engagement across five clinically-informed levels: intellectual (pure head-level discussion without emotion), defended (actively avoiding feeling through humor or deflection), emerging (beginning to feel, with hints of vulnerability quickly covered), engaged (present with genuine emotion and surprise at self), and deep (full therapeutic presence, tears, silence, profound recognition). These levels draw from assessment standards used by the International Association for Analytical Psychology and the Society of Analytical Psychology, adapted here for voice-based interaction where prosody data provides an additional signal that text alone cannot.
 
 <ZoomableImage
   src="/static/images/blog/humechat/archetype-analysis.png"
@@ -151,22 +140,54 @@ After each session, Claude Opus 4 performs a clinical analysis grounded in Jungi
 
 Progress through the four individuation stages (Persona, Shadow, Anima/Animus, and Self) is quantified through a stage readiness score calculated from the last five sessions. Advancing to the next stage requires reaching 80% readiness, a threshold based on genuine therapeutic work rather than mere participation. The platform operates on a full transparency model, exposing everything to the user: Carl's private clinical notes, affective engagement levels, resistance patterns, and session-by-session insights. The intent is that self-discovery should not be opaque; the process itself should be visible.
 
-While Archetype represents perhaps the most ambitious application of emotionally-aware voice AI in the platform, HumeChat's third product explores a very different context: conversations designed for children.
+While Archetype approaches inner work through the analytical lens of depth psychology, HumeChat's second product takes a fundamentally different path: guided experience rather than guided analysis.
 
-## Wooza
+## Shaman
 
-Wooza is a children's voice companion, currently in development. The motivation behind it was a curiosity about whether emotionally-aware voice AI could serve younger users in an educational context, and whether the same prosody analysis that detects nuance in adult conversation could also sense when a child is confused, frustrated, or losing interest, and adjust accordingly.
+Shaman began with a question about the nature of guided inner work itself. Archetype operates through analysis: it names patterns, tracks progress, and produces clinical assessments. But not all inner work benefits from that analytical frame. Sometimes what a person needs is not interpretation but immersion, not a diagnosis but a space held with intention. I wanted to explore whether emotionally-aware voice AI could facilitate that kind of experiential practice, one rooted in shamanic tradition rather than clinical psychology.
 
 <ZoomableImage
-  src="/static/images/blog/humechat/wooza1.png"
-  alt="Wooza, Meet Buster the friendly AI troll for kids with homework help, storytelling, and reading practice"
+  src="/static/images/blog/humechat/shaman-landing.png"
+  alt="Shaman landing page with guide selection and intention cards"
   width={800}
   height={450}
 />
 
-At its center is Buster, a friendly AI character designed specifically for younger users. Buster can assist with homework across subjects such as mathematics and science, guide children through interactive storytelling adventures, provide feedback during reading practice, and serve as a patient listener for any question a child might have.
+The experience begins with two choices. First, the user selects a guide from five shamanic personas, each embodying a distinct quality of presence: Diego offers grounded earth wisdom and ceremonial guidance; Daniel Plainview brings deep visionary insight and transformative depth; Isabela provides nurturing, heart-centered healing; Kora channels playful cosmic energy and authentic presence; and Luna serves as a mystical guide drawing on tarot and astrology. Second, the user sets an intention for the session by choosing from four sacred intention cards: Healing (restore balance and find peace), Clarity (see through confusion to truth), Growth (transform and evolve), or Release (let go of what no longer serves).
 
-The design philosophy for Wooza prioritizes safety above all else. Unlike Playground, there is no persona customization. The experience is entirely controlled, with responses constrained to child-friendly content and the interface designed to maintain focus on learning and enjoyment. This deliberate limitation reflects a recognition that the flexibility appropriate for adult users requires a fundamentally different set of guardrails when the audience is children.
+<ZoomableImage
+  src="/static/images/blog/humechat/shaman-about.png"
+  alt="Shaman about page showing guided voice journeys with sacred geometry and intention-setting"
+  width={800}
+  height={450}
+/>
+
+With guide and intention selected, the user enters a voice session accompanied by sacred geometry visualizations that respond to the audio in real time. The same 48-emotion prosody analysis that powers the rest of the platform runs throughout, allowing the guide to perceive and respond to the user's emotional state as the journey unfolds. Session context carries the selected intention forward, so the guide's responses remain anchored to the user's purpose. Over time, the dashboard tracks intentions and journeys, surfacing patterns across sessions.
+
+Where Archetype and Shaman serve adult users through different modalities of inner work, HumeChat's third product addresses a fundamentally different audience and purpose.
+
+## Wooza
+
+Wooza is a children's voice companion built around the question of whether emotionally-aware voice AI could serve younger users in an educational context, and whether the same prosody analysis that detects nuance in adult conversation could also sense when a child is confused, frustrated, or losing interest, and adjust accordingly.
+
+<ZoomableImage
+  src="/static/images/blog/humechat/wooza-landing.png"
+  alt="Wooza, Meet Buster the friendly AI troll for kids with homework help, storytelling, reading practice, and voice games"
+  width={800}
+  height={450}
+/>
+
+At its center is Buster, a friendly AI troll designed specifically for younger users. Buster can assist with homework across subjects such as mathematics and science, guide children through interactive storytelling adventures, provide feedback during reading practice, and serve as a patient listener for any question a child might have. The design philosophy for Wooza prioritizes safety above all else. There is no persona customization. The experience is entirely controlled, with responses constrained to child-friendly content and the interface designed to maintain focus on learning and enjoyment.
+
+### Buster's Game Hub
+
+Beyond conversation, Wooza includes a game hub where Buster leads children through voice-powered games that make direct use of the platform's emotion detection capabilities. Two games are currently available:
+
+- **Emotion Charades:** Buster presents a target emotion and the child expresses it through their voice. The same real-time prosody analysis that powers the rest of the platform detects whether the child's vocal expression matches the target, with streak scoring and particle visualizations that celebrate successful matches. The game turns emotion recognition into active practice rather than passive observation.
+
+- **Math Creatures:** Buster presents math puzzles using emoji creatures ("three stars plus two moons"), and the child answers through voice. Difficulty scales across five levels with adjustable operations, and streak tracking encourages sustained engagement. The particle visualizer transforms with each level, giving the math problems a visual dimension that holds attention.
+
+Both games demonstrate a broader point about the platform's architecture: the emotion detection layer is not confined to therapeutic or conversational contexts. The same prosody analysis that measures affective engagement in Archetype sessions can also tell whether a child is genuinely having fun or starting to disengage.
 
 ## Platform Overview
 
@@ -177,14 +198,21 @@ The design philosophy for Wooza prioritizes safety above all else. Unlike Playgr
   height={450}
 />
 
-At the infrastructure level, HumeChat is built around WebSocket-powered real-time voice chat with sub-second latency and continuous 48-emotion prosody analysis during every session. The persona system supports unlimited custom AI companions, each with a selectable language model from over 25 options (including Claude, GPT-4, Llama, Gemini, and Groq), voice selection from 159+ presets or cloned from uploaded samples, and persistent memory that retains context across sessions and learns user preferences over time.
+At the infrastructure level, HumeChat is built around WebSocket-powered real-time voice chat with sub-second latency and continuous 48-emotion prosody analysis during every session. Each product features GPU-accelerated WebGL particle visualizers with over 80 procedural shapes, from sacred geometry to animals, driven by the audio signal with bass, voice, and treble mapped to distinct visual axes. Persistent memory retains context across sessions, allowing guides and companions to build on previous conversations.
 
-On the analytics and self-discovery side, the platform provides a personal dashboard encompassing conversation history, full transcripts, emotion tracking, and audio downloads. For users engaged with Archetype, this extends to Jungian archetype profiling with structured AI clinical analysis, a capability that ties the platform's emotional awareness to a deeper framework for self-understanding.
+<ZoomableImage
+  src="/static/images/blog/humechat/chat-demo.png"
+  alt="HumeChat voice session interface with real-time audio visualizer and emotion detection"
+  width={800}
+  height={450}
+/>
+
+Each of the three products maintains its own dashboard with session history, full transcripts, emotion analytics, and audio recordings. Beyond these shared capabilities, each product contributes its own layer: Archetype extends the dashboard with Jungian profiling, clinical analysis, and individuation tracking; Shaman tracks intentions and journey history across sessions; and Wooza offers voice-powered games that turn emotion detection into interactive play.
 
 ## Conclusion
 
-Building HumeChat has been an exercise in exploring what becomes possible when emotional awareness is treated not as a novelty feature but as a foundational input to voice AI interaction. The platform is, in many respects, still early in its development. Wooza remains a work in progress, and the clinical analysis capabilities within Archetype continue to be refined. But the core premise has proven compelling: that voice AI which can perceive how someone feels, not merely what they say, opens a meaningfully different design space.
+Building HumeChat has been an exercise in exploring what becomes possible when emotional awareness is treated not as a novelty feature but as a foundational input to voice AI interaction. The core premise has proven compelling: that voice AI which can perceive how someone feels, not merely what they say, opens a meaningfully different design space. Each of the three products tests that premise in a distinct context, from clinical depth psychology to experiential shamanic practice to children's education and play.
 
-To what extent can prosody analysis deepen the therapeutic potential of AI-guided self-discovery? Can emotionally-aware voice interfaces genuinely support psychological work, or will they remain constrained to surface-level adaptation? What does it mean for a children's educational companion to sense frustration or disengagement in real time? These are questions I find worth pursuing, and HumeChat is the vehicle through which I am exploring them.
+To what extent can prosody analysis deepen the therapeutic potential of AI-guided self-discovery? What happens when a shamanic guide can perceive the emotional terrain of a journey in real time? Can emotionally-aware voice interfaces genuinely support psychological work, or will they remain constrained to surface-level adaptation? What does it mean for a children's educational companion to sense frustration or disengagement and adjust accordingly? These are questions I find worth pursuing, and HumeChat is the vehicle through which I am exploring them.
 
-For those interested in trying the platform, HumeChat offers a free demo requiring no account, with ten minutes of daily voice AI conversation that includes access to public personas and emotion detection. Full access, encompassing custom persona creation, voice cloning, persistent memory, and the personal dashboard, is currently available on an invite basis and can be requested through the [sign-in page](https://humechat.com/auth/signin).
+For those interested in trying the platform, HumeChat offers a free demo requiring no account, with ten minutes of daily voice AI conversation across all three products, including emotion detection and WebGL visualizers. Full access, encompassing persistent memory, session history, dashboards, and the complete Archetype individuation journey, is currently available on an invite basis and can be requested through the [sign-in page](https://humechat.com/auth/signin).

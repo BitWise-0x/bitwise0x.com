@@ -53,8 +53,12 @@ tsconfig.tsbuildinfo
 # Contentlayer
 .contentlayer
 
+# Cloudflare Worker (deployed separately via wrangler)
+/cloudflare-worker
+
 # Claude
 .claude
 public/static/images/_hero-clipart/academy-lstm.jpeg
 public/static/images/_hero-clipart/academy-visualization.jpeg
 public/static/images/_hero-clipart/ai-for-finance-banner.jpeg
+CLAUDE.md

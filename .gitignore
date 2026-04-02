@@ -58,7 +58,5 @@ tsconfig.tsbuildinfo
 
 # Claude
 .claude
-public/static/images/_hero-clipart/academy-lstm.jpeg
-public/static/images/_hero-clipart/academy-visualization.jpeg
-public/static/images/_hero-clipart/ai-for-finance-banner.jpeg
+public/static/images/_hero-clipart/
 CLAUDE.md

@@ -3,8 +3,8 @@ import headerNavLinks from '@/data/headerNavLinks'
 import Logo from '@/data/logo.svg'
 import Link from './Link'
 import MobileNav from './MobileNav'
-import ThemeSwitch from './ThemeSwitch'
 import SearchButton from './SearchButton'
+import { Github } from './social-icons/icons'
 
 const Header = () => {
   let headerClass = 'flex items-center w-full bg-page justify-between py-10'
@@ -47,7 +47,15 @@ const Header = () => {
         <div className="hidden sm:block">
           <SearchButton />
         </div>
-        <ThemeSwitch />
+        <a
+          href={siteMetadata.github}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="GitHub profile"
+          className="text-heading hover:text-primary-500 dark:hover:text-primary-500 flex items-center"
+        >
+          <Github className="h-6 w-6 fill-current" />
+        </a>
         <MobileNav />
       </div>
     </header>

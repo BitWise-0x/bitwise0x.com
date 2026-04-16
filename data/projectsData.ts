@@ -8,7 +8,7 @@ interface Project {
 const projectsData: Project[] = [
   {
     title: 'HumeChat',
-    description: `Expressive Voice Intelligence platform powered by Hume AI EVI. Real-time
+    description: `Expressive Voice Intelligence platform powered by Hume AI. Real-time
     voice conversations with multi-persona AI, Jungian archetype assessments, emotion
     detection, and 3D audio visualizations.`,
     imgSrc: '/static/images/projects/humechat.svg',

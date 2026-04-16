@@ -89,8 +89,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <link rel="icon" type="image/svg+xml" href={`${basePath}/static/favicons/favicon.svg?v=2`} />
       <link rel="manifest" href={`${basePath}/static/favicons/site.webmanifest?v=2`} />
       <meta name="msapplication-TileColor" content="#000000" />
-      <meta name="theme-color" media="(prefers-color-scheme: light)" content="#fff" />
-      <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#000" />
+      <meta name="theme-color" content="#000" />
       <link rel="alternate" type="application/rss+xml" href={`${basePath}/feed.xml`} />
       <body className="bg-page pl-[calc(100vw-100%)] text-black antialiased dark:text-white">
         <ThemeProviders>

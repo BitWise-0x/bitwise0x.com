@@ -12,11 +12,11 @@
   <rect width="544" height="306" fill="url(#dots5)"/>
 
   <!-- Project name -->
-  <text x="272" y="100" font-family="monospace, 'Courier New', Courier" font-size="32" font-weight="700" fill="url(#grad5)" text-anchor="middle">Homebridge</text>
-  <text x="272" y="136" font-family="monospace, 'Courier New', Courier" font-size="28" font-weight="700" fill="url(#grad5)" text-anchor="middle">Blink Security</text>
+  <text x="272" y="100" font-family="'IBM Plex Mono', 'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace" font-size="32" font-weight="700" fill="url(#grad5)" text-anchor="middle">Homebridge</text>
+  <text x="272" y="136" font-family="'IBM Plex Mono', 'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace" font-size="28" font-weight="700" fill="url(#grad5)" text-anchor="middle">Blink Security</text>
 
   <!-- Description -->
-  <text x="272" y="168" font-family="monospace, 'Courier New', Courier" font-size="13" fill="rgba(255,255,255,0.7)" text-anchor="middle">Blink Cameras · Live View · HomeKit</text>
+  <text x="272" y="168" font-family="'IBM Plex Mono', 'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace" font-size="13" fill="rgba(255,255,255,0.7)" text-anchor="middle">Blink Cameras · Live View · HomeKit</text>
 
   <!-- Camera body -->
   <rect x="224" y="200" width="60" height="42" rx="4" fill="none" stroke="url(#grad5)" stroke-width="1.8" opacity="0.9"/>

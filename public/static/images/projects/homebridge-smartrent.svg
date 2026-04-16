@@ -12,11 +12,11 @@
   <rect width="544" height="306" fill="url(#dots4)"/>
 
   <!-- Project name -->
-  <text x="272" y="110" font-family="monospace, 'Courier New', Courier" font-size="36" font-weight="700" fill="url(#grad4)" text-anchor="middle">Homebridge</text>
-  <text x="272" y="148" font-family="monospace, 'Courier New', Courier" font-size="36" font-weight="700" fill="url(#grad4)" text-anchor="middle">SmartRent</text>
+  <text x="272" y="110" font-family="'IBM Plex Mono', 'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace" font-size="36" font-weight="700" fill="url(#grad4)" text-anchor="middle">Homebridge</text>
+  <text x="272" y="148" font-family="'IBM Plex Mono', 'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace" font-size="36" font-weight="700" fill="url(#grad4)" text-anchor="middle">SmartRent</text>
 
   <!-- Description -->
-  <text x="272" y="182" font-family="monospace, 'Courier New', Courier" font-size="14" fill="rgba(255,255,255,0.7)" text-anchor="middle">HomeKit Integration Plugin</text>
+  <text x="272" y="182" font-family="'IBM Plex Mono', 'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace" font-size="14" fill="rgba(255,255,255,0.7)" text-anchor="middle">HomeKit Integration Plugin</text>
 
   <!-- House icon -->
   <path d="M 230 245 L 272 210 L 314 245 L 314 270 L 230 270 Z" fill="none" stroke="url(#grad4)" stroke-width="1.5" opacity="0.6"/>

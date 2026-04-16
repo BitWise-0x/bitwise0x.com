@@ -18,7 +18,7 @@ const Header = () => {
         <div className="flex items-center justify-between">
           <div className="w-[clamp(15.5rem,24vw,18rem)]">
             <Logo />
-            <span className="text-muted mt-1 block text-left text-sm font-medium sm:text-base md:text-lg">
+            <span className="text-muted mt-1 block text-left font-mono text-xs font-medium tracking-[0.2em] uppercase sm:text-sm md:text-base">
               Intelligent Backends
             </span>
           </div>

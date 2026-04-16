@@ -12,10 +12,10 @@
   <rect width="544" height="306" fill="url(#dots1)"/>
 
   <!-- Project name -->
-  <text x="272" y="120" font-family="monospace, 'Courier New', Courier" font-size="48" font-weight="700" fill="url(#grad1)" text-anchor="middle">humechat</text>
+  <text x="272" y="120" font-family="'IBM Plex Mono', 'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace" font-size="48" font-weight="700" fill="url(#grad1)" text-anchor="middle">humechat</text>
 
   <!-- Description -->
-  <text x="272" y="160" font-family="monospace, 'Courier New', Courier" font-size="16" fill="rgba(255,255,255,0.7)" text-anchor="middle">AI-Powered Conversational Interface</text>
+  <text x="272" y="160" font-family="'IBM Plex Mono', 'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace" font-size="16" fill="rgba(255,255,255,0.7)" text-anchor="middle">AI-Powered Conversational Interface</text>
 
   <!-- Decorative dots -->
   <circle cx="246" cy="210" r="6" fill="url(#grad1)" opacity="0.5"/>

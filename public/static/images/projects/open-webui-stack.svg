@@ -12,11 +12,11 @@
   <rect width="544" height="306" fill="url(#dots3)"/>
 
   <!-- Project name -->
-  <text x="272" y="100" font-family="monospace, 'Courier New', Courier" font-size="32" font-weight="700" fill="url(#grad3)" text-anchor="middle">Open WebUI</text>
-  <text x="272" y="134" font-family="monospace, 'Courier New', Courier" font-size="28" font-weight="700" fill="url(#grad3)" text-anchor="middle">Ultimate Stack</text>
+  <text x="272" y="100" font-family="'IBM Plex Mono', 'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace" font-size="32" font-weight="700" fill="url(#grad3)" text-anchor="middle">Open WebUI</text>
+  <text x="272" y="134" font-family="'IBM Plex Mono', 'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace" font-size="28" font-weight="700" fill="url(#grad3)" text-anchor="middle">Ultimate Stack</text>
 
   <!-- Description -->
-  <text x="272" y="164" font-family="monospace, 'Courier New', Courier" font-size="13" fill="rgba(255,255,255,0.7)" text-anchor="middle">Docker · RAG · MCP · TTS · OCR · Search</text>
+  <text x="272" y="164" font-family="'IBM Plex Mono', 'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace" font-size="13" fill="rgba(255,255,255,0.7)" text-anchor="middle">Docker · RAG · MCP · TTS · OCR · Search</text>
 
   <!-- Neural network: input layer (left), hidden layer (center), output node (right) -->
   <!-- Connections: input → hidden -->

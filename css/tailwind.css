@@ -12,19 +12,18 @@
     'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
 
   /* Colors */
-  /* PRIMARY COLORS - BitWise Brand (Tokyo Night Blue → Purple) */
-  /* Based on GitHub profile: #7aa2f7 (blue) → #bb9af7 (purple) */
-  --color-primary-50: oklch(0.95 0.03 270);
-  --color-primary-100: oklch(0.9 0.06 270);
-  --color-primary-200: oklch(0.83 0.1 265);
-  --color-primary-300: oklch(0.76 0.13 260);
-  --color-primary-400: oklch(0.7 0.12 250); /* #7aa2f7 - Brand blue */
-  --color-primary-500: oklch(0.74 0.14 290); /* #bb9af7 - Brand purple */
-  --color-primary-600: oklch(0.65 0.13 295);
-  --color-primary-700: oklch(0.55 0.11 300);
-  --color-primary-800: oklch(0.45 0.09 300);
-  --color-primary-900: oklch(0.35 0.07 305);
-  --color-primary-950: oklch(0.25 0.05 305);
+  /* PRIMARY COLORS - BitWise Brand (Cyan → Teal, balanced) */
+  --color-primary-50: oklch(0.96 0.025 200);
+  --color-primary-100: oklch(0.92 0.05 200);
+  --color-primary-200: oklch(0.86 0.08 198);
+  --color-primary-300: oklch(0.79 0.1 196);
+  --color-primary-400: oklch(0.74 0.11 194);
+  --color-primary-500: oklch(0.7 0.12 192);
+  --color-primary-600: oklch(0.6 0.1 190);
+  --color-primary-700: oklch(0.5 0.085 188);
+  --color-primary-800: oklch(0.4 0.07 186);
+  --color-primary-900: oklch(0.32 0.055 184);
+  --color-primary-950: oklch(0.22 0.04 182);
 
   --color-gray-50: oklch(0.985 0.002 247.839);
   --color-gray-100: oklch(0.967 0.003 264.542);

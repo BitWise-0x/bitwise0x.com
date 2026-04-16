@@ -32,27 +32,26 @@ const Header = () => {
         </div>
       </Link>
       <div className="flex items-center space-x-4 leading-5 sm:-mr-6 sm:space-x-6">
-        <div className="no-scrollbar hidden max-w-40 items-center gap-x-4 overflow-x-auto sm:flex md:max-w-72 lg:max-w-96">
-          <div className="flex items-center">
-            <a
-              href={siteMetadata.github}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="GitHub profile"
-              className="text-heading hover:text-primary-500 dark:hover:text-primary-500 m-1 flex items-center"
-            >
-              <Github className="h-5 w-5 fill-current" />
-            </a>
-            <span className="text-muted mx-2">|</span>
-          </div>
+        <div className="no-scrollbar hidden max-w-40 items-center overflow-x-auto sm:flex md:max-w-72 lg:max-w-96">
+          <a
+            href={siteMetadata.github}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="GitHub profile"
+            className="text-heading hover:text-primary-500 dark:hover:text-primary-500 flex items-center"
+          >
+            <Github className="h-5 w-5 fill-current" />
+          </a>
           {headerNavLinks
             .filter((link) => link.href !== '/')
-            .map((link, index, array) => (
+            .map((link) => (
               <div key={link.title} className="flex items-center">
-                <Link href={link.href} className="text-heading m-1 font-medium">
+                <span className="text-muted mx-3" aria-hidden="true">
+                  |
+                </span>
+                <Link href={link.href} className="text-heading font-medium">
                   {link.title}
                 </Link>
-                {index < array.length - 1 && <span className="text-muted mx-2">|</span>}
               </div>
             ))}
         </div>

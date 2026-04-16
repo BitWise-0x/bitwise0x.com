@@ -8,7 +8,7 @@
   </defs>
 
   <!-- BitWise text with gradient - left aligned -->
-  <text x="0" y="54" font-family="'IBM Plex Mono', 'JetBrains Mono', 'SF Mono', 'Menlo', monospace" font-size="38" font-weight="600" letter-spacing="-0.5" fill="url(#bitwise-gradient)">BitWise</text>
+  <text x="0" y="54" font-family="'IBM Plex Mono', 'JetBrains Mono', 'SF Mono', 'Menlo', monospace" font-size="38" font-weight="700" letter-spacing="-0.5" fill="url(#bitwise-gradient)">BitWise</text>
 
   <!-- Three binary dots after text - wave animation every ~10 seconds -->
   <circle cx="173" cy="43" r="6" fill="url(#bitwise-gradient)" opacity="0.5">

@@ -38,9 +38,10 @@ const Header = () => {
             target="_blank"
             rel="noopener noreferrer"
             aria-label="GitHub profile"
-            className="text-heading hover:text-primary-500 dark:hover:text-primary-500 flex items-center"
+            className="bg-primary-500 hover:bg-primary-600 dark:hover:bg-primary-600 flex items-center gap-1.5 rounded-full px-2.5 py-1 text-sm font-medium text-gray-900 transition-colors"
           >
-            <Github className="h-5 w-5 fill-current" />
+            <Github className="h-4 w-4 fill-current" />
+            <span>Git</span>
           </a>
           {headerNavLinks
             .filter((link) => link.href !== '/')

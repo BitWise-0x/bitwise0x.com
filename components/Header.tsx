@@ -16,7 +16,7 @@ const Header = () => {
     <header className={headerClass}>
       <Link href="/" aria-label={siteMetadata.headerTitle}>
         <div className="flex items-center justify-between">
-          <div className="mr-3 w-[clamp(11rem,38vw,28rem)]">
+          <div className="mr-3 w-[clamp(13.5rem,24vw,18rem)]">
             <Logo />
             <span className="text-muted mt-1 block text-left text-sm font-medium sm:text-base md:text-lg">
               Intelligent Backends

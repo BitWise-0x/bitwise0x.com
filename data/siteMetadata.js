@@ -55,8 +55,8 @@ const siteMetadata = {
       mapping: 'pathname', // supported options: pathname, url, title
       reactions: '1', // Emoji reactions: 1 = enable / 0 = disable
       metadata: '0',
-      theme: 'preferred_color_scheme',
-      darkTheme: 'preferred_color_scheme',
+      theme: 'dark',
+      darkTheme: 'dark',
       themeURL: '',
       lang: 'en',
     },

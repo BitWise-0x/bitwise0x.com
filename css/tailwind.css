@@ -10,20 +10,21 @@
   --font-sans:
     var(--font-space-grotesk), ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji',
     'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  --font-mono: var(--font-plex-mono), 'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace;
 
   /* Colors */
-  /* PRIMARY COLORS - BitWise Brand (Cyan → Teal, balanced) */
-  --color-primary-50: oklch(0.96 0.025 200);
-  --color-primary-100: oklch(0.92 0.05 200);
-  --color-primary-200: oklch(0.86 0.08 198);
-  --color-primary-300: oklch(0.79 0.1 196);
-  --color-primary-400: oklch(0.74 0.11 194);
-  --color-primary-500: oklch(0.7 0.12 192);
-  --color-primary-600: oklch(0.6 0.1 190);
-  --color-primary-700: oklch(0.5 0.085 188);
-  --color-primary-800: oklch(0.4 0.07 186);
-  --color-primary-900: oklch(0.32 0.055 184);
-  --color-primary-950: oklch(0.22 0.04 182);
+  /* PRIMARY COLORS - BitWise Brand (Ocean blue — cool, blue-leaning) */
+  --color-primary-50: oklch(0.96 0.025 228);
+  --color-primary-100: oklch(0.92 0.05 228);
+  --color-primary-200: oklch(0.86 0.09 226);
+  --color-primary-300: oklch(0.79 0.12 224);
+  --color-primary-400: oklch(0.72 0.14 222); /* ~#4ab3e8 - Brand light (ocean blue) */
+  --color-primary-500: oklch(0.66 0.15 220); /* ~#1c9ad6 - Brand accent (ocean blue) */
+  --color-primary-600: oklch(0.56 0.13 218);
+  --color-primary-700: oklch(0.46 0.11 216);
+  --color-primary-800: oklch(0.38 0.09 214);
+  --color-primary-900: oklch(0.3 0.07 212);
+  --color-primary-950: oklch(0.2 0.05 210);
 
   --color-gray-50: oklch(0.985 0.002 247.839);
   --color-gray-100: oklch(0.967 0.003 264.542);
@@ -101,7 +102,7 @@
       font-weight: 600;
     }
     & :where(code):not(pre code) {
-      color: var(--color-indigo-500);
+      color: var(--color-primary-500);
     }
   }
 

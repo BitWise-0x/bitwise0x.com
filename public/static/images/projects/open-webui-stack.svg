@@ -1,11 +1,11 @@
 <svg width="544" height="306" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <linearGradient id="grad3" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" style="stop-color:#7aa2f7;stop-opacity:1" />
-      <stop offset="100%" style="stop-color:#bb9af7;stop-opacity:1" />
+      <stop offset="0%" style="stop-color:#4ab3e8;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1c9ad6;stop-opacity:1" />
     </linearGradient>
     <pattern id="dots3" x="0" y="0" width="24" height="24" patternUnits="userSpaceOnUse">
-      <circle cx="2" cy="2" r="1.2" fill="#7aa2f7" opacity="0.18"/>
+      <circle cx="2" cy="2" r="1.2" fill="#4ab3e8" opacity="0.18"/>
     </pattern>
   </defs>
   <rect width="544" height="306" fill="#1a1b26"/>

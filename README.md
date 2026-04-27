@@ -15,7 +15,7 @@
 
 <p align="center">
   Public blog covering backend engineering, AI/ML, blockchain, and developer tooling.<br>
-  Live at <a href="https://blog.bitwisesolutions.co">blog.bitwisesolutions.co</a>.
+  Live at <a href="https://blog.bitwise0x.com">blog.bitwise0x.com</a>.
 </p>
 
 ---

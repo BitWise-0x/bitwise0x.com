@@ -37,4 +37,4 @@ yarn build    # Production build
 
 ## Questions?
 
-Open an [issue](https://github.com/BitWise-0x/blog-bitwise/issues) or reach out at [rob@bitwisesolutions.co](mailto:rob@bitwisesolutions.co).
+Open an [issue](https://github.com/BitWise-0x/blog-bitwise/issues) or reach out at [rob@bitwise0x.com](mailto:rob@bitwise0x.com).

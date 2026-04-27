@@ -1,9 +1,9 @@
 {
-  "name": "blog-bitwisesolutions",
+  "name": "blog-bitwise",
   "version": "1.0.0",
   "description": "BitWise — Intelligent Backends",
   "author": "Rob@BitWise",
-  "homepage": "https://blog.bitwisesolutions.co",
+  "homepage": "https://blog.bitwise0x.com",
   "repository": {
     "type": "git",
     "url": "https://github.com/BitWise-0x/blog-bitwise.git"

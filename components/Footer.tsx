@@ -11,9 +11,7 @@ export default function Footer() {
           <SocialIcon kind="x" href={siteMetadata.x} size={6} />
           <SocialIcon kind="bluesky" href={siteMetadata.bluesky} size={6} />
         </div>
-        <div className="text-muted mb-8 text-sm">
-          {`BitWise Solutions · © ${new Date().getFullYear()}`}
-        </div>
+        <div className="text-muted mb-8 text-sm">{`BitWise · © ${new Date().getFullYear()}`}</div>
       </div>
     </footer>
   )

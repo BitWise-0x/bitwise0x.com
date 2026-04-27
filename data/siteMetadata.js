@@ -7,11 +7,11 @@ const siteMetadata = {
     'Deep dives into backend engineering, distributed systems, and infrastructure — practical insights from real-world projects.',
   language: 'en-US',
   theme: 'dark', // system, dark or light
-  siteUrl: 'https://blog.bitwisesolutions.co',
+  siteUrl: 'https://blog.bitwise0x.com',
   siteRepo: 'https://github.com/BitWise-0x/blog-bitwise',
   siteLogo: `${process.env.BASE_PATH || ''}/static/images/social-banner.svg`,
   socialBanner: `${process.env.BASE_PATH || ''}/static/images/social-banner.png`,
-  email: 'rob@bitwisesolutions.co',
+  email: 'rob@bitwise0x.com',
   github: 'https://github.com/BitWise-0x',
   x: 'https://x.com/BitWise_0x',
   bluesky: 'https://bsky.app/profile/bitwise-0x.bsky.social',

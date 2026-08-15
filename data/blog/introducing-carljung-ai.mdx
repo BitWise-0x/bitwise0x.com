@@ -1,0 +1,89 @@
+---
+title: 'carljung.ai: Voice Reflection with a Jungian Persona'
+date: '2026-08-15'
+lastmod: '2026-08-15'
+tags: ['ai', 'projects', 'voice-ai', 'hume', 'emotion-detection', 'psychology', 'jungian']
+draft: false
+summary: 'How I built carljung.ai, a voice reflection platform that pairs a Carl Jung persona with real-time emotion detection across 48 categories, structured around Jungian archetype assessment and the four stages of individuation.'
+images: ['/static/images/blog/carljung/hero.png']
+authors: ['default']
+canonicalUrl: 'https://bitwise0x.com/blog/introducing-carljung-ai'
+---
+
+Most self-reflection tools built on top of language models are text boxes with a system prompt attached. You type, the model responds, and whatever emotional weight sat behind your words is lost the moment they became characters on a screen. I wanted to know what changes when the input is voice, and when the system underneath can actually perceive how something was said, not just what was said. That question is the reason [carljung.ai](https://carljung.ai) exists.
+
+<Image
+  src="/static/images/blog/carljung/hero.png"
+  alt="carljung.ai landing page with the headline Speak with Jung, leave with insight"
+  width={800}
+  height={500}
+/>
+
+carljung.ai is a voice reflection platform: an archetype assessment, a persona modeled on Carl Jung's own writing and clinical vocabulary, and a structured path through the four stages of individuation, all conducted by talking rather than typing. This post walks through why I built it, how the pieces fit together, and what I learned pairing depth psychology with real-time emotion detection.
+
+## Why a Jungian Persona
+
+Jung's framework was the natural fit for a voice-first reflection tool, for a reason that has nothing to do with mysticism and everything to do with structure. Archetypes, shadow, individuation: these are not vague gestures at self-improvement, they are a specific, staged model of psychological development that Jung spent a career articulating. That gave me something concrete to build against. A reflection tool without a framework is just a sympathetic chatbot. A reflection tool built on individuation has a beginning, a middle, stages a person can move through, and a way to know whether they are actually moving.
+
+The premise I wanted to test was narrower than "can an AI persona discuss Jungian psychology." Plenty of chatbots can summarize the shadow or explain the anima and animus from training data alone. What interested me was whether real-time emotional perception changes the character of that conversation: whether a persona that can sense hesitation, defensiveness, or genuine engagement as they happen behaves differently from one working off a transcript alone.
+
+<Image
+  src="/static/images/blog/carljung/individuation-stages.png"
+  alt="The Individuation Journey diagram showing four stages: Persona, Shadow, Anima/Animus, and Self"
+  width={800}
+  height={315}
+/>
+
+Individuation, in Jung's model, is the lifelong process of integrating the disparate parts of the psyche into a coherent whole. carljung.ai structures that process into four stages. Persona is the recognition of the social masks a person wears. Shadow is the work of acknowledging and integrating the qualities a person rejects in themselves. Anima and animus concern the contrasexual inner figures Jung believed shape how people relate to others. Self is the stage of relative wholeness the other three are building toward. None of this is presented as therapy or as a finished psychological system to defer to uncritically. It is a structure borrowed from Jung's own writing, used as scaffolding for a reflection practice.
+
+> [!IMPORTANT]
+> carljung.ai describes itself plainly as a voice journaling tool, not a substitute for licensed mental-health care, therapy, or medical advice. That line matters more than any feature description below it.
+
+## How It Works
+
+The experience opens with an archetype assessment: twelve questions, each asking you to pick the answer closest to you and the one furthest, styled after Carol Pearson's Pearson-Marr Archetype Indicator (PMAI). Pearson's framework organizes twelve archetypal patterns into three groups: Ego archetypes (Innocent, Orphan, Hero, Caregiver), Soul archetypes (Explorer, Destroyer, Lover, Creator), and Self archetypes (Ruler, Magician, Sage, Jester). The assessment surfaces a dominant archetype, a secondary and tertiary pattern beneath it, and a shadow archetype: the pattern most actively avoided.
+
+<Image
+  src="/static/images/blog/carljung/assessment.png"
+  alt="Archetype assessment interface showing question 1 of 12 with five answer options"
+  width={800}
+  height={500}
+/>
+
+From there, the dashboard becomes the home base: a profile tab showing the full archetypal blend, a journey tab tracking progress through the four individuation stages, and a history tab holding every past session. The core interaction is a voice session with the Carl Jung persona, informed by your specific archetype profile and wherever you currently sit in the individuation journey. Sessions support dream reflection alongside open conversation, and every session runs on the same real-time prosody analysis throughout: forty-eight emotion categories detected from voice alone, not just from what gets said.
+
+<Image
+  src="/static/images/blog/carljung/feature-grid.png"
+  alt="carljung.ai feature grid showing PMAI-style assessment, 12 archetypes, shadow reflection, anima/animus reflection, voice sessions, and AI reflection notes"
+  width={800}
+  height={577}
+/>
+
+After each session, AI-generated reflection notes summarize what happened: shadow themes that surfaced, an affective engagement read against the emotion data from the session, and a stage readiness score computed from the last five sessions. Advancing to the next individuation stage requires 80% readiness, so progression tracks something closer to demonstrated engagement than mere time spent talking. The whole system runs on a transparency model: nothing is hidden from the user, including Carl's own private session notes.
+
+## What Real-Time Emotion Detection Adds
+
+The prosody analysis under the hood is the same [Hume AI](https://hume.ai) technology I used in earlier voice AI work: forty-eight distinct emotions detected from tone, pitch, rhythm, and pauses, running continuously through a session rather than producing a single score at the end. What differs here is what the emotion data feeds into. In a generic chat interface, detecting that someone sounds defensive is a curiosity. In a structured individuation practice, it is a signal that belongs in the reflection notes, in the readiness score, and in how the persona responds in the moment.
+
+That distinction is the actual bet behind the project. A shadow theme raised with genuine discomfort in the voice is a different event than the same words said flatly, and a system that only reads the transcript cannot tell the difference. Whether that distinction meaningfully deepens a self-reflection practice, or whether it mostly adds an interesting metric without changing the substance of the work, is an open question I am still testing against real use.
+
+## Plans and Access
+
+carljung.ai ships as a straightforward tiered offering rather than an invite list. A free tier gives five minutes a month with sessions up to fifteen minutes, enough to run the assessment and try a short conversation. Insight, at \$15 a month, extends that to ninety minutes with thirty-minute sessions and transcript exports. Deep Work, at \$35 a month, goes to 240 minutes with forty-five minute sessions and the full reflection notes: shadow themes, resistance patterns, readiness signals, and Carl's private session notes all included.
+
+<Image
+  src="/static/images/blog/carljung/pricing.png"
+  alt="carljung.ai pricing page showing Free, Insight, and Deep Work plans with monthly and annual billing"
+  width={800}
+  height={500}
+/>
+
+The platform is available in English and Spanish, and every tier can be billed monthly or annually, with two months free on the annual option. There is no gate beyond the plan you choose: the assessment is public, and a free account is enough to see whether the format is worth sitting with.
+
+## Where This Goes
+
+Building carljung.ai has been an exercise in taking a psychological framework seriously enough to structure a product around it, rather than borrowing its vocabulary for flavor. The individuation stages, the readiness scoring, the shadow and anima and animus reflections: all of it is an attempt to give voice-based self-reflection an actual shape instead of leaving it as an open-ended chat window with a persona pasted on top.
+
+Does real-time emotional perception change what a person gets out of talking through their shadow, compared to typing it? Does a staged framework like individuation make voice reflection more useful than an unstructured conversation, or does the structure eventually feel like a cage? I do not have settled answers yet. Those are the questions carljung.ai is built to keep testing, one session at a time.
+
+For anyone curious to see where their own archetype profile lands, the [assessment](https://carljung.ai/assessment) is open and free to start.

@@ -1,0 +1,26 @@
+<svg width="544" height="306" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="grad4" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#4ab3e8;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1c9ad6;stop-opacity:1" />
+    </linearGradient>
+    <pattern id="dots4" x="0" y="0" width="24" height="24" patternUnits="userSpaceOnUse">
+      <circle cx="2" cy="2" r="1.2" fill="#4ab3e8" opacity="0.18"/>
+    </pattern>
+  </defs>
+  <rect width="544" height="306" fill="#1a1b26"/>
+  <rect width="544" height="306" fill="url(#dots4)"/>
+
+  <!-- Project name -->
+  <text x="272" y="120" font-family="'IBM Plex Mono', 'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace" font-size="40" font-weight="700" fill="url(#grad4)" text-anchor="middle">carljung.ai</text>
+
+  <!-- Description -->
+  <text x="272" y="152" font-family="'IBM Plex Mono', 'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace" font-size="15" fill="rgba(255,255,255,0.7)" text-anchor="middle">Jungian Voice Reflection</text>
+
+  <!-- Four-stage individuation ring: Persona, Shadow, Anima/Animus, Self -->
+  <circle cx="272" cy="220" r="7" fill="none" stroke="url(#grad4)" stroke-width="1.5" opacity="0.85"/>
+  <circle cx="230" cy="220" r="7" fill="none" stroke="url(#grad4)" stroke-width="1.5" opacity="0.6"/>
+  <circle cx="314" cy="220" r="7" fill="none" stroke="url(#grad4)" stroke-width="1.5" opacity="0.6"/>
+  <circle cx="272" cy="182" r="7" fill="none" stroke="url(#grad4)" stroke-width="1.5" opacity="0.4"/>
+  <circle cx="272" cy="220" r="24" fill="none" stroke="url(#grad4)" stroke-width="1" opacity="0.3" stroke-dasharray="3 4"/>
+</svg>

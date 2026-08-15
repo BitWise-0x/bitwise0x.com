@@ -7,12 +7,12 @@ interface Project {
 
 const projectsData: Project[] = [
   {
-    title: 'HumeChat',
-    description: `Expressive Voice Intelligence platform powered by Hume AI. Real-time
-    voice conversations with multi-persona AI, Jungian archetype assessments, emotion
-    detection, and 3D audio visualizations.`,
-    imgSrc: '/static/images/projects/humechat.svg',
-    href: 'https://humechat.com',
+    title: 'carljung.ai',
+    description: `Voice reflection sessions with a Carl Jung persona, powered by Hume AI.
+    PMAI-style archetype assessment, real-time emotion detection across 48 categories,
+    and a four-stage individuation journey with AI-generated reflection notes.`,
+    imgSrc: '/static/images/projects/carljung.svg',
+    href: 'https://carljung.ai',
   },
   {
     title: 'MongoDB Replica Set Manager',

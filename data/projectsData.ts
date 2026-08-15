@@ -30,7 +30,7 @@ const projectsData: Project[] = [
     description: `Homebridge plugin enabling full HomeKit integration for SmartRent
     smart home installations. Control locks, thermostats, and switches natively
     through Apple Home.`,
-    imgSrc: '/static/images/blog/homebridge-smartrent-blink/homebridge-banner.png',
+    imgSrc: '/static/images/blog/homebridge-smartrent-blink/smartrent-devices.png',
     href: 'https://github.com/BitWise-0x/homebridge-smartrent',
     learnMoreHref: '/blog/homebridge-smartrent-blink',
   },

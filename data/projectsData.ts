@@ -7,10 +7,10 @@ interface Project {
 
 const projectsData: Project[] = [
   {
-    title: 'carljung.ai',
-    description: `Voice reflection sessions with a Carl Jung persona, powered by Hume AI.
-    PMAI-style archetype assessment, real-time emotion detection across 48 categories,
-    and a four-stage individuation journey with AI-generated reflection notes.`,
+    title: 'CarlJung.ai',
+    description: `Voice reflection sessions with a Carl Jung persona, built on an empathic
+    voice AI interface. PMAI-style archetype assessment, real-time emotion detection across
+    48 categories, and a four-stage individuation journey with AI-generated reflection notes.`,
     imgSrc: '/static/images/projects/carljung.svg',
     href: 'https://carljung.ai',
   },

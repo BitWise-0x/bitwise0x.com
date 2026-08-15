@@ -15,6 +15,17 @@ const Card = ({ title, description, imgSrc, href, learnMoreHref }: CardProps) =>
   return (
     <div className="md max-w-[544px] p-4 md:w-1/2">
       <div className={`${imgSrc && 'h-full'} border-theme overflow-hidden rounded-md border-2`}>
+        <div className="p-6 pb-4">
+          <h2 className="text-2xl leading-8 font-bold tracking-tight">
+            {href ? (
+              <Link href={href} aria-label={`Link to ${title}`}>
+                {title}
+              </Link>
+            ) : (
+              title
+            )}
+          </h2>
+        </div>
         {imgSrc &&
           (href ? (
             <Link href={href} aria-label={`Link to ${title}`}>
@@ -36,16 +47,7 @@ const Card = ({ title, description, imgSrc, href, learnMoreHref }: CardProps) =>
               height={306}
             />
           ))}
-        <div className="p-6">
-          <h2 className="mb-3 text-2xl leading-8 font-bold tracking-tight">
-            {href ? (
-              <Link href={href} aria-label={`Link to ${title}`}>
-                {title}
-              </Link>
-            ) : (
-              title
-            )}
-          </h2>
+        <div className="p-6 pt-4">
           <p className="prose prose-summary mb-3 max-w-none">{description}</p>
           {learnMore && (
             <Link

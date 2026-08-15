@@ -36,7 +36,7 @@ export default function Mermaid({ chart }: { chart: string }) {
       const DOMPurify = (await import('dompurify')).default
       setSvg(
         DOMPurify.sanitize(svg, {
-          USE_PROFILES: { svg: true, svgFilters: true },
+          USE_PROFILES: { svg: true, svgFilters: true, html: true },
           ADD_TAGS: ['foreignObject'],
         })
       )

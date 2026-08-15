@@ -5101,9 +5101,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"blog-bitwise@workspace:.":
+"bitwise0x@workspace:.":
   version: 0.0.0-use.local
-  resolution: "blog-bitwise@workspace:."
+  resolution: "bitwise0x@workspace:."
   dependencies:
     "@eslint/eslintrc": ^3.2.0
     "@eslint/js": ^9.18.0

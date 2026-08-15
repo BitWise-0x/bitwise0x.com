@@ -1,6 +1,6 @@
 # Contributing
 
-Thanks for your interest in contributing to the BitWise blog.
+Thanks for your interest in contributing to the BitWise site.
 
 ## What We Accept
 

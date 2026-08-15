@@ -21,6 +21,8 @@ Jung spent his career arguing that the psyche does not reveal itself in declarat
 
 ## A Persona Built on Structure, Not Mysticism
 
+---
+
 Depth psychology gives a voice-based reflection tool something most AI personas lack: an actual shape. Archetypes, shadow, anima and animus, self, these are not mood-board language for self-improvement. They are a staged model of psychological development that Jung spent decades refining against his own clinical practice, and staged models can be built into software in a way that vague encouragement cannot. A chatbot with no framework has nowhere to go after the first exchange. A tool built on individuation has a beginning, a direction, and a way to know whether a person is actually moving through it or circling the same defended ground.
 
 <Mermaid chart={`
@@ -80,13 +82,24 @@ Individuation, in Jung's account, is the lifelong integration of the parts of th
 
 ## What the Sessions Actually Look Like
 
-The path in starts with an archetype assessment: twelve forced-choice questions, styled after Carol Pearson's Pearson-Marr Archetype Indicator, that ask not just which answer feels closest but which feels furthest away. Pearson's twelve archetypes fall into three families: Ego archetypes (Innocent, Orphan, Hero, Caregiver), Soul archetypes (Explorer, Destroyer, Lover, Creator), and Self archetypes (Ruler, Magician, Sage, Jester). What comes out the other side is a dominant archetype, a secondary and tertiary pattern beneath it, and a shadow archetype: whichever pattern the person most consistently pushed away.
+---
+
+The path in starts with an archetype assessment: twelve forced-choice questions, styled after Carol Pearson's Pearson-Marr Archetype Indicator, that ask not just which answer feels closest but which feels furthest away. "When facing a major life decision, what matters most to you?" is the first one, with five options spanning protection, self-expression, understanding, impact, and mastery. Pearson's twelve archetypes fall into three families: Ego archetypes (Innocent, Orphan, Hero, Caregiver), Soul archetypes (Explorer, Destroyer, Lover, Creator), and Self archetypes (Ruler, Magician, Sage, Jester). What comes out the other side is a dominant archetype, a secondary and tertiary pattern beneath it, and a shadow archetype: whichever pattern the person most consistently pushed away.
 
 <ZoomableImage
   src="/static/images/blog/carljung/assessment.png"
   alt="CarlJung.ai archetype assessment showing question 1 of 12 with five paired-choice answer options"
   width={800}
   height={500}
+/>
+
+A finished assessment reads as a blend, not a label. One example profile comes back dominant Sage (43%, "to find the truth," talent in wisdom and intelligence, the stated challenge is that Sage "can study issues forever and never act"), secondary Creator (29%), and tertiary Hero (29%, close enough to Creator that the two are functionally tied for second). The same profile shows its rejected energies: Caregiver marked furthest-from-me three times out of five, Innocent twice. That rejection count is what the assessment reads as shadow material, the archetype a person is least willing to see in themselves.
+
+<ZoomableImage
+  src="/static/images/blog/carljung/profile.png"
+  alt="CarlJung.ai profile dashboard showing archetype blend, secondary and tertiary archetypes, and rejected energies"
+  width={800}
+  height={1067}
 />
 
 From that profile, [CarlJung.ai](https://carljung.ai) opens into voice: a live conversation with a Carl Jung persona that already knows the archetype blend it is speaking with, rendered on screen as an audio-reactive field of particles that shifts with the register of the exchange rather than sitting static while words scroll past.
@@ -102,7 +115,9 @@ Underneath the visual, the same prosody engine that reads forty-eight emotion ca
 
 ## Where the Voice Data Goes
 
-The interesting part of the architecture is not the emotion detection itself, the empathic voice AI interface underneath is genuinely capable technology on its own, it is what the detection is allowed to touch. After a session runs long enough to matter, reflection notes are generated from the transcript and the emotion trace together: an engagement-level read, the themes that surfaced, and, where relevant, an account of whether and how the shadow material actually appeared rather than staying safely theoretical.
+---
+
+The interesting part of the architecture is not the emotion detection itself. It is what the detection is allowed to touch. After a session runs long enough to matter, reflection notes are generated from the transcript and the emotion trace together, tagged by theme (General Discussion, Projection Awareness, Integration Movement) and stamped with a defended-or-not read on the session as a whole.
 
 <ZoomableImage
   src="/static/images/blog/carljung/analysis.png"
@@ -111,21 +126,22 @@ The interesting part of the architecture is not the emotion detection itself, th
   height={670}
 />
 
-Those notes are not decorative. They feed a stage-readiness score built from a person's last five sessions, and reaching 80% is what moves someone from one stage of individuation to the next. Progress, in other words, tracks demonstrated engagement rather than elapsed time or a self-report at the end. And the system holds nothing back from the person it is about: every private note the persona writes about a session is visible to the user who lived it. Self-discovery conducted through a black box would defeat its own purpose.
+The Sage-dominant profile above surfaces exactly this kind of note. A session marked "Defended" reads: engagement actively avoiding deeper emotional content, a retreat into a builder persona after prior vulnerable work, control of the frame through a dual role of builder and patient. The "How the Shadow Appeared" note is more specific still: the Caregiver shadow (the one this person rejected three times in the assessment) did not surface as movement toward compassion or being cared for. Offered a moment of being noticed, the person refused it flatly. The resistance note ties that refusal to the prosody trace directly: 74% embarrassment, 21% awkwardness, and 21% shame recorded on the exact line where the person claimed to feel nothing. The words said one thing. The voice, read in parallel, said another. That gap is the note.
 
-<ZoomableImage
-  src="/static/images/blog/carljung/profile.png"
-  alt="CarlJung.ai profile dashboard showing archetype blend, secondary and tertiary archetypes, and rejected energies"
-  width={800}
-  height={1067}
-/>
+Those notes are not decorative. They feed a stage-readiness score built from a person's last five sessions, and reaching 80% is what moves someone from one stage of individuation to the next. Progress, in other words, tracks demonstrated engagement rather than elapsed time or a self-report at the end. And the system holds nothing back from the person it is about: every private note the persona writes about a session, resistance patterns and shadow appearances included, is visible to the user who lived it. Self-discovery conducted through a black box would defeat its own purpose.
 
 This is the actual bet the project is built on: that a shadow theme raised with genuine discomfort audible in the voice is a materially different event than the same words delivered flat, and that a system reading only the transcript cannot tell those two moments apart. Whether that distinction deepens a self-reflection practice, or merely decorates it with a more interesting metric, is a question no amount of architecture answers by itself. It only gets answered by what happens across real sessions, over real time.
 
 ## Access
 
+---
+
 [CarlJung.ai](https://carljung.ai) is built as a tiered product rather than a closed list. A free tier offers five minutes a month, enough to complete the assessment and sit with the persona briefly. Insight, at \$15 a month, extends that to ninety minutes with transcript export. Deep Work, at \$35 a month, goes to 240 minutes with the full reflection layer: shadow themes, resistance patterns, readiness signals, and the persona's private session notes, all visible. The platform runs in English and Spanish, and the [assessment](https://carljung.ai/assessment) itself is open to try without an account.
 
 ## The Question That Remains Open
 
+---
+
 Jung wrote that the meeting of two personalities is like the contact of two chemical substances: if there is any reaction, both are transformed. That was written about the analytic relationship between two people in a room, and there is no pretending a voice persona reproduces it. What [CarlJung.ai](https://carljung.ai) is actually testing is narrower and more honest: whether a structured framework, carried by a voice that can hear what is happening underneath the words, gives self-reflection more traction than a blank page or an unstructured chat ever could. The four stages provide the map. The prosody data provides a second source of truth alongside whatever gets said. What a person does with either is still, as it always was, entirely their own work.
+
+Try the [assessment](https://carljung.ai/assessment) or read more at [carljung.ai](https://carljung.ai).

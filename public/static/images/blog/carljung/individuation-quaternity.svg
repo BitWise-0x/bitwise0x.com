@@ -1,52 +1,102 @@
-<svg width="800" height="800" viewBox="0 0 800 800" xmlns="http://www.w3.org/2000/svg">
+<svg width="900" height="620" viewBox="0 0 900 620" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Flow diagram of the CarlJung.ai session pipeline: an archetype assessment produces an archetype profile, which informs a voice session running alongside a prosody engine reading emotion from tone; the session generates reflection notes that feed a stage-readiness score, and reaching eighty percent advances the person through the four stages of individuation, Persona, Shadow, Anima or Animus, and Self, looping back into more sessions.">
   <defs>
-    <radialGradient id="bgGlow" cx="50%" cy="50%" r="65%">
+    <radialGradient id="bgGlow2" cx="50%" cy="50%" r="75%">
       <stop offset="0%" style="stop-color:#1c2733;stop-opacity:1" />
       <stop offset="100%" style="stop-color:#0d1117;stop-opacity:1" />
     </radialGradient>
-    <linearGradient id="ringGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+    <linearGradient id="ringGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" style="stop-color:#4ab3e8;stop-opacity:0.9" />
       <stop offset="100%" style="stop-color:#7fd9c4;stop-opacity:0.9" />
     </linearGradient>
+    <marker id="arrow2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#9fd7c7" opacity="0.85" />
+    </marker>
   </defs>
 
-  <rect width="800" height="800" fill="url(#bgGlow)" />
+  <rect width="900" height="620" fill="url(#bgGlow2)" />
 
-  <!-- outer quaternity circle -->
-  <circle cx="400" cy="400" r="280" fill="none" stroke="url(#ringGrad)" stroke-width="1.5" opacity="0.55" />
-  <circle cx="400" cy="400" r="240" fill="none" stroke="url(#ringGrad)" stroke-width="1" opacity="0.3" stroke-dasharray="2 6" />
+  <!-- stage 1: assessment -->
+  <rect x="32" y="70" width="150" height="86" rx="10" fill="#131a22" stroke="url(#ringGrad2)" stroke-width="1.5" />
+  <text x="107" y="106" font-family="Georgia, 'Times New Roman', serif" font-size="17" font-weight="600" fill="#e7ede8" text-anchor="middle">Assessment</text>
+  <text x="107" y="127" font-family="Georgia, 'Times New Roman', serif" font-size="12" fill="#9fb0a8" text-anchor="middle" font-style="italic">12 forced-choice</text>
+  <text x="107" y="143" font-family="Georgia, 'Times New Roman', serif" font-size="12" fill="#9fb0a8" text-anchor="middle" font-style="italic">questions</text>
 
-  <!-- cross axes connecting the four stages -->
-  <line x1="400" y1="120" x2="400" y2="680" stroke="url(#ringGrad)" stroke-width="1" opacity="0.35" />
-  <line x1="120" y1="400" x2="680" y2="400" stroke="url(#ringGrad)" stroke-width="1" opacity="0.35" />
+  <line x1="182" y1="113" x2="222" y2="113" stroke="#9fd7c7" stroke-width="1.5" opacity="0.85" marker-end="url(#arrow2)" />
 
-  <!-- center: Self -->
-  <circle cx="400" cy="400" r="54" fill="#0d1117" stroke="url(#ringGrad)" stroke-width="2" />
-  <circle cx="400" cy="400" r="38" fill="none" stroke="url(#ringGrad)" stroke-width="1" opacity="0.6" />
-  <text x="400" y="407" font-family="Georgia, 'Times New Roman', serif" font-size="22" font-weight="600" fill="#e7ede8" text-anchor="middle">Self</text>
+  <!-- stage 2: archetype profile -->
+  <rect x="224" y="60" width="164" height="106" rx="10" fill="#131a22" stroke="url(#ringGrad2)" stroke-width="1.5" />
+  <text x="306" y="92" font-family="Georgia, 'Times New Roman', serif" font-size="17" font-weight="600" fill="#e7ede8" text-anchor="middle">Archetype Profile</text>
+  <text x="306" y="113" font-family="Georgia, 'Times New Roman', serif" font-size="12" fill="#9fb0a8" text-anchor="middle" font-style="italic">dominant + secondary</text>
+  <text x="306" y="129" font-family="Georgia, 'Times New Roman', serif" font-size="12" fill="#9fb0a8" text-anchor="middle" font-style="italic">/ tertiary pattern</text>
+  <text x="306" y="148" font-family="Georgia, 'Times New Roman', serif" font-size="12" fill="#9fb0a8" text-anchor="middle" font-style="italic">shadow archetype</text>
 
-  <!-- Persona: top -->
-  <circle cx="400" cy="120" r="46" fill="#131a22" stroke="url(#ringGrad)" stroke-width="1.5" />
-  <path d="M 383 112 q 17 -14 34 0 q 3 14 -17 18 q -20 -4 -17 -18 z" fill="none" stroke="#9fd7c7" stroke-width="1.5" opacity="0.85" />
-  <text x="400" y="178" font-family="Georgia, 'Times New Roman', serif" font-size="20" font-weight="600" fill="#e7ede8" text-anchor="middle">Persona</text>
-  <text x="400" y="200" font-family="Georgia, 'Times New Roman', serif" font-size="13" fill="#9fb0a8" text-anchor="middle" font-style="italic">the social mask</text>
+  <line x1="388" y1="113" x2="428" y2="113" stroke="#9fd7c7" stroke-width="1.5" opacity="0.85" marker-end="url(#arrow2)" />
 
-  <!-- Shadow: right -->
-  <circle cx="680" cy="400" r="46" fill="#131a22" stroke="url(#ringGrad)" stroke-width="1.5" />
-  <circle cx="680" cy="400" r="16" fill="none" stroke="#9fd7c7" stroke-width="1.5" opacity="0.85" />
-  <path d="M 668 400 a 12 12 0 0 0 12 12 a 9 9 0 0 1 -12 -12 z" fill="#9fd7c7" opacity="0.85" />
-  <text x="680" y="466" font-family="Georgia, 'Times New Roman', serif" font-size="20" font-weight="600" fill="#e7ede8" text-anchor="middle">Shadow</text>
-  <text x="680" y="488" font-family="Georgia, 'Times New Roman', serif" font-size="13" fill="#9fb0a8" text-anchor="middle" font-style="italic">the rejected self</text>
+  <!-- stage 3: voice session -->
+  <rect x="430" y="52" width="172" height="122" rx="10" fill="#131a22" stroke="url(#ringGrad2)" stroke-width="1.5" />
+  <text x="516" y="84" font-family="Georgia, 'Times New Roman', serif" font-size="17" font-weight="600" fill="#e7ede8" text-anchor="middle">Voice Session</text>
+  <text x="516" y="105" font-family="Georgia, 'Times New Roman', serif" font-size="12" fill="#9fb0a8" text-anchor="middle" font-style="italic">Jung persona, live</text>
+  <line x1="464" y1="118" x2="568" y2="118" stroke="#9fd7c7" stroke-width="1" opacity="0.3" stroke-dasharray="2 5" />
+  <text x="516" y="140" font-family="Georgia, 'Times New Roman', serif" font-size="12" fill="#9fb0a8" text-anchor="middle" font-style="italic">prosody engine reads</text>
+  <text x="516" y="156" font-family="Georgia, 'Times New Roman', serif" font-size="12" fill="#9fb0a8" text-anchor="middle" font-style="italic">48 emotions, in parallel</text>
 
-  <!-- Anima/Animus: bottom -->
-  <circle cx="400" cy="680" r="46" fill="#131a22" stroke="url(#ringGrad)" stroke-width="1.5" />
-  <path d="M 400 664 a 11 11 0 1 1 -0.01 0 z M 400 675 v 20 M 393 689 h 14" fill="none" stroke="#9fd7c7" stroke-width="1.5" opacity="0.85" />
-  <text x="400" y="746" font-family="Georgia, 'Times New Roman', serif" font-size="20" font-weight="600" fill="#e7ede8" text-anchor="middle">Anima / Animus</text>
-  <text x="400" y="768" font-family="Georgia, 'Times New Roman', serif" font-size="13" fill="#9fb0a8" text-anchor="middle" font-style="italic">the inner other</text>
+  <line x1="602" y1="113" x2="642" y2="113" stroke="#9fd7c7" stroke-width="1.5" opacity="0.85" marker-end="url(#arrow2)" />
 
-  <!-- Persona↔Shadow, Shadow↔Anima, etc small connective ticks along the ring at diagonals -->
-  <circle cx="597" cy="203" r="3" fill="#9fd7c7" opacity="0.5" />
-  <circle cx="597" cy="597" r="3" fill="#9fd7c7" opacity="0.5" />
-  <circle cx="203" cy="597" r="3" fill="#9fd7c7" opacity="0.5" />
-  <circle cx="203" cy="203" r="3" fill="#9fd7c7" opacity="0.5" />
+  <!-- stage 4: reflection notes -->
+  <rect x="644" y="60" width="164" height="106" rx="10" fill="#131a22" stroke="url(#ringGrad2)" stroke-width="1.5" />
+  <text x="726" y="92" font-family="Georgia, 'Times New Roman', serif" font-size="17" font-weight="600" fill="#e7ede8" text-anchor="middle">Reflection Notes</text>
+  <text x="726" y="113" font-family="Georgia, 'Times New Roman', serif" font-size="12" fill="#9fb0a8" text-anchor="middle" font-style="italic">engagement, themes,</text>
+  <text x="726" y="129" font-family="Georgia, 'Times New Roman', serif" font-size="12" fill="#9fb0a8" text-anchor="middle" font-style="italic">shadow appearance</text>
+  <text x="726" y="148" font-family="Georgia, 'Times New Roman', serif" font-size="12" fill="#9fb0a8" text-anchor="middle" font-style="italic">visible to the user</text>
+
+  <!-- drop down to readiness score -->
+  <line x1="726" y1="166" x2="726" y2="216" stroke="#9fd7c7" stroke-width="1.5" opacity="0.85" marker-end="url(#arrow2)" />
+
+  <!-- stage 5: readiness score -->
+  <rect x="620" y="218" width="212" height="86" rx="10" fill="#131a22" stroke="url(#ringGrad2)" stroke-width="1.5" />
+  <text x="726" y="250" font-family="Georgia, 'Times New Roman', serif" font-size="17" font-weight="600" fill="#e7ede8" text-anchor="middle">Stage-Readiness Score</text>
+  <text x="726" y="271" font-family="Georgia, 'Times New Roman', serif" font-size="12" fill="#9fb0a8" text-anchor="middle" font-style="italic">last 5 sessions</text>
+  <text x="726" y="288" font-family="Georgia, 'Times New Roman', serif" font-size="12" fill="#9fb0a8" text-anchor="middle" font-style="italic">80% clears the stage</text>
+
+  <line x1="726" y1="304" x2="726" y2="352" stroke="#9fd7c7" stroke-width="1.5" opacity="0.85" marker-end="url(#arrow2)" />
+  <text x="742" y="328" font-family="Georgia, 'Times New Roman', serif" font-size="12" fill="#9fd7c7" text-anchor="start" font-style="italic">≥80%</text>
+
+  <!-- individuation ring, four stages -->
+  <g>
+    <circle cx="450" cy="470" r="118" fill="none" stroke="url(#ringGrad2)" stroke-width="1" opacity="0.3" stroke-dasharray="2 6" />
+
+    <!-- connecting arc arrows around the ring, trimmed clear of the node circles -->
+    <path d="M 493.4 360.3 A 118 118 0 0 1 559.7 426.6" fill="none" stroke="#9fd7c7" stroke-width="1.5" opacity="0.85" marker-end="url(#arrow2)" />
+    <path d="M 559.7 513.4 A 118 118 0 0 1 493.4 579.7" fill="none" stroke="#9fd7c7" stroke-width="1.5" opacity="0.85" marker-end="url(#arrow2)" />
+    <path d="M 406.6 579.7 A 118 118 0 0 1 340.3 513.4" fill="none" stroke="#9fd7c7" stroke-width="1.5" opacity="0.85" marker-end="url(#arrow2)" />
+    <path d="M 340.3 426.6 A 118 118 0 0 1 406.6 360.3" fill="none" stroke="#9fd7c7" stroke-width="1.5" opacity="0.6" marker-end="url(#arrow2)" stroke-dasharray="1 5" />
+
+    <!-- Persona: top -->
+    <circle cx="450" cy="352" r="38" fill="#131a22" stroke="url(#ringGrad2)" stroke-width="1.5" />
+    <text x="450" y="358" font-family="Georgia, 'Times New Roman', serif" font-size="15" font-weight="600" fill="#e7ede8" text-anchor="middle">Persona</text>
+
+    <!-- Shadow: right -->
+    <circle cx="568" cy="470" r="38" fill="#131a22" stroke="url(#ringGrad2)" stroke-width="1.5" />
+    <text x="568" y="476" font-family="Georgia, 'Times New Roman', serif" font-size="15" font-weight="600" fill="#e7ede8" text-anchor="middle">Shadow</text>
+
+    <!-- Anima/Animus: bottom -->
+    <circle cx="450" cy="588" r="38" fill="#131a22" stroke="url(#ringGrad2)" stroke-width="1.5" />
+    <text x="450" y="592" font-family="Georgia, 'Times New Roman', serif" font-size="13" font-weight="600" fill="#e7ede8" text-anchor="middle">Anima /</text>
+    <text x="450" y="606" font-family="Georgia, 'Times New Roman', serif" font-size="13" font-weight="600" fill="#e7ede8" text-anchor="middle">Animus</text>
+
+    <!-- Left: back to session -->
+    <circle cx="332" cy="470" r="38" fill="#131a22" stroke="url(#ringGrad2)" stroke-width="1.5" />
+    <text x="332" y="466" font-family="Georgia, 'Times New Roman', serif" font-size="13" font-weight="600" fill="#e7ede8" text-anchor="middle">More</text>
+    <text x="332" y="480" font-family="Georgia, 'Times New Roman', serif" font-size="13" font-weight="600" fill="#e7ede8" text-anchor="middle">sessions</text>
+
+    <!-- center: Self -->
+    <circle cx="450" cy="470" r="46" fill="#0d1117" stroke="url(#ringGrad2)" stroke-width="2" />
+    <circle cx="450" cy="470" r="32" fill="none" stroke="url(#ringGrad2)" stroke-width="1" opacity="0.6" />
+    <text x="450" y="477" font-family="Georgia, 'Times New Roman', serif" font-size="19" font-weight="600" fill="#e7ede8" text-anchor="middle">Self</text>
+  </g>
+
+  <!-- feedback line from ring back up to voice session -->
+  <path d="M 294 470 C 180 470, 180 175, 460 174" fill="none" stroke="#9fd7c7" stroke-width="1.5" opacity="0.6" stroke-dasharray="1 5" marker-end="url(#arrow2)" />
+
+  <text x="900" y="0" font-size="1" fill="none">.</text>
 </svg>

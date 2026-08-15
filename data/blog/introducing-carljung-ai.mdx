@@ -23,12 +23,37 @@ Jung spent his career arguing that the psyche does not reveal itself in declarat
 
 Depth psychology gives a voice-based reflection tool something most AI personas lack: an actual shape. Archetypes, shadow, anima and animus, self, these are not mood-board language for self-improvement. They are a staged model of psychological development that Jung spent decades refining against his own clinical practice, and staged models can be built into software in a way that vague encouragement cannot. A chatbot with no framework has nowhere to go after the first exchange. A tool built on individuation has a beginning, a direction, and a way to know whether a person is actually moving through it or circling the same defended ground.
 
-<Image
-  src="/static/images/blog/carljung/individuation-quaternity.svg"
-  alt="Flow diagram of the CarlJung.ai session pipeline: assessment produces an archetype profile, which informs a voice session running alongside a prosody engine, generating reflection notes that feed a stage-readiness score, which at 80% advances the person through Persona, Shadow, Anima/Animus, and Self before looping back into more sessions"
-  width={900}
-  height={620}
-/>
+<Mermaid chart={`
+flowchart TD
+    Q["12-question assessment\nmost-like / least-like, per question"] --> SCORE["net scoring\nmost +1, least -1 per archetype"]
+    SCORE --> PROFILE["Profile\ndominant + secondary + tertiary"]
+    SCORE --> REJECT["Rejection tally\nhow often each archetype was named least-like"]
+    REJECT --> SHADOW["Shadow archetype\nmost-rejected, excluding the dominant"]
+
+    PROFILE --> SESSION
+    SHADOW --> SESSION
+
+    subgraph SESSION["Voice session"]
+        direction LR
+        VOICE["Carl Jung persona\nknows the profile + current stage"]
+        PROSODY["Prosody engine\n48 emotions read in parallel"]
+    end
+
+    SESSION --> NOTES["Reflection notes\nengagement, themes, shadow appearance\nvisible to the user"]
+    NOTES --> READY["Stage-readiness score\nweighted average of last 5 sessions"]
+
+    READY --> GATE{"score >= 80%"}
+    GATE -- "not yet" --> SESSION
+    GATE -- "yes" --> ADVANCE["advance to next stage"]
+
+    subgraph STAGES["Individuation"]
+        direction LR
+        PERSONA(["Persona"]) --> SHADOWSTAGE(["Shadow"]) --> ANIMA(["Anima / Animus"]) --> SELF(["Self"])
+    end
+
+    ADVANCE --> STAGES
+    STAGES -.-> SESSION
+`} />
 
 Individuation, in Jung's account, is the lifelong integration of the parts of the psyche a person has split off from consciousness. [CarlJung.ai](https://carljung.ai) structures that integration into four stages. Persona is the recognition of the social mask, the face assembled for the world's approval. Shadow is the harder work: naming and reclaiming the qualities a person has disowned rather than outgrown. Anima and animus name the contrasexual inner figures Jung believed shape how a person relates to intimacy and to the world beyond the self. Self is the horizon the other three are oriented toward, not a destination so much as a direction of travel. None of it is offered as therapy, and none of it asks to be believed uncritically. It is scaffolding borrowed from Jung's own writing and put to work as the architecture of a reflection practice.
 

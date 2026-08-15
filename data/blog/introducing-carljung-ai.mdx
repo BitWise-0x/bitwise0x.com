@@ -53,6 +53,24 @@ flowchart TD
 
     ADVANCE --> STAGES
     STAGES -.-> SESSION
+
+    style Q fill:#0d1b2a,stroke:#3a86ff,color:#fff
+    style SCORE fill:#0d1b2a,stroke:#3a86ff,color:#fff
+    style PROFILE fill:#14213d,stroke:#565f89,color:#fff
+    style REJECT fill:#b5651d,stroke:#d4a574,color:#fff
+    style SHADOW fill:#b5651d,stroke:#d4a574,color:#fff
+    style SESSION fill:#1b4332,stroke:#40916c,color:#fff
+    style VOICE fill:#2d6a4f,stroke:#40916c,color:#fff
+    style PROSODY fill:#2d6a4f,stroke:#40916c,color:#fff
+    style NOTES fill:#7b2cbf,stroke:#9d4edd,color:#fff
+    style READY fill:#7b2cbf,stroke:#9d4edd,color:#fff
+    style GATE fill:#343a40,stroke:#6c757d,color:#fff
+    style ADVANCE fill:#7b2cbf,stroke:#9d4edd,color:#fff
+    style STAGES fill:#14213d,stroke:#565f89,color:#fff
+    style PERSONA fill:#1a1b26,stroke:#4ab3e8,color:#fff
+    style SHADOWSTAGE fill:#1a1b26,stroke:#4ab3e8,color:#fff
+    style ANIMA fill:#1a1b26,stroke:#4ab3e8,color:#fff
+    style SELF fill:#1a1b26,stroke:#4ab3e8,color:#fff
 `} />
 
 Individuation, in Jung's account, is the lifelong integration of the parts of the psyche a person has split off from consciousness. [CarlJung.ai](https://carljung.ai) structures that integration into four stages. Persona is the recognition of the social mask, the face assembled for the world's approval. Shadow is the harder work: naming and reclaiming the qualities a person has disowned rather than outgrown. Anima and animus name the contrasexual inner figures Jung believed shape how a person relates to intimacy and to the world beyond the self. Self is the horizon the other three are oriented toward, not a destination so much as a direction of travel. None of it is offered as therapy, and none of it asks to be believed uncritically. It is scaffolding borrowed from Jung's own writing and put to work as the architecture of a reflection practice.
@@ -64,7 +82,7 @@ Individuation, in Jung's account, is the lifelong integration of the parts of th
 
 The path in starts with an archetype assessment: twelve forced-choice questions, styled after Carol Pearson's Pearson-Marr Archetype Indicator, that ask not just which answer feels closest but which feels furthest away. Pearson's twelve archetypes fall into three families: Ego archetypes (Innocent, Orphan, Hero, Caregiver), Soul archetypes (Explorer, Destroyer, Lover, Creator), and Self archetypes (Ruler, Magician, Sage, Jester). What comes out the other side is a dominant archetype, a secondary and tertiary pattern beneath it, and a shadow archetype: whichever pattern the person most consistently pushed away.
 
-<Image
+<ZoomableImage
   src="/static/images/blog/carljung/assessment.png"
   alt="CarlJung.ai archetype assessment showing question 1 of 12 with five paired-choice answer options"
   width={800}
@@ -73,7 +91,7 @@ The path in starts with an archetype assessment: twelve forced-choice questions,
 
 From that profile, [CarlJung.ai](https://carljung.ai) opens into voice: a live conversation with a Carl Jung persona that already knows the archetype blend it is speaking with, rendered on screen as an audio-reactive field of particles that shifts with the register of the exchange rather than sitting static while words scroll past.
 
-<Image
+<ZoomableImage
   src="/static/images/blog/carljung/chat-session.png"
   alt="Live CarlJung.ai voice session showing the audio-reactive particle visualizer and session controls"
   width={800}
@@ -86,7 +104,7 @@ Underneath the visual, the same prosody engine that reads forty-eight emotion ca
 
 The interesting part of the architecture is not the emotion detection itself, the empathic voice AI interface underneath is genuinely capable technology on its own, it is what the detection is allowed to touch. After a session runs long enough to matter, reflection notes are generated from the transcript and the emotion trace together: an engagement-level read, the themes that surfaced, and, where relevant, an account of whether and how the shadow material actually appeared rather than staying safely theoretical.
 
-<Image
+<ZoomableImage
   src="/static/images/blog/carljung/analysis.png"
   alt="CarlJung.ai session analysis showing engagement level, themes observed, and shadow appearance notes generated from a voice session"
   width={800}
@@ -95,7 +113,7 @@ The interesting part of the architecture is not the emotion detection itself, th
 
 Those notes are not decorative. They feed a stage-readiness score built from a person's last five sessions, and reaching 80% is what moves someone from one stage of individuation to the next. Progress, in other words, tracks demonstrated engagement rather than elapsed time or a self-report at the end. And the system holds nothing back from the person it is about: every private note the persona writes about a session is visible to the user who lived it. Self-discovery conducted through a black box would defeat its own purpose.
 
-<Image
+<ZoomableImage
   src="/static/images/blog/carljung/profile.png"
   alt="CarlJung.ai profile dashboard showing archetype blend, secondary and tertiary archetypes, and rejected energies"
   width={800}

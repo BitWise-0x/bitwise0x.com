@@ -21,7 +21,7 @@ const Card = ({ title, description, imgSrc, href, learnMoreHref }: CardProps) =>
               <Image
                 alt={title}
                 src={imgSrc}
-                className="object-cover object-center md:h-36 lg:h-48"
+                className="object-cover object-center md:h-44 lg:h-56"
                 width={544}
                 height={306}
                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 544px"
@@ -31,7 +31,7 @@ const Card = ({ title, description, imgSrc, href, learnMoreHref }: CardProps) =>
             <Image
               alt={title}
               src={imgSrc}
-              className="object-cover object-center md:h-36 lg:h-48"
+              className="object-cover object-center md:h-44 lg:h-56"
               width={544}
               height={306}
             />

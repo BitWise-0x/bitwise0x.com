@@ -6,55 +6,60 @@ interface CardProps {
   description: string
   imgSrc?: string
   href?: string
+  learnMoreHref?: string
 }
 
-const Card = ({ title, description, imgSrc, href }: CardProps) => (
-  <div className="md max-w-[544px] p-4 md:w-1/2">
-    <div className={`${imgSrc && 'h-full'} border-theme overflow-hidden rounded-md border-2`}>
-      {imgSrc &&
-        (href ? (
-          <Link href={href} aria-label={`Link to ${title}`}>
+const Card = ({ title, description, imgSrc, href, learnMoreHref }: CardProps) => {
+  const learnMore = learnMoreHref || href
+
+  return (
+    <div className="md max-w-[544px] p-4 md:w-1/2">
+      <div className={`${imgSrc && 'h-full'} border-theme overflow-hidden rounded-md border-2`}>
+        {imgSrc &&
+          (href ? (
+            <Link href={href} aria-label={`Link to ${title}`}>
+              <Image
+                alt={title}
+                src={imgSrc}
+                className="object-cover object-center md:h-36 lg:h-48"
+                width={544}
+                height={306}
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 544px"
+              />
+            </Link>
+          ) : (
             <Image
               alt={title}
               src={imgSrc}
               className="object-cover object-center md:h-36 lg:h-48"
               width={544}
               height={306}
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 544px"
             />
-          </Link>
-        ) : (
-          <Image
-            alt={title}
-            src={imgSrc}
-            className="object-cover object-center md:h-36 lg:h-48"
-            width={544}
-            height={306}
-          />
-        ))}
-      <div className="p-6">
-        <h2 className="mb-3 text-2xl leading-8 font-bold tracking-tight">
-          {href ? (
-            <Link href={href} aria-label={`Link to ${title}`}>
-              {title}
+          ))}
+        <div className="p-6">
+          <h2 className="mb-3 text-2xl leading-8 font-bold tracking-tight">
+            {href ? (
+              <Link href={href} aria-label={`Link to ${title}`}>
+                {title}
+              </Link>
+            ) : (
+              title
+            )}
+          </h2>
+          <p className="prose prose-summary mb-3 max-w-none">{description}</p>
+          {learnMore && (
+            <Link
+              href={learnMore}
+              className="text-link text-base leading-6 font-medium"
+              aria-label={`Learn more about ${title}`}
+            >
+              Learn more &rarr;
             </Link>
-          ) : (
-            title
           )}
-        </h2>
-        <p className="prose prose-summary mb-3 max-w-none">{description}</p>
-        {href && (
-          <Link
-            href={href}
-            className="text-link text-base leading-6 font-medium"
-            aria-label={`Link to ${title}`}
-          >
-            Learn more &rarr;
-          </Link>
-        )}
+        </div>
       </div>
     </div>
-  </div>
-)
+  )
+}
 
 export default Card

@@ -16,6 +16,7 @@ export default function ProjectsList({ title = 'Projects' }: { title?: string })
               description={d.description}
               imgSrc={d.imgSrc}
               href={d.href}
+              learnMoreHref={d.learnMoreHref}
             />
           ))}
         </div>

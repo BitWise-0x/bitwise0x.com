@@ -11,14 +11,14 @@
   <rect width="544" height="306" fill="#1a1b26"/>
   <rect width="544" height="306" fill="url(#dots4)"/>
 
+  <!-- House icon -->
+  <path d="M 250 78 L 272 60 L 294 78 L 294 94 L 250 94 Z" fill="none" stroke="url(#grad4)" stroke-width="1.5" opacity="0.6"/>
+  <rect x="266" y="82" width="10" height="12" fill="url(#grad4)" opacity="0.3" rx="1"/>
+
   <!-- Project name -->
-  <text x="272" y="110" font-family="'IBM Plex Mono', 'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace" font-size="36" font-weight="700" fill="url(#grad4)" text-anchor="middle">Homebridge</text>
-  <text x="272" y="148" font-family="'IBM Plex Mono', 'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace" font-size="36" font-weight="700" fill="url(#grad4)" text-anchor="middle">SmartRent</text>
+  <text x="272" y="146" font-family="'IBM Plex Mono', 'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace" font-size="30" font-weight="700" fill="url(#grad4)" text-anchor="middle">Homebridge</text>
+  <text x="272" y="180" font-family="'IBM Plex Mono', 'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace" font-size="30" font-weight="700" fill="url(#grad4)" text-anchor="middle">SmartRent</text>
 
   <!-- Description -->
-  <text x="272" y="182" font-family="'IBM Plex Mono', 'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace" font-size="14" fill="rgba(255,255,255,0.7)" text-anchor="middle">HomeKit Integration Plugin</text>
-
-  <!-- House icon -->
-  <path d="M 230 245 L 272 210 L 314 245 L 314 270 L 230 270 Z" fill="none" stroke="url(#grad4)" stroke-width="1.5" opacity="0.6"/>
-  <rect x="258" y="252" width="14" height="18" fill="url(#grad4)" opacity="0.3" rx="1"/>
+  <text x="272" y="210" font-family="'IBM Plex Mono', 'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace" font-size="13" fill="rgba(255,255,255,0.7)" text-anchor="middle">HomeKit Integration Plugin</text>
 </svg>

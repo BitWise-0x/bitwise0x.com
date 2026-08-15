@@ -12,11 +12,11 @@
   <rect width="544" height="306" fill="url(#dots2)"/>
 
   <!-- Replica set nodes -->
-  <circle cx="240" cy="112" r="7" fill="none" stroke="url(#grad2)" stroke-width="2" opacity="0.6"/>
-  <circle cx="272" cy="112" r="7" fill="none" stroke="url(#grad2)" stroke-width="2" opacity="0.8"/>
-  <circle cx="304" cy="112" r="7" fill="none" stroke="url(#grad2)" stroke-width="2" opacity="1"/>
-  <line x1="247" y1="112" x2="265" y2="112" stroke="url(#grad2)" stroke-width="1.5" opacity="0.4"/>
-  <line x1="279" y1="112" x2="297" y2="112" stroke="url(#grad2)" stroke-width="1.5" opacity="0.4"/>
+  <circle cx="240" cy="98" r="7" fill="none" stroke="url(#grad2)" stroke-width="2" opacity="0.6"/>
+  <circle cx="272" cy="98" r="7" fill="none" stroke="url(#grad2)" stroke-width="2" opacity="0.8"/>
+  <circle cx="304" cy="98" r="7" fill="none" stroke="url(#grad2)" stroke-width="2" opacity="1"/>
+  <line x1="247" y1="98" x2="265" y2="98" stroke="url(#grad2)" stroke-width="1.5" opacity="0.4"/>
+  <line x1="279" y1="98" x2="297" y2="98" stroke="url(#grad2)" stroke-width="1.5" opacity="0.4"/>
 
   <!-- Project name -->
   <text x="272" y="160" font-family="'IBM Plex Mono', 'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace" font-size="30" font-weight="700" fill="url(#grad2)" text-anchor="middle">MongoDB</text>

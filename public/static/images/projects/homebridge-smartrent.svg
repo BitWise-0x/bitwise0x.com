@@ -12,8 +12,8 @@
   <rect width="544" height="306" fill="url(#dots4)"/>
 
   <!-- House icon -->
-  <path d="M 252 122 L 272 106 L 292 122 L 292 138 L 252 138 Z" fill="none" stroke="url(#grad4)" stroke-width="1.5" opacity="0.6"/>
-  <rect x="266" y="126" width="12" height="12" fill="url(#grad4)" opacity="0.3" rx="1"/>
+  <path d="M 252 108 L 272 92 L 292 108 L 292 124 L 252 124 Z" fill="none" stroke="url(#grad4)" stroke-width="1.5" opacity="0.6"/>
+  <rect x="266" y="112" width="12" height="12" fill="url(#grad4)" opacity="0.3" rx="1"/>
 
   <!-- Project name -->
   <text x="272" y="168" font-family="'IBM Plex Mono', 'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace" font-size="27" font-weight="700" fill="url(#grad4)" text-anchor="middle">Homebridge</text>

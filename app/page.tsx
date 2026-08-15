@@ -14,14 +14,6 @@ export default async function Page() {
       url: siteMetadata.siteUrl,
       sameAs: [siteMetadata.github, siteMetadata.x, siteMetadata.bluesky].filter(Boolean),
     },
-    potentialAction: {
-      '@type': 'SearchAction',
-      target: {
-        '@type': 'EntryPoint',
-        urlTemplate: `${siteMetadata.siteUrl}/blog?q={search_term_string}`,
-      },
-      'query-input': 'required name=search_term_string',
-    },
   }
 
   return (

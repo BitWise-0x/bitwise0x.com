@@ -14,8 +14,8 @@
 </p>
 
 <p align="center">
-  Public blog covering backend engineering, AI/ML, blockchain, and developer tooling.<br>
-  Live at <a href="https://blog.bitwise0x.com">blog.bitwise0x.com</a>.
+  Projects and writing on backend engineering, AI/ML, blockchain, and developer tooling.<br>
+  Live at <a href="https://bitwise0x.com">bitwise0x.com</a>.
 </p>
 
 ---
@@ -28,7 +28,7 @@ yarn install
 yarn dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) to view the blog locally.
+Open [http://localhost:3000](http://localhost:3000) to view the site locally.
 
 <br>
 

@@ -12,7 +12,7 @@ const projectsData: Project[] = [
     description: `Voice reflection sessions with a Carl Jung persona, built on an empathic
     voice AI interface. PMAI-style archetype assessment, real-time emotion detection across
     48 categories, and a four-stage individuation journey with AI-generated reflection notes.`,
-    imgSrc: '/static/images/blog/carljung/jung-portrait.jpg',
+    imgSrc: '/static/images/blog/carljung/jung-banner.jpg',
     href: 'https://carljung.ai',
     learnMoreHref: '/blog/introducing-carljung-ai',
   },

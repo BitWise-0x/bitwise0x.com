@@ -7,7 +7,7 @@ const siteMetadata = {
     'Deep dives into backend engineering, distributed systems, and infrastructure — practical insights from real-world projects.',
   language: 'en-US',
   theme: 'dark', // system, dark or light
-  siteUrl: 'https://blog.bitwise0x.com',
+  siteUrl: 'https://bitwise0x.com',
   siteRepo: 'https://github.com/BitWise-0x/bitwise0x',
   siteLogo: `${process.env.BASE_PATH || ''}/static/images/social-banner.svg`,
   socialBanner: `${process.env.BASE_PATH || ''}/static/images/social-banner.png`,

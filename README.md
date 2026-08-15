@@ -4,12 +4,12 @@
   <img src="https://img.shields.io/badge/Tailwind_CSS-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white" alt="Tailwind CSS"/>
   <br>
   <br>
-  <code><strong>blog-bitwise</strong></code>
+  <code><strong>bitwise0x</strong></code>
 </h1>
 
 <p align="center">
-  <img src="https://img.shields.io/github/license/BitWise-0x/blog-bitwise?style=flat-square&color=blue" alt="License"/>
-  <img src="https://img.shields.io/github/last-commit/BitWise-0x/blog-bitwise?style=flat-square&color=green" alt="Last Commit"/>
+  <img src="https://img.shields.io/github/license/BitWise-0x/bitwise0x?style=flat-square&color=blue" alt="License"/>
+  <img src="https://img.shields.io/github/last-commit/BitWise-0x/bitwise0x?style=flat-square&color=green" alt="Last Commit"/>
   <img src="https://img.shields.io/badge/deployed-GitHub_Pages-181717?style=flat-square&logo=github&logoColor=white" alt="Deployed on GitHub Pages"/>
 </p>
 
@@ -23,7 +23,7 @@
 ## Quick Start
 
 ```bash
-git clone https://github.com/BitWise-0x/blog-bitwise && cd blog-bitwise
+git clone https://github.com/BitWise-0x/bitwise0x && cd bitwise0x
 yarn install
 yarn dev
 ```

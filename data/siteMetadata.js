@@ -8,7 +8,7 @@ const siteMetadata = {
   language: 'en-US',
   theme: 'dark', // system, dark or light
   siteUrl: 'https://blog.bitwise0x.com',
-  siteRepo: 'https://github.com/BitWise-0x/blog-bitwise',
+  siteRepo: 'https://github.com/BitWise-0x/bitwise0x',
   siteLogo: `${process.env.BASE_PATH || ''}/static/images/social-banner.svg`,
   socialBanner: `${process.env.BASE_PATH || ''}/static/images/social-banner.png`,
   email: 'rob@bitwise0x.com',

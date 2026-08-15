@@ -1,11 +1,7 @@
-import { sortPosts, allCoreContent } from 'pliny/utils/contentlayer'
-import { allBlogs } from 'contentlayer/generated'
 import siteMetadata from '@/data/siteMetadata'
-import Main from './Main'
+import ProjectsList from '@/components/ProjectsList'
 
 export default async function Page() {
-  const sortedPosts = sortPosts(allBlogs)
-  const posts = allCoreContent(sortedPosts)
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'WebSite',
@@ -34,7 +30,7 @@ export default async function Page() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, '\\u003c') }}
       />
-      <Main posts={posts} />
+      <ProjectsList title="Projects" />
     </>
   )
 }

@@ -8,7 +8,7 @@ export default function ProjectsList({ title = 'Projects' }: { title?: string })
         <h1 className="page-title">{title}</h1>
       </div>
       <div className="container py-12">
-        <div className="-m-4 flex flex-wrap">
+        <div className="divide-theme -m-4 flex flex-wrap divide-y md:divide-y-0">
           {projectsData.map((d) => (
             <Card
               key={d.title}

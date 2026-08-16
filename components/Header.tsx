@@ -7,7 +7,6 @@ import Logo from '@/data/logo.svg'
 import Link from './Link'
 import MobileNav from './MobileNav'
 import SearchButton from './SearchButton'
-import { Github } from './social-icons/icons'
 
 const Header = () => {
   const pathname = usePathname()
@@ -22,7 +21,7 @@ const Header = () => {
         <div className="flex items-center justify-between">
           <div className="w-[clamp(15.5rem,24vw,18rem)]">
             <Logo />
-            <span className="text-muted mt-1 block text-left font-mono text-[0.5rem] font-medium tracking-[0.2em] uppercase sm:text-[0.625rem] md:text-xs">
+            <span className="text-muted mt-1 block text-left font-mono text-[0.625rem] font-medium tracking-[0.2em] uppercase md:text-xs">
               Intelligent Backends
             </span>
           </div>
@@ -58,15 +57,6 @@ const Header = () => {
                 </div>
               )
             })}
-          <a
-            href={siteMetadata.github}
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="GitHub profile"
-            className="bg-primary-500 hover:bg-primary-600 dark:hover:bg-primary-600 ml-3 flex items-center rounded-full p-1.5 text-gray-900 transition-colors"
-          >
-            <Github className="h-4 w-4 fill-current" />
-          </a>
         </div>
         <div className="hidden sm:block">
           <SearchButton />

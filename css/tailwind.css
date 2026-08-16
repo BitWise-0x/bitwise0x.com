@@ -283,3 +283,11 @@ input:-webkit-autofill:focus {
   display: inline-block;
   vertical-align: middle;
 }
+
+/* keep the alert callout icon, hide the type label text (NOTE/TIP/IMPORTANT/WARNING/CAUTION) */
+.markdown-alert .markdown-alert-title {
+  font-size: 0;
+}
+.markdown-alert .markdown-alert-title svg.octicon {
+  margin-right: 0 !important;
+}

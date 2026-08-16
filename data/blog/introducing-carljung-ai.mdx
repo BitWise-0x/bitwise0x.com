@@ -84,7 +84,7 @@ Individuation, in Jung's account, is the lifelong integration of the parts of th
 
 ---
 
-The path in starts with an archetype assessment: twelve forced-choice questions, styled after Carol Pearson's Pearson-Marr Archetype Indicator, that ask not just which answer feels closest but which feels furthest away. "When facing a major life decision, what matters most to you?" is the first one, with five options spanning protection, self-expression, understanding, impact, and mastery. Pearson's twelve archetypes fall into three families: Ego archetypes (Innocent, Orphan, Hero, Caregiver), Soul archetypes (Explorer, Destroyer, Lover, Creator), and Self archetypes (Ruler, Magician, Sage, Jester). What comes out the other side is a dominant archetype, a secondary and tertiary pattern beneath it, and a shadow archetype: whichever pattern the person most consistently pushed away.
+The path in starts with an archetype assessment: twelve forced-choice questions, styled after Carol Pearson's Pearson-Marr Archetype Indicator, that ask not just which answer feels closest but which feels furthest away. Each question offers five options spanning protection, self-expression, understanding, impact, and mastery. Pearson's twelve archetypes fall into three families: Ego archetypes (Innocent, Orphan, Hero, Caregiver), Soul archetypes (Explorer, Destroyer, Lover, Creator), and Self archetypes (Ruler, Magician, Sage, Jester). What comes out the other side is a dominant archetype, a secondary and tertiary pattern beneath it, and a shadow archetype: whichever pattern the person most consistently pushed away.
 
 <ZoomableImage
   src="/static/images/blog/carljung/assessment.png"
@@ -126,6 +126,29 @@ The interesting part of the architecture is not the emotion detection itself. It
   height={670}
 />
 
+<Mermaid chart={`
+flowchart LR
+    LINE["A single line in session\n'I don't feel anything about that'"]
+
+    LINE --> WORDS["Transcript channel\nwhat was said"]
+    LINE --> TONE["Prosody channel\nhow it was said"]
+
+    WORDS --> CLAIM["Claim: nothing here"]
+    TONE --> READ["embarrassment 74%\nawkwardness 21%\nshame 21%"]
+
+    CLAIM --> GAP{"channels disagree"}
+    READ --> GAP
+    GAP --> NOTE["Reflection note\nresistance recorded, not the words"]
+
+    style LINE fill:#0d1b2a,stroke:#3a86ff,color:#fff
+    style WORDS fill:#14213d,stroke:#565f89,color:#fff
+    style TONE fill:#2d6a4f,stroke:#40916c,color:#fff
+    style CLAIM fill:#14213d,stroke:#565f89,color:#fff
+    style READ fill:#b5651d,stroke:#d4a574,color:#fff
+    style GAP fill:#343a40,stroke:#6c757d,color:#fff
+    style NOTE fill:#7b2cbf,stroke:#9d4edd,color:#fff
+`} />
+
 The Sage-dominant profile above surfaces exactly this kind of note. A session marked "Defended" reads: engagement actively avoiding deeper emotional content, a retreat into a builder persona after prior vulnerable work, control of the frame through a dual role of builder and patient. The "How the Shadow Appeared" note is more specific still: the Caregiver shadow (the one this person rejected three times in the assessment) did not surface as movement toward compassion or being cared for. Offered a moment of being noticed, the person refused it flatly. The resistance note ties that refusal to the prosody trace directly: 74% embarrassment, 21% awkwardness, and 21% shame recorded on the exact line where the person claimed to feel nothing. The words said one thing. The voice, read in parallel, said another. That gap is the note.
 
 Those notes are not decorative. They feed a stage-readiness score built from a person's last five sessions, and reaching 80% is what moves someone from one stage of individuation to the next. Progress, in other words, tracks demonstrated engagement rather than elapsed time or a self-report at the end. And the system holds nothing back from the person it is about: every private note the persona writes about a session, resistance patterns and shadow appearances included, is visible to the user who lived it. Self-discovery conducted through a black box would defeat its own purpose.
@@ -136,7 +159,7 @@ This is the actual bet the project is built on: that a shadow theme raised with 
 
 ---
 
-[CarlJung.ai](https://carljung.ai) is built as a tiered product rather than a closed list. A free tier offers five minutes a month, enough to complete the assessment and sit with the persona briefly. Insight, at \$15 a month, extends that to ninety minutes with transcript export. Deep Work, at \$35 a month, goes to 240 minutes with the full reflection layer: shadow themes, resistance patterns, readiness signals, and the persona's private session notes, all visible. The platform runs in English and Spanish, and the [assessment](https://carljung.ai/assessment) itself is open to try without an account.
+[CarlJung.ai](https://carljung.ai) is built as a tiered product rather than a closed list. A free tier offers five minutes a month, enough to complete the assessment and sit with the persona briefly. Insight, at \$15 a month, extends that to ninety minutes with transcript export. Deep Work, at \$35 a month, goes to 240 minutes with the full reflection layer: shadow themes, resistance patterns, readiness signals, and the persona's private session notes, all visible. The platform runs in English and Spanish, and the assessment itself is open to try without an account.
 
 ## The Question That Remains Open
 
@@ -144,4 +167,4 @@ This is the actual bet the project is built on: that a shadow theme raised with 
 
 Jung wrote that the meeting of two personalities is like the contact of two chemical substances: if there is any reaction, both are transformed. That was written about the analytic relationship between two people in a room, and there is no pretending a voice persona reproduces it. What [CarlJung.ai](https://carljung.ai) is actually testing is narrower and more honest: whether a structured framework, carried by a voice that can hear what is happening underneath the words, gives self-reflection more traction than a blank page or an unstructured chat ever could. The four stages provide the map. The prosody data provides a second source of truth alongside whatever gets said. What a person does with either is still, as it always was, entirely their own work.
 
-Try the [assessment](https://carljung.ai/assessment) or read more at [carljung.ai](https://carljung.ai).
+Try the assessment or read more at [carljung.ai](https://carljung.ai).

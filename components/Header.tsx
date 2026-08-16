@@ -22,7 +22,7 @@ const Header = () => {
         <div className="flex items-center justify-between">
           <div className="w-[clamp(15.5rem,24vw,18rem)]">
             <Logo />
-            <span className="text-muted mt-1 block text-left font-mono text-[0.625rem] font-medium tracking-[0.2em] uppercase sm:text-xs md:text-sm">
+            <span className="text-muted mt-1 block text-left font-mono text-[0.5rem] font-medium tracking-[0.2em] uppercase sm:text-[0.625rem] md:text-xs">
               Intelligent Backends
             </span>
           </div>
@@ -37,25 +37,17 @@ const Header = () => {
       </Link>
       <div className="flex items-center space-x-4 leading-5 sm:-mr-6 sm:space-x-6">
         <div className="no-scrollbar hidden max-w-40 items-center overflow-x-auto sm:flex md:max-w-72 lg:max-w-96">
-          <a
-            href={siteMetadata.github}
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="GitHub profile"
-            className="bg-primary-500 hover:bg-primary-600 dark:hover:bg-primary-600 flex items-center gap-1.5 rounded-full px-2.5 py-1 text-sm font-medium text-gray-900 transition-colors"
-          >
-            <Github className="h-4 w-4 fill-current" />
-            <span>Git</span>
-          </a>
           {headerNavLinks
             .filter((link) => link.href !== '/')
-            .map((link) => {
+            .map((link, index) => {
               const isActive = pathname === link.href || pathname.startsWith(`${link.href}/`)
               return (
                 <div key={link.title} className="flex items-center">
-                  <span className="text-muted mx-3" aria-hidden="true">
-                    |
-                  </span>
+                  {index > 0 && (
+                    <span className="text-muted mx-3" aria-hidden="true">
+                      |
+                    </span>
+                  )}
                   <Link
                     href={link.href}
                     className={`font-medium ${isActive ? 'text-primary-500' : 'text-heading'}`}
@@ -66,6 +58,15 @@ const Header = () => {
                 </div>
               )
             })}
+          <a
+            href={siteMetadata.github}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="GitHub profile"
+            className="bg-primary-500 hover:bg-primary-600 dark:hover:bg-primary-600 ml-3 flex items-center rounded-full p-1.5 text-gray-900 transition-colors"
+          >
+            <Github className="h-4 w-4 fill-current" />
+          </a>
         </div>
         <div className="hidden sm:block">
           <SearchButton />

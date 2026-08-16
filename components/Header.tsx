@@ -27,10 +27,10 @@ const Header = () => {
             </span>
           </div>
           {typeof siteMetadata.headerTitle === 'string' ? (
-            <div className="hidden h-6 text-3xl font-semibold sm:block text-primary-500">
+            <div className="text-primary-500 hidden h-6 text-3xl font-semibold sm:block">
               {(() => {
-                const currentLink = headerNavLinks.find(
-                  (link) => link.href === '/' ? pathname === '/' : pathname.startsWith(link.href)
+                const currentLink = headerNavLinks.find((link) =>
+                  link.href === '/' ? pathname === '/' : pathname.startsWith(link.href)
                 )
                 return currentLink?.title || siteMetadata.headerTitle
               })()}

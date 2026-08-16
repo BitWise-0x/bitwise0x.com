@@ -116,13 +116,13 @@ export default function ListLayoutWithTags({
               </ul>
             </div>
           </div>
-          <div className="pt-12">
+          <div className="pt-4 sm:pt-12">
             <ul className="divide-theme divide-y">
               {displayPosts.map((post) => {
                 const { path, date, title, summary, tags, heroImage } = post
                 const showThumbnail = heroImage && !heroImage.includes('social-banner')
                 return (
-                  <li key={path} className="py-12">
+                  <li key={path} className="py-6 sm:py-12">
                     <article>
                       <div className="mb-3 sm:hidden">
                         <p className="text-muted text-base leading-6 font-medium">

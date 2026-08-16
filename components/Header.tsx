@@ -27,13 +27,8 @@ const Header = () => {
             </span>
           </div>
           {typeof siteMetadata.headerTitle === 'string' ? (
-            <div className="text-primary-500 hidden h-6 text-3xl font-semibold sm:block">
-              {(() => {
-                const currentLink = headerNavLinks.find((link) =>
-                  link.href === '/' ? pathname === '/' : pathname.startsWith(link.href)
-                )
-                return currentLink?.title || siteMetadata.headerTitle
-              })()}
+            <div className="hidden h-6 text-3xl font-semibold sm:block">
+              {siteMetadata.headerTitle}
             </div>
           ) : (
             siteMetadata.headerTitle
@@ -54,16 +49,23 @@ const Header = () => {
           </a>
           {headerNavLinks
             .filter((link) => link.href !== '/')
-            .map((link) => (
-              <div key={link.title} className="flex items-center">
-                <span className="text-muted mx-3" aria-hidden="true">
-                  |
-                </span>
-                <Link href={link.href} className="text-heading font-medium">
-                  {link.title}
-                </Link>
-              </div>
-            ))}
+            .map((link) => {
+              const isActive = pathname === link.href || pathname.startsWith(`${link.href}/`)
+              return (
+                <div key={link.title} className="flex items-center">
+                  <span className="text-muted mx-3" aria-hidden="true">
+                    |
+                  </span>
+                  <Link
+                    href={link.href}
+                    className={`font-medium ${isActive ? 'text-primary-500' : 'text-heading'}`}
+                    aria-current={isActive ? 'page' : undefined}
+                  >
+                    {link.title}
+                  </Link>
+                </div>
+              )
+            })}
         </div>
         <div className="hidden sm:block">
           <SearchButton />

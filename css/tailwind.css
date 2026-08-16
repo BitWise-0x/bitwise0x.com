@@ -217,6 +217,7 @@ a.text-heading:hover {
 .page-title {
   @apply text-3xl leading-9 font-extrabold tracking-tight sm:text-4xl sm:leading-10 md:text-4xl md:leading-12;
   color: var(--color-gray-900);
+  white-space: pre-line;
 }
 :is(.dark, .dark *) .page-title {
   color: var(--color-gray-100);

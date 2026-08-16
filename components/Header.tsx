@@ -1,3 +1,6 @@
+'use client'
+
+import { usePathname } from 'next/navigation'
 import siteMetadata from '@/data/siteMetadata'
 import headerNavLinks from '@/data/headerNavLinks'
 import Logo from '@/data/logo.svg'
@@ -7,6 +10,7 @@ import SearchButton from './SearchButton'
 import { Github } from './social-icons/icons'
 
 const Header = () => {
+  const pathname = usePathname()
   let headerClass = 'flex items-center w-full bg-page justify-between py-10'
   if (siteMetadata.stickyNav) {
     headerClass += ' sticky top-0 z-50'
@@ -18,13 +22,18 @@ const Header = () => {
         <div className="flex items-center justify-between">
           <div className="w-[clamp(15.5rem,24vw,18rem)]">
             <Logo />
-            <span className="text-muted mt-1 block text-left font-mono text-xs font-medium tracking-[0.2em] uppercase sm:text-sm md:text-base">
+            <span className="text-muted mt-1 block text-left font-mono text-[0.625rem] font-medium tracking-[0.2em] uppercase sm:text-xs md:text-sm">
               Intelligent Backends
             </span>
           </div>
           {typeof siteMetadata.headerTitle === 'string' ? (
-            <div className="hidden h-6 text-3xl font-semibold sm:block">
-              {siteMetadata.headerTitle}
+            <div className="hidden h-6 text-3xl font-semibold sm:block text-primary-500">
+              {(() => {
+                const currentLink = headerNavLinks.find(
+                  (link) => link.href === '/' ? pathname === '/' : pathname.startsWith(link.href)
+                )
+                return currentLink?.title || siteMetadata.headerTitle
+              })()}
             </div>
           ) : (
             siteMetadata.headerTitle

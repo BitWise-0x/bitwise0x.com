@@ -28,7 +28,7 @@ export default function AuthorLayout({ children, content }: Props) {
                 className="h-48 w-48 rounded-full"
               />
             )}
-            <h3 className="pt-4 pb-2 text-2xl leading-8 font-bold tracking-tight">{name}</h3>
+            <h3 className="pt-4 pb-0 text-2xl leading-8 font-bold tracking-tight">{name}</h3>
             <div className="text-muted">{company}</div>
             <div className="text-muted text-center text-sm leading-relaxed">{occupation}</div>
             <div className="flex space-x-3 pt-6 pb-4">

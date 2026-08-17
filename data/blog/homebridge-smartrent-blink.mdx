@@ -159,7 +159,7 @@ A single Blink camera accessory in HomeKit is not a simple service. It is a comp
 
 Each Blink sync module surfaces as a separate **`SecuritySystem`** accessory, allowing the user to arm and disarm the entire Blink network for that module directly from Apple Home. The Video Doorbell model adds a **`Doorbell`** service, mapping doorbell press events to HomeKit's doorbell notification system. The Siren model maps to a single `Switch`.
 
-<Image
+<ZoomableImage
   src="/static/images/blog/homebridge-smartrent-blink/homekit-camera-view.png"
   alt="Apple Home app showing Blink cameras as native HomeKit accessories with live view and motion sensor tiles"
   width={800}
@@ -272,7 +272,7 @@ Blink represents one end of the integration spectrum: a polling-based REST API w
 
 ---
 
-<Image
+<ZoomableImage
   src="/static/images/blog/homebridge-smartrent-blink/smartrent-devices.png"
   alt="SmartRent device lineup: thermostat, hub, keypad, and entry panel"
   width={1625}

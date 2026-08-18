@@ -137,10 +137,11 @@ export const Blog = defineDocumentType(() => ({
       type: 'json',
       resolve: (doc) => {
         const rt = readingTime(doc.body.raw)
-        const image =
+        const rawImage =
           doc.images && doc.images.length > 0
             ? doc.images[0]
             : extractFirstImage(doc.body.raw) || siteMetadata.socialBanner
+        const image = rawImage.includes('http') ? rawImage : siteMetadata.siteUrl + rawImage
         return {
           '@context': 'https://schema.org',
           '@type': 'BlogPosting',

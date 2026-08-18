@@ -14,6 +14,7 @@ tags:
     'mcp',
     'generative-ai',
     'swarm',
+    'self-hosted',
   ]
 draft: false
 summary: 'A production-ready Docker deployment for Open WebUI with RAG, private search, OCR, MCP tooling, and 35 auto-deployed tools, filters, and function pipes.'
@@ -34,7 +35,7 @@ The conversation around large language models has quietly shifted. The question 
 
 I spent months running Open WebUI in various configurations, progressively layering services around it as my needs grew: PostgreSQL for durability, then pgvector for proper RAG, then SearXNG for private search augmentation, then Tika for document parsing. Each addition required its own configuration, its own health checks, its own secrets. The tools I wanted to use had to be installed manually through the admin panel after every redeployment. It became clear that the real work was not in Open WebUI itself but in the operational scaffolding around it.
 
-[open-webui-ultimate-stack](https://github.com/BitWise-0x/open-webui-ultimate-stack) is the result of consolidating that scaffolding into a single, reproducible deployment. It is not a fork of Open WebUI. It is a composition: eight services wired together with health checks, secrets management, and automated tool deployment, designed to run Open WebUI the way it was meant to be run. The stack ships with 35 tools, filters, and function pipes that are automatically deployed on every startup, covering everything from academic research to image generation to multi-model orchestration.
+[open-webui-ultimate-stack](https://github.com/BitWise-0x/open-webui-ultimate-stack) is the result of consolidating that scaffolding into a single, reproducible deployment. It is not a fork of Open WebUI but a composition: eight services wired together with health checks, secrets management, and automated tool deployment, designed to run Open WebUI the way it was meant to be run. The stack ships with 35 tools, filters, and function pipes that are automatically deployed on every startup, covering everything from academic research to image generation to multi-model orchestration.
 
 ## What Open WebUI Brings to the Table
 

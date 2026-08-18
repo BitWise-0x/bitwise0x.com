@@ -76,7 +76,7 @@ The platform plugin lifecycle is straightforward in concept: on startup, call th
   height={450}
 />
 
-Amazon Blink cameras are battery-powered, intermittently connected devices that communicate through a sync module, a small hub that bridges them to the Blink cloud. The API is REST-based and polling-driven: there is no push channel. Live streaming uses a proprietary IMMI protocol rather than RTSP. HomeKit's camera model is demanding: it expects SRTP video streams, snapshots on demand, and accurate motion events. Blink exposes none of this natively.
+Amazon Blink cameras are battery-powered, intermittently connected devices that communicate through a sync module, a small hub that bridges them to the Blink cloud. The API is REST-based and polling-driven, with no push channel. Live streaming uses a proprietary IMMI protocol rather than RTSP. HomeKit's camera model is demanding: it expects SRTP video streams, snapshots on demand, and accurate motion events. Blink exposes none of this natively.
 
 Bridging all of it into HomeKit required integrating ffmpeg for live view transcoding, building a polling loop for motion detection that avoids hammering the API, and implementing a caching strategy for snapshots that keeps them available even when the live stream is not.
 
@@ -260,7 +260,7 @@ The solution is a periodic background fetch: every `camera-thumbnail-refresh-sec
 
 ---
 
-Blink accounts change over time: cameras get sold, sync modules get removed, networks get reorganized. Homebridge caches accessory registrations across restarts, which means a camera removed from the Blink account can persist as a ghost accessory in Apple Home indefinitely.
+Blink accounts change over time as cameras get sold, sync modules get removed, and networks get reorganized. Homebridge caches accessory registrations across restarts, which means a camera removed from the Blink account can persist as a ghost accessory in Apple Home indefinitely.
 
 On each startup, the plugin compares its registered `PlatformAccessory` instances against the current device list from the Blink API. Any cached accessory whose device ID no longer appears in the API response is deregistered, removing it cleanly from the Homebridge cache and causing it to disappear from Apple Home on the next Home app refresh.
 
@@ -471,7 +471,7 @@ There is no universal right answer for how frequently to poll a third-party API.
 
 ### 3. Authentication Persistence Matters More Than Expected
 
-Homebridge on a Raspberry Pi restarts more often than you might expect: after system updates, after power interruptions, during plugin upgrades. If a plugin authenticates from scratch on every startup, that adds seconds of latency before any accessory state is correct, and on platforms with aggressive re-authentication policies it risks triggering lockouts. Both plugins invest in session persistence: the SmartRent plugin caches its access token across sessions, and the Blink plugin stores OAuth tokens in Homebridge's persistent storage with automatic refresh.
+Homebridge on a Raspberry Pi restarts more often than you might expect, whether after a system update, a power interruption, or a plugin upgrade. If a plugin authenticates from scratch on every startup, that adds seconds of latency before any accessory state is correct, and on platforms with aggressive re-authentication policies it risks triggering lockouts. Both plugins invest in session persistence: the SmartRent plugin caches its access token across sessions, and the Blink plugin stores OAuth tokens in Homebridge's persistent storage with automatic refresh.
 
 ### 4. ffmpeg on Embedded Hardware Is a Real Constraint
 

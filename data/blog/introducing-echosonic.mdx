@@ -12,7 +12,7 @@ canonicalUrl: 'https://bitwise0x.com/blog/introducing-echosonic'
 
 <Image
   src="/static/images/blog/echosonic/hero.jpg"
-  alt="A music production interface at an angle: an FM synthesizer panel with a modulation ring, envelope curves, and mixer controls glowing in cyan on black"
+  alt="FM synthesizer interface"
   width={2400}
   height={1600}
 />
@@ -21,7 +21,7 @@ Most music tools ask you to already be a musician. They hand you a piano roll, a
 
 <ZoomableImage
   src="/static/images/blog/echosonic/studio.png"
-  alt="EchoSonic feature overview, showing music generation, the studio editor, voice cloning and TTS, stem separation, effects and mastering, and public sharing"
+  alt="EchoSonic feature overview"
   width={1600}
   height={1000}
 />
@@ -36,7 +36,7 @@ The front door is a single prompt. You write what you want in plain language, op
 
 <ZoomableImage
   src="/static/images/blog/echosonic/landing.jpg"
-  alt="EchoSonic landing page, the wordmark over an audio-reactive waveform with the tagline: full songs from a sentence, your voice, any language"
+  alt="EchoSonic landing page"
   width={1200}
   height={630}
 />
@@ -56,7 +56,7 @@ flowchart TD
 
     subgraph GPU["GPU worker (cold-start safe)"]
         direction LR
-        INFER["ACE-Step 1.5\ndiffusion inference"] --> UPLOAD["encode + upload\naudio to R2"]
+        INFER["ACE-Step 1.5\ndiffusion inference"] --> UPLOAD["encode + upload\naudio to storage"]
     end
 
     GPU --> CB["callback to API:\nwrite version + peaks,\npush SSE event"]
@@ -93,7 +93,7 @@ The economics are fungible on purpose. One pool of credits buys generations, edi
 
 <ZoomableImage
   src="/static/images/blog/echosonic/pricing.png"
-  alt="EchoSonic pricing cards for the Free, Pro, and Studio tiers with their per-tier feature lists and monthly credit allowances"
+  alt="EchoSonic pricing tiers"
   width={1600}
   height={1311}
 />
@@ -111,7 +111,7 @@ A first generation is a starting point, and EchoSonic treats it that way. Every 
 
 <ZoomableImage
   src="/static/images/blog/echosonic/reshape.png"
-  alt="EchoSonic edit surfaces, showing the describe / hear / reshape workflow and a version history where every edit lands as v4 repaint, v3 cover, v2 add layer, v1 generated"
+  alt="EchoSonic edit surface and version history"
   width={1600}
   height={1000}
 />
@@ -172,12 +172,12 @@ The second half of EchoSonic is voice, and it is built on the same idea: capture
 
 <ZoomableImage
   src="/static/images/blog/echosonic/voicelab.png"
-  alt="EchoSonic Voice Lab, showing voice cloning from a single 90-second recording, narration in that voice, and arranging takes into a multi-track story"
+  alt="EchoSonic Voice Lab"
   width={1600}
   height={1000}
 />
 
-From that one recording, two things become possible. The first is narration: text-to-speech in your own voice, spread across six engines that trade off speed, expressiveness, and language coverage. [Kokoro](https://github.com/hexgrad/kokoro) runs free and instant for a quick read; [ChatterBox](https://github.com/resemble-ai/chatterbox) and [Qwen3](https://github.com/QwenLM/Qwen3-TTS) sit in the middle; [TADA](https://github.com/HumeAI/tada) is the studio-grade option for long-form. Between them the platform clones zero-shot across 23 languages, so the voice you recorded in English can read a paragraph in Spanish or Japanese and still sound like you. A persona field lets the voice write in character as well as speak, expanding a topic into copy before it ever hits synthesis.
+From that one recording, two things become possible. The first is narration: text-to-speech in your own voice, spread across seven engines that trade off speed, expressiveness, and language coverage. [Kokoro](https://github.com/hexgrad/kokoro) runs free and instant for a quick read; [ChatterBox](https://github.com/resemble-ai/chatterbox) and [Qwen3](https://github.com/QwenLM/Qwen3-TTS) sit in the middle; [TADA](https://github.com/HumeAI/tada) is the studio-grade option for long-form. Between them the platform clones zero-shot across 23 languages, so the voice you recorded in English can read a paragraph in Spanish or Japanese and still sound like you. A persona field lets the voice write in character as well as speak, expanding a topic into copy before it ever hits synthesis.
 
 The second is the part that ties the whole platform together: that same cloned reference can sing. Drop your voice onto a music generation and the model conditions its vocal timbre on your recording, zero-shot, at no extra cost. There is no training step and no second capture; the clip you recorded to narrate an audiobook is the clip that puts your voice on a chorus.
 

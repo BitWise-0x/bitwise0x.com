@@ -12,9 +12,9 @@ canonicalUrl: 'https://bitwise0x.com/blog/introducing-echosonic'
 
 <Image
   src="/static/images/blog/echosonic/hero.jpg"
-  alt="EchoSonic landing page, the wordmark over an audio-reactive waveform with the tagline: full songs from a sentence, your voice, any language"
-  width={1200}
-  height={630}
+  alt="A music production interface at an angle: an FM synthesizer panel with a modulation ring, envelope curves, and mixer controls glowing in cyan on black"
+  width={2400}
+  height={1600}
 />
 
 Most music tools ask you to already be a musician. They hand you a piano roll, a rack of plugins, and a blinking cursor, and the blank project is the same wall a blank page has always been. [EchoSonic](https://echosonic.io) starts from the other end. You describe a song in a sentence, "a slow-burning trip-hop track, brushed drums, a voice that sounds like it is remembering something," and a minute later there is audio. Not a loop, not a stem to build on: a structured track with an intro, a body, and an ending. The interesting part is not that the first draft exists. It is what you are allowed to do to it afterward.
@@ -33,6 +33,13 @@ Generation is only the opening move. The reason to build all of this into one pl
 ---
 
 The front door is a single prompt. You write what you want in plain language, optionally paste or generate lyrics, choose how much fidelity to spend, and press generate. Everything past that point is machinery, and the machinery is the actual product.
+
+<ZoomableImage
+  src="/static/images/blog/echosonic/landing.jpg"
+  alt="EchoSonic landing page, the wordmark over an audio-reactive waveform with the tagline: full songs from a sentence, your voice, any language"
+  width={1200}
+  height={630}
+/>
 
 Underneath the prompt sits a real generative model, [ACE-Step 1.5](https://github.com/ace-step/ACE-Step-1.5), a diffusion transformer trained on music rather than on speech or images. A prompt describes style and instrumentation; the lyrics, if there are any, are conditioned separately, so the model is placing a vocal line against an arrangement instead of stapling words onto a backing track. The result comes back as a genuine mixed recording with a waveform you can scrub, not a MIDI sketch waiting to be rendered.
 

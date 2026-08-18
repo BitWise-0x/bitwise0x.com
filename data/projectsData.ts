@@ -17,7 +17,7 @@ const projectsData: Project[] = [
     learnMoreHref: '/blog/introducing-echosonic',
   },
   {
-    title: 'CarlJung.ai',
+    title: 'CarlJung.ai: Voice Reflection with a Jungian Persona',
     description: `Voice reflection sessions with a Carl Jung persona, built on an empathic
     voice AI interface. PMAI-style archetype assessment, real-time emotion detection across
     48 categories, and a four-stage individuation journey with AI-generated reflection notes.`,

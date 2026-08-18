@@ -1,0 +1,250 @@
+---
+title: "EchoSonic\nA Full Song From a Single Sentence"
+date: '2026-08-18'
+lastmod: '2026-08-18'
+tags: ['ai', 'projects', 'generative-ai', 'music-ai', 'voice-ai', 'diffusion', 'transformers', 'machine-learning', 'nextjs', 'typescript', 'gpu']
+draft: false
+summary: 'A production music platform that turns one line of intent into a finished track, then hands you a studio to edit it: repaint a passage, add a layer, morph the style, clone your own voice, and sing it in any language.'
+images: ['/static/images/blog/echosonic/hero.jpg']
+authors: ['default']
+canonicalUrl: 'https://bitwise0x.com/blog/introducing-echosonic'
+---
+
+<Image
+  src="/static/images/blog/echosonic/hero.jpg"
+  alt="EchoSonic landing page, the wordmark over an audio-reactive waveform with the tagline: full songs from a sentence, your voice, any language"
+  width={1200}
+  height={630}
+/>
+
+Most music tools ask you to already be a musician. They hand you a piano roll, a rack of plugins, and a blinking cursor, and the blank project is the same wall a blank page has always been. [EchoSonic](https://echosonic.io) starts from the other end. You describe a song in a sentence, "a slow-burning trip-hop track, brushed drums, a voice that sounds like it is remembering something," and a minute later there is audio. Not a loop, not a stem to build on: a structured track with an intro, a body, and an ending. The interesting part is not that the first draft exists. It is what you are allowed to do to it afterward.
+
+<ZoomableImage
+  src="/static/images/blog/echosonic/studio.png"
+  alt="EchoSonic feature overview, showing music generation, the studio editor, voice cloning and TTS, stem separation, effects and mastering, and public sharing"
+  width={1600}
+  height={1000}
+/>
+
+Generation is only the opening move. The reason to build all of this into one place is that a finished track is rarely one render: it is a draft, an edit, a stem you pulled out, a voice you put on top, a link you shared. EchoSonic is the whole path from a sentence to that link.
+
+## From a Sentence to a Song
+
+---
+
+The front door is a single prompt. You write what you want in plain language, optionally paste or generate lyrics, choose how much fidelity to spend, and press generate. Everything past that point is machinery, and the machinery is the actual product.
+
+Underneath the prompt sits a real generative model, [ACE-Step 1.5](https://github.com/ace-step/ACE-Step-1.5), a diffusion transformer trained on music rather than on speech or images. A prompt describes style and instrumentation; the lyrics, if there are any, are conditioned separately, so the model is placing a vocal line against an arrangement instead of stapling words onto a backing track. The result comes back as a genuine mixed recording with a waveform you can scrub, not a MIDI sketch waiting to be rendered.
+
+What matters operationally is that a generation is never a single blocking request. The moment you press the button, EchoSonic reserves the credits, hands the job to a GPU that may not exist yet, and starts streaming status back to your browser. You watch the track cook in real time rather than staring at a spinner and hoping.
+
+<Mermaid chart={`
+flowchart TD
+    USER["Browser\nprompt + lyrics + quality"] --> API["tRPC API\nvalidate + tier gate"]
+    API --> CREDIT{"enough credits?"}
+    CREDIT -- "no" --> BLOCK["paused until\nrenewal / top-up"]
+    CREDIT -- "yes" --> DISPATCH["deduct credits,\nwrite ledger,\ndispatch to worker"]
+
+    DISPATCH --> GPU
+
+    subgraph GPU["GPU worker (cold-start safe)"]
+        direction LR
+        INFER["ACE-Step 1.5\ndiffusion inference"] --> UPLOAD["encode + upload\naudio to R2"]
+    end
+
+    GPU --> CB["callback to API:\nwrite version + peaks,\npush SSE event"]
+    CB --> RENDER["browser renders\nwaveform + player"]
+
+    style USER fill:#0d1b2a,stroke:#3a86ff,color:#fff
+    style API fill:#14213d,stroke:#565f89,color:#fff
+    style CREDIT fill:#343a40,stroke:#6c757d,color:#fff
+    style BLOCK fill:#b5651d,stroke:#d4a574,color:#fff
+    style DISPATCH fill:#14213d,stroke:#565f89,color:#fff
+    style GPU fill:#1b4332,stroke:#40916c,color:#fff
+    style INFER fill:#2d6a4f,stroke:#40916c,color:#fff
+    style UPLOAD fill:#2d6a4f,stroke:#40916c,color:#fff
+    style CB fill:#7b2cbf,stroke:#9d4edd,color:#fff
+    style RENDER fill:#0d1b2a,stroke:#3a86ff,color:#fff
+`} />
+
+Credits are deducted before the GPU is asked to do anything, and refunded automatically if the job dies. That ordering is deliberate. It means the ledger can never promise work it did not pay for, and a worker that crashes at import time, a host with the wrong driver, a job that silently vanishes, all resolve back to the user getting their credits returned rather than a track stuck forever in a "generating" state. A watchdog sweeps for jobs that went quiet and reconciles them. None of this is visible when everything works, which is the point.
+
+## Spend Fidelity, Not Guesswork
+
+---
+
+There is a quality dial, and it is honest about what it costs. EchoSonic exposes four operating points on the underlying model, from a fast distilled draft to the full high-fidelity checkpoint, and each one carries a plainly stated credit price so you are never surprised by an overage. You do not buy a subscription and then discover the good model is metered separately behind it.
+
+| Preset | Model | Inference steps | Credits (≤30s) | Tier |
+| ------ | ----- | --------------- | -------------- | ---- |
+| Draft | turbo | 8 | 5 | Free |
+| Quality | sft | 50 | 15 | Pro |
+| Premium | xl | 8 | 30 | Studio |
+| Max Quality | xl-sft | 50 | 50 | Studio |
+
+The economics are fungible on purpose. One pool of credits buys generations, edits, stems, and voice narration alike, and the per-action cost is a single source of truth in the codebase rather than a literal scattered across a dozen screens. Repricing one action is a one-line change, and the cost the summary card shows you is computed by the exact same function the server charges with, so the number you see and the number you pay can never drift apart.
+
+<ZoomableImage
+  src="/static/images/blog/echosonic/pricing.png"
+  alt="EchoSonic pricing cards for the Free, Pro, and Studio tiers with their per-tier feature lists and monthly credit allowances"
+  width={1600}
+  height={1311}
+/>
+
+Three tiers stack on top of that. Free gives you a daily trickle of credits and the draft model, enough to learn the tool. Pro unlocks the full-fidelity Quality checkpoint and a monthly credit budget. Studio opens the two premium models, the largest budget, and the full editing surface. Every new account starts on a Studio trial with no card required, because the whole argument of the product lives in the parts you only reach once you have a first draft to work on.
+
+> [!NOTE]
+> When credits run out, generation pauses. It does not silently bill you for an overage. You wait for the monthly renewal or buy a one-time pack. Predictable cost was a design goal, not an afterthought.
+
+## The Draft Is Where the Work Begins
+
+---
+
+A first generation is a starting point, and EchoSonic treats it that way. Every finished track becomes a card in a library, and every card is its own small studio. You do not leave the song to edit it; the edit tools live on the song.
+
+<ZoomableImage
+  src="/static/images/blog/echosonic/reshape.png"
+  alt="EchoSonic edit surfaces, showing the describe / hear / reshape workflow and a version history where every edit lands as v4 repaint, v3 cover, v2 add layer, v1 generated"
+  width={1600}
+  height={1000}
+/>
+
+The edit vocabulary is where the tool stops being a novelty and starts being an instrument. Each operation maps to a real capability of the underlying model rather than a filter bolted on top:
+
+- **Re-roll** spins the same song again with a fresh seed: same prompt, same lyrics, a different take. It is the B-side, for when the arrangement was right but the performance was not.
+- **Repaint** regenerates a time window you select on the waveform. Drag two handles across the passage you dislike, preview exactly what falls inside the selection, and re-synthesize only that stretch while the rest of the track holds.
+- **Cover** treats the current song as a style reference and re-imagines it under a new prompt, keeping its bones while changing its clothes.
+- **Morph** is the subtle one. Instead of re-synthesizing under a new prompt, it integrates a path *between* the source and a target prompt, painting the audio continuously toward the new idea. A gentle morph nudges; a strong one transforms.
+- **Add a layer** generates a single new instrument part conditioned on what is already there and mixes it in, so a bare sketch grows an arrangement one stem at a time.
+- **Auto-arrange** takes a thin recording and fills out what is missing, letting you name the instruments you want or letting the model decide.
+- **Reconstruct stems** re-synthesizes the track as separate per-instrument parts, so you can mute, solo, and mix them with real dB faders and export the result.
+
+<Mermaid chart={`
+flowchart TD
+    GEN["Generated track\nv1 baseline"]
+
+    GEN --> EDITS
+
+    subgraph EDITS["Edits, each writes a version"]
+        direction LR
+        REPAINT["Repaint"] --- COVER["Cover"] --- MORPH["Morph"]
+        LAYER["Add a layer"] --- ARRANGE["Auto-arrange"]
+    end
+
+    GEN --> SIDE
+
+    subgraph SIDE["Side outputs, no version"]
+        direction LR
+        REROLL["Re-roll\nsibling take"] --- STEMS["Reconstruct\nstems"]
+    end
+
+    EDITS --> HIST["Version history"]
+    HIST --> PROMOTE["Make current\npointer flip, no re-render"]
+
+    style GEN fill:#0d1b2a,stroke:#3a86ff,color:#fff
+    style EDITS fill:#14213d,stroke:#565f89,color:#fff
+    style SIDE fill:#1b263b,stroke:#565f89,color:#fff
+    style REPAINT fill:#14213d,stroke:#565f89,color:#fff
+    style COVER fill:#14213d,stroke:#565f89,color:#fff
+    style MORPH fill:#b5651d,stroke:#d4a574,color:#fff
+    style LAYER fill:#2d6a4f,stroke:#40916c,color:#fff
+    style ARRANGE fill:#2d6a4f,stroke:#40916c,color:#fff
+    style REROLL fill:#14213d,stroke:#565f89,color:#fff
+    style STEMS fill:#2d6a4f,stroke:#40916c,color:#fff
+    style HIST fill:#7b2cbf,stroke:#9d4edd,color:#fff
+    style PROMOTE fill:#7b2cbf,stroke:#9d4edd,color:#fff
+`} />
+
+Every edit lands as a new version on the song, never a silent overwrite. The original take stays exactly where it was; your edit sits beside it in a history you can play through. When you find the version you want, "Make current" promotes it, and that promotion is a pure pointer flip: no GPU work, no credits, no new render. The take you chose simply becomes the face of the song, and future edits branch from it. Nothing you generated is ever thrown away to make room for what you generated next.
+
+## Your Voice, in Any Language
+
+---
+
+The second half of EchoSonic is voice, and it is built on the same idea: capture once, use everywhere. You record yourself reading a short teleprompter passage, one continuous take, and that single clip becomes a cloned voice you own.
+
+<ZoomableImage
+  src="/static/images/blog/echosonic/voicelab.png"
+  alt="EchoSonic Voice Lab, showing voice cloning from a single 90-second recording, narration in that voice, and arranging takes into a multi-track story"
+  width={1600}
+  height={1000}
+/>
+
+From that one recording, two things become possible. The first is narration: text-to-speech in your own voice, spread across six engines that trade off speed, expressiveness, and language coverage. [Kokoro](https://github.com/hexgrad/kokoro) runs free and instant for a quick read; [ChatterBox](https://github.com/resemble-ai/chatterbox) and [Qwen3](https://github.com/QwenLM/Qwen3-TTS) sit in the middle; [TADA](https://github.com/HumeAI/tada) is the studio-grade option for long-form. Between them the platform clones zero-shot across 23 languages, so the voice you recorded in English can read a paragraph in Spanish or Japanese and still sound like you. A persona field lets the voice write in character as well as speak, expanding a topic into copy before it ever hits synthesis.
+
+The second is the part that ties the whole platform together: that same cloned reference can sing. Drop your voice onto a music generation and the model conditions its vocal timbre on your recording, zero-shot, at no extra cost. There is no training step and no second capture; the clip you recorded to narrate an audiobook is the clip that puts your voice on a chorus.
+
+<Mermaid chart={`
+flowchart TD
+    REC["One continuous\nrecording"] --> REF["Canonical reference\ncleaned, 48 kHz"]
+
+    REF --> TTS["Narration\nTTS in your voice"]
+    REF --> SING["Music\nzero-shot\nvocal timbre"]
+
+    TTS --> LANG["23 languages\nacross engines"]
+    SING --> SONG["Your voice on\na generated track"]
+
+    style REC fill:#0d1b2a,stroke:#3a86ff,color:#fff
+    style REF fill:#7b2cbf,stroke:#9d4edd,color:#fff
+    style TTS fill:#2d6a4f,stroke:#40916c,color:#fff
+    style SING fill:#2d6a4f,stroke:#40916c,color:#fff
+    style LANG fill:#14213d,stroke:#565f89,color:#fff
+    style SONG fill:#b5651d,stroke:#d4a574,color:#fff
+`} />
+
+The recorder itself is careful about the thing that actually determines clone quality: clean, continuous, phonetically varied audio. It runs one uninterrupted capture with a rotating teleprompter, watches your input level live, and rejects a take that is mostly silence before it ever uploads. On the worker side the reference gets trimmed, de-offset, and normalized before it becomes the canonical clip every engine conditions on. The single biggest lever on how much a clone sounds like you is the quality of that one recording, so the tool spends its effort there.
+
+## Serverless GPUs, Held Together by Discipline
+
+---
+
+None of this runs on a permanently rented graphics card. EchoSonic is a Next.js application on the edge with a serverless GPU backend: the web tier validates, bills, and orchestrates, and the actual inference lands on ephemeral serverless workers that spin up on demand, pull their model weights, run the job, and disappear.
+
+<Mermaid chart={`
+graph TB
+    subgraph web["Web tier (Vercel)"]
+        direction LR
+        UI["Next.js\nApp Router"] --> TRPC["tRPC API"] --> AUTH["Auth\n+ Billing"]
+    end
+
+    subgraph gpu["Serverless GPU workers"]
+        direction LR
+        MUSIC["Music worker\nACE-Step 1.5"]
+        VOICE["Voice worker\nTTS + cloning"]
+    end
+
+    subgraph data["State"]
+        direction LR
+        PG["Postgres"]
+        REDIS["Redis"]
+        R2["Object storage\naudio + stems"]
+    end
+
+    web -->|dispatch| gpu
+    gpu -.->|upload + callback| data
+    web --> data
+
+    style web fill:#0d1b2a,stroke:#3a86ff,color:#fff
+    style data fill:#1b263b,stroke:#3a86ff,color:#fff
+    style gpu fill:#1b4332,stroke:#40916c,color:#fff
+    style UI fill:#14213d,stroke:#565f89,color:#fff
+    style TRPC fill:#14213d,stroke:#565f89,color:#fff
+    style AUTH fill:#14213d,stroke:#565f89,color:#fff
+    style PG fill:#2d6a4f,stroke:#40916c,color:#fff
+    style REDIS fill:#2d6a4f,stroke:#40916c,color:#fff
+    style R2 fill:#2d6a4f,stroke:#40916c,color:#fff
+    style MUSIC fill:#7b2cbf,stroke:#9d4edd,color:#fff
+    style VOICE fill:#7b2cbf,stroke:#9d4edd,color:#fff
+`} />
+
+The failure surface of this design is large, and most of the engineering behind EchoSonic lives there rather than in the models. Serverless GPU work is a distributed system with all the usual hazards: a job dispatched to a worker that never boots, a callback that fires twice, a host whose driver is a version behind, a cancel that stops billing but not the running kernel. Each one has a specific answer. Credits are held before dispatch and refunded on any terminal failure. Callbacks are idempotent against retries. Cancels reach into the worker mid-inference through a polled flag so a stopped job actually stops burning GPU. A cron watchdog reconciles anything that slips through, marks it failed, and returns the credits, while going out of its way not to wake the database when there is no work in flight.
+
+The result reads, from the user's side, as a tool that simply works: press generate, watch a waveform appear, edit it into something you meant. The distributed-systems care that makes that true is invisible, which is exactly how it should be.
+
+## What EchoSonic Is Actually For
+
+---
+
+There is a version of AI music that is a slot machine, one prompt, one output, spin again if you do not like it. EchoSonic is built against that. Generation is the cheap part now, table stakes. The wager is that the value lives downstream, in the editing surface, the version history that never loses a take, the stem mixer, the voice you recorded once and can put anywhere. A first draft in sixty seconds is a good demo. A draft you can shape, in your own voice, in any language, without ever needing to have been a producer, is a tool.
+
+Start free at [echosonic.io](https://echosonic.io). Every account opens on a full Studio trial, no card required, which is the only honest way to argue for a product whose point is the part you reach after the first song exists.

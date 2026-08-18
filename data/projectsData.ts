@@ -8,6 +8,15 @@ interface Project {
 
 const projectsData: Project[] = [
   {
+    title: 'EchoSonic',
+    description: `AI music platform that turns one sentence into a finished track, then
+    hands you a studio to reshape it: repaint a passage, add a layer, morph the style,
+    separate stems, and clone your own voice to sing it in any language.`,
+    imgSrc: '/static/images/blog/echosonic/hero.jpg',
+    href: 'https://echosonic.io',
+    learnMoreHref: '/blog/introducing-echosonic',
+  },
+  {
     title: 'CarlJung.ai',
     description: `Voice reflection sessions with a Carl Jung persona, built on an empathic
     voice AI interface. PMAI-style archetype assessment, real-time emotion detection across

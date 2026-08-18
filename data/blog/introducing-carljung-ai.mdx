@@ -127,18 +127,18 @@ The interesting part of the architecture is not the emotion detection itself. It
 />
 
 <Mermaid chart={`
-flowchart LR
-    LINE["A single line in session\n'I don't feel anything about that'"]
+flowchart TD
+    LINE["A single line in session\n'I don't feel anything\nabout that'"]
 
     LINE --> WORDS["Transcript channel\nwhat was said"]
     LINE --> TONE["Prosody channel\nhow it was said"]
 
-    WORDS --> CLAIM["Claim: nothing here"]
+    WORDS --> CLAIM["Claim:\nnothing here"]
     TONE --> READ["embarrassment 74%\nawkwardness 21%\nshame 21%"]
 
-    CLAIM --> GAP{"channels disagree"}
+    CLAIM --> GAP{"channels\ndisagree"}
     READ --> GAP
-    GAP --> NOTE["Reflection note\nresistance recorded, not the words"]
+    GAP --> NOTE["Reflection note\nresistance recorded,\nnot the words"]
 
     style LINE fill:#0d1b2a,stroke:#3a86ff,color:#fff
     style WORDS fill:#14213d,stroke:#565f89,color:#fff

@@ -31,25 +31,23 @@ The plugin system is what makes this composable. Each plugin receives a referenc
 There are two plugin types. An **accessory plugin** exposes a single fixed accessory. A **platform plugin** can expose any number of accessories dynamically, adding or removing them as the underlying platform changes. Both of my plugins are platform plugins, for the obvious reason that both SmartRent and Blink involve multiple devices per account that can be discovered from an API.
 
 <Mermaid chart={`
-graph LR
+graph TB
     subgraph apple["Apple Ecosystem"]
         home["Apple Home\nSiri / Automations"]
     end
 
     subgraph bridge["Homebridge Process"]
-        hb["Homebridge\nHAP Bridge"]
-        sr["SmartRent\nPlatform Plugin"]
-        blink["Blink\nPlatform Plugin"]
+        direction LR
+        sr["SmartRent\nPlatform Plugin"] --- hb["Homebridge\nHAP Bridge"] --- blink["Blink\nPlatform Plugin"]
     end
 
     subgraph cloud["Third-Party Cloud"]
+        direction LR
         srapi["SmartRent\nREST API + WebSocket"]
         blinkapi["Blink\nREST API + IMMI"]
     end
 
     home <-- "HomeKit / HAP\n(encrypted)" --> hb
-    hb --- sr
-    hb --- blink
     sr <-- "axios + ws" --> srapi
     blink <-- "axios + ffmpeg" --> blinkapi
 

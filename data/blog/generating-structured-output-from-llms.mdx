@@ -117,22 +117,22 @@ As far as I am aware, there are three main approaches that help to solve the abo
 3. Schema Engineering
 
 <Mermaid chart={`
-graph LR
+graph TB
     subgraph problem["Structured Output"]
-        direction TB
+        direction LR
         S1["Correct Schema\nStructure"]
         S2["Consistent Schema\nContent"]
     end
 
     subgraph approaches["Three Approaches"]
-        direction TB
+        direction LR
         A["Model\nFine-tuning"]
         B["Domain Specific\nLanguage"]
         C["Schema\nEngineering"]
     end
 
     subgraph tools["Libraries & Tools"]
-        direction TB
+        direction LR
         A1["OpenAI Function Calling\nAnthropic Tool Use"]
         B1["LMQL / Guidance\nOutlines / GBNF"]
         C1["Instructor / Marvin\nTypeChat / Zod-GPT"]

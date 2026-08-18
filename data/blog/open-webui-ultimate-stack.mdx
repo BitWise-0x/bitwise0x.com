@@ -62,43 +62,39 @@ The ultimate stack addresses both sides of this equation: the infrastructure tha
 Every service in the stack exists because Open WebUI benefits from it directly. There are no decorative components. The topology is straightforward: Open WebUI sits at the center, and seven supporting services fill specific gaps in its default deployment.
 
 <Mermaid chart={`
-graph TD
+graph TB
     User["User / Browser"]
+    User -->|":3000"| owui["Open WebUI\nghcr.io/open-webui\n:8080 -> :3000"]
 
-    subgraph core["Core Services"]
-        owui["Open WebUI\nghcr.io/open-webui\n:8080 -> :3000"]
-        db["PostgreSQL 17\npgvector/pgvector:pg17\n:5432"]
+    subgraph core["Core Data"]
+        direction LR
+        db["PostgreSQL 17\npgvector:pg17\n:5432"]
         redis["Valkey\nvalkey:9-alpine\n:6379"]
     end
 
     subgraph search["Search & Documents"]
-        searxng["SearXNG\nsearxng/searxng\n:8080 -> :8888"]
+        direction LR
+        searxng["SearXNG\n:8080 -> :8888"]
         tika["Apache Tika\nTesseract OCR\n:9998"]
     end
 
     subgraph integrations["AI Integrations"]
+        direction LR
         edgetts["Edge TTS\nopenai-edge-tts\n:5050"]
-        mcpo["MCPO Server\nMCP-to-OpenAPI Proxy\n:8000"]
+        mcpo["MCPO Server\nMCP-to-OpenAPI\n:8000"]
     end
 
-    subgraph automation["Automation"]
-        tools["tools-init\npython:3.12-slim\none-shot deploy"]
-    end
+    tools["tools-init\npython:3.12-slim\none-shot deploy"]
 
-    User -->|":3000"| owui
-    owui --> db
-    owui --> redis
-    owui --> searxng
-    owui --> tika
-    owui --> edgetts
-    owui --> mcpo
+    owui --> core
+    owui --> search
+    owui --> integrations
     searxng --> redis
     tools -.->|"API push\non deploy"| owui
 
     style core fill:#0d1b2a,stroke:#3a86ff,color:#fff
     style search fill:#1b263b,stroke:#3a86ff,color:#fff
     style integrations fill:#1b263b,stroke:#3a86ff,color:#fff
-    style automation fill:#1b263b,stroke:#3a86ff,color:#fff
     style User fill:#14213d,stroke:#565f89,color:#fff
     style owui fill:#7b2cbf,stroke:#9d4edd,color:#fff
     style db fill:#2d6a4f,stroke:#40916c,color:#fff

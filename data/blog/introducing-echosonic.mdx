@@ -209,7 +209,7 @@ None of this runs on a permanently rented graphics card. EchoSonic is a Next.js 
 
 <Mermaid chart={`
 graph TB
-    subgraph web["Web tier (Vercel)"]
+    subgraph web["Web tier (edge)"]
         direction LR
         UI["Next.js\nApp Router"] --> TRPC["tRPC API"] --> AUTH["Auth\n+ Billing"]
     end

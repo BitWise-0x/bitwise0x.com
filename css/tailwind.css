@@ -104,6 +104,12 @@
     & :where(code):not(pre code) {
       color: var(--color-primary-500);
     }
+    /* a `---` divider used directly under a section heading is a header rule,
+       not a thematic break: tighten the gap to its content so it doesn't read
+       as double-spaced. standalone dividers keep the default 3em rhythm. */
+    & :where(h1, h2, h3, h4) + hr {
+      margin-bottom: 1.5em;
+    }
   }
 
   .prose-invert {

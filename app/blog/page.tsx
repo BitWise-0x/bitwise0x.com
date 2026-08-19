@@ -9,7 +9,7 @@ const POSTS_PER_PAGE = 5
 export const metadata: Metadata = genPageMetadata({
   title: 'Blog',
   description:
-    'All posts on BitWise — deep dives into backend engineering, distributed systems, AI/ML, and infrastructure.',
+    'All posts on BitWise: deep dives into backend engineering, distributed systems, AI/ML, and infrastructure.',
   path: 'blog',
 })
 

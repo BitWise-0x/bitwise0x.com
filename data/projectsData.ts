@@ -12,7 +12,7 @@ const projectsData: Project[] = [
     title: 'EchoSonic',
     tagline: 'Ai music generation platform',
     description: `Ai music platform that turns one sentence into a finished track, then
-    hands you a studio to reshape it: repaint a passage, add a layer, morph the style,
+    hands you a studio to reshape it. Repaint a passage, add a layer, morph the style,
     separate stems, and clone your own voice to sing it in any language.`,
     imgSrc: '/static/images/blog/echosonic/hero.jpg',
     href: 'https://echosonic.io',

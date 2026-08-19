@@ -10,6 +10,14 @@ interface CardProps {
   learnMoreHref?: string
 }
 
+const getHostname = (url: string) => {
+  try {
+    return new URL(url).hostname.replace(/^www\./, '')
+  } catch {
+    return url
+  }
+}
+
 const Card = ({ title, tagline, description, imgSrc, href, learnMoreHref }: CardProps) => {
   return (
     <div className="md max-w-[544px] p-4 md:w-1/2">
@@ -45,7 +53,7 @@ const Card = ({ title, tagline, description, imgSrc, href, learnMoreHref }: Card
               className="text-link mt-1 block text-base leading-6 font-medium"
               aria-label={`Visit ${title}`}
             >
-              Visit &rarr;
+              {getHostname(href)} &rarr;
             </Link>
           )}
         </div>

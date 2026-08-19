@@ -13,6 +13,7 @@ export default function ProjectsList({ title = 'Projects' }: { title?: string })
             <Card
               key={d.title}
               title={d.title}
+              tagline={d.tagline}
               description={d.description}
               imgSrc={d.imgSrc}
               href={d.href}

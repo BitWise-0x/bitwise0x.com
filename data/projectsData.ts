@@ -1,5 +1,6 @@
 interface Project {
   title: string
+  tagline?: string
   description: string
   href?: string
   imgSrc?: string
@@ -9,6 +10,7 @@ interface Project {
 const projectsData: Project[] = [
   {
     title: 'EchoSonic',
+    tagline: 'AI music platform',
     description: `AI music platform that turns one sentence into a finished track, then
     hands you a studio to reshape it: repaint a passage, add a layer, morph the style,
     separate stems, and clone your own voice to sing it in any language.`,
@@ -18,6 +20,7 @@ const projectsData: Project[] = [
   },
   {
     title: 'CarlJung.ai: Voice Reflection with a Jungian Persona',
+    tagline: 'Voice reflection with an empathic AI persona',
     description: `Voice reflection sessions with a Carl Jung persona, built on an empathic
     voice AI interface. PMAI-style archetype assessment, real-time emotion detection across
     48 categories, and a four-stage individuation journey with AI-generated reflection notes.`,
@@ -27,6 +30,7 @@ const projectsData: Project[] = [
   },
   {
     title: 'Open WebUI Ultimate Stack',
+    tagline: 'Production Open WebUI deployment stack',
     description: `Production-ready Open WebUI deployment with RAG, private web search,
     OCR, local TTS, and MCP tool servers. Ships as Docker Compose and Docker Swarm stacks
     with a curated library of tools, filters, and function pipes auto-deployed on every deploy.`,
@@ -36,6 +40,7 @@ const projectsData: Project[] = [
   },
   {
     title: 'Homebridge SmartRent Plugin',
+    tagline: 'HomeKit integration for SmartRent',
     description: `Homebridge plugin enabling full HomeKit integration for SmartRent
     smart home installations. Control locks, thermostats, and switches natively
     through Apple Home.`,
@@ -45,6 +50,7 @@ const projectsData: Project[] = [
   },
   {
     title: 'Homebridge Blink Security',
+    tagline: 'HomeKit integration for Blink cameras',
     description: `Homebridge plugin for Amazon Blink cameras, doorbells, and sirens.
     Brings live view, motion detection, snapshots, and arm/disarm control into
     Apple Home via HomeKit with OAuth 2.0, 2FA, and multi-network support.`,
@@ -54,6 +60,7 @@ const projectsData: Project[] = [
   },
   {
     title: 'MongoDB Replica Set Manager',
+    tagline: 'MongoDB replica sets for Docker Swarm',
     description: `Production-ready MongoDB replica set controller for Docker Swarm.
     Automates deployment, scaling, and failover of MongoDB clusters in containerized
     environments with high availability guarantees.`,

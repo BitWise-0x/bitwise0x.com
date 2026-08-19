@@ -10,9 +10,16 @@ interface CardProps {
   learnMoreHref?: string
 }
 
+const hostLabels: Record<string, string> = {
+  'echosonic.io': 'EchoSonic.io',
+  'carljung.ai': 'CarlJung.ai',
+  'github.com': 'GitHub.com',
+}
+
 const getHostname = (url: string) => {
   try {
-    return new URL(url).hostname.replace(/^www\./, '')
+    const host = new URL(url).hostname.replace(/^www\./, '')
+    return hostLabels[host] || host
   } catch {
     return url
   }
@@ -24,7 +31,7 @@ const Card = ({ title, tagline, description, imgSrc, href, learnMoreHref }: Card
       <div className={`${imgSrc && 'h-full'} border-theme overflow-hidden rounded-md border-2`}>
         <div className="p-6 pb-4">
           <h2 className="text-2xl leading-8 font-bold tracking-tight">{title}</h2>
-          {tagline && <p className="text-link mt-1 text-sm font-medium">{tagline}</p>}
+          {tagline && <p className="text-link mt-1 text-sm font-medium uppercase">{tagline}</p>}
         </div>
         {imgSrc && (
           <Image
@@ -38,23 +45,29 @@ const Card = ({ title, tagline, description, imgSrc, href, learnMoreHref }: Card
         )}
         <div className="p-6 pt-4">
           <p className="prose prose-summary mb-3 max-w-none">{description}</p>
-          {learnMoreHref && (
-            <Link
-              href={learnMoreHref}
-              className="text-link block text-base leading-6 font-medium"
-              aria-label={`Blog post about ${title}`}
-            >
-              Blog post &rarr;
-            </Link>
-          )}
-          {href && (
-            <Link
-              href={href}
-              className="text-link mt-1 block text-base leading-6 font-medium"
-              aria-label={`Visit ${title}`}
-            >
-              {getHostname(href)} &rarr;
-            </Link>
+          {(learnMoreHref || href) && (
+            <div className="flex items-center justify-between">
+              {learnMoreHref ? (
+                <Link
+                  href={learnMoreHref}
+                  className="text-link text-base leading-6 font-medium"
+                  aria-label={`Learn more about ${title}`}
+                >
+                  Learn more &rarr;
+                </Link>
+              ) : (
+                <span />
+              )}
+              {href && (
+                <Link
+                  href={href}
+                  className="text-link text-base leading-6 font-medium"
+                  aria-label={`Visit ${title}`}
+                >
+                  {getHostname(href)} &rarr;
+                </Link>
+              )}
+            </div>
           )}
         </div>
       </div>

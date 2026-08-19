@@ -135,7 +135,7 @@ The edit vocabulary is where the tool stops being a novelty and starts being an 
 
 - **Re-roll** spins the same song again with a fresh seed: same prompt, same lyrics, a different take. It is the B-side, for when the arrangement was right but the performance was not.
 - **Repaint** regenerates a time window you select on the waveform. Drag two handles across the passage you dislike, preview exactly what falls inside the selection, and re-synthesize only that stretch while the rest of the track holds.
-- **Cover** treats the current song as a style reference and re-imagines it under a new prompt, keeping its bones while changing its clothes.
+- **Cover** keeps the song's own structure as an anchor and lets a new prompt re-render everything else, its bones staying put while its clothes change.
 - **Morph** is the subtle one. Instead of re-synthesizing under a new prompt, it integrates a path *between* the source and a target prompt, painting the audio continuously toward the new idea. A gentle morph nudges; a strong one transforms.
 - **Add a layer** generates a single new instrument part conditioned on what is already there and mixes it in, so a bare sketch grows an arrangement one stem at a time.
 - **Auto-arrange** takes a thin recording and fills out what is missing, letting you name the instruments you want or letting the model decide.
@@ -179,6 +179,20 @@ flowchart TD
 
 Every edit lands as a new version on the song, never a silent overwrite. The original take stays exactly where it was. Your edit sits beside it in a history you can play through. When you find the version you want, "Make current" promotes it, and that promotion is a pure pointer flip, no GPU work, no credits, no new render. The take you chose simply becomes the face of the song, and future edits branch from it. Nothing you generated is ever thrown away to make room for what you generated next.
 
+## Inside Cover: What Actually Happens When You Restyle a Song
+
+---
+
+Cover is worth pulling apart, because "keep the structure, change the style" is doing a lot of quiet work under one button. The diffusion sampler that generates a track builds the audio step by step out of noise, and Cover controls that process with two separate knobs rather than one.
+
+The first is how much of the song's own audio anchors the starting point. At zero, the sampler starts from pure noise the same as any fresh generation, and the source only shapes things loosely through the model's own encoded sense of it. Turn that knob up and the sampler instead starts from the source track's own waveform with noise added back in, so the result is built directly on top of what is already there instead of imagined from scratch. In the product this is the "Melody retention" slider.
+
+The second knob is about when the new prompt takes over. For most of the denoising process the source song is still steering the sound, and only in the final stretch, the last quarter or so of the steps, does the model switch to following your new caption instead. That handoff point is what the "Cover" label controls. Turned all the way up, the source would steer the entire process and the caption would never really get a say, which in practice just reproduces the original song. EchoSonic caps that slider below the point where it stops doing anything, precisely because the team found that exact failure mode: an early version let the knob reach full strength, and a cover at full strength sounded identical to the source it started from.
+
+That is also why the prompt box for Cover starts empty rather than pre-filled with the song's original description. A short instruction like "jazz piano version" works. Pasting in the song's full original prompt on top of it does not, because the source audio is already carrying that description into the sampler directly, and a second, denser copy of the same information competes with it instead of adding anything.
+
+Morph, sitting right next to Cover in the edit menu, sounds similar but works on a different axis entirely. Cover hands control from source to prompt at one point partway through. Morph blends the two continuously across a window of steps you can widen or narrow, more like a crossfade than a handoff, which is why a light morph nudges a song and a strong one can walk it somewhere new. Different question, different mechanism: Cover asks "how much of the original survives before the new idea takes over," Morph asks "how far along the path between old and new should this land."
+
 ## Your Voice, in Any Language
 
 ---
@@ -192,18 +206,20 @@ The second half of EchoSonic is voice, and it runs on the same idea. Capture onc
   height={1000}
 />
 
-From that one recording, two things become possible. The first is narration, text-to-speech in your own voice, spread across seven engines that trade off speed, expressiveness, and language coverage. [Kokoro](https://github.com/hexgrad/kokoro) runs free and instant for a quick read. [ChatterBox](https://github.com/resemble-ai/chatterbox) and [Qwen3](https://github.com/QwenLM/Qwen3-TTS) sit in the middle. [TADA](https://github.com/HumeAI/tada) is the studio-grade option for long-form. A roster like that only exists because open voice models have quietly gotten excellent. A closed vendor sells you its one voice stack. A platform built on open engines can pick the right one per job and swap in a better one the month it appears, and the reference clip that defines your voice stays a file you own, not an asset locked inside somebody's walled model. Between them the platform clones zero-shot across 23 languages, so the voice you recorded in English can read a paragraph in Spanish or Japanese and still sound like you. A persona field lets the voice write in character as well as speak, expanding a topic into copy before it ever hits synthesis.
+From that one recording, two things become possible. The first is narration, text-to-speech in your own voice, spread across seven engines that trade off speed, expressiveness, and language coverage. [Kokoro](https://github.com/hexgrad/kokoro) runs free and instant for a quick read. [ChatterBox](https://github.com/resemble-ai/chatterbox) and [Qwen3](https://github.com/QwenLM/Qwen3-TTS) sit in the middle. [TADA](https://github.com/HumeAI/tada) is the studio-grade option for long-form. A roster like that only exists because open voice models have quietly gotten excellent. A closed vendor sells you its one voice stack. A platform built on open engines can pick the right one per job and swap in a better one the month it appears, and the reference clip that defines your voice stays a file you own, not an asset locked inside somebody's walled model. ChatterBox alone clones zero-shot across 23 languages, so a voice recorded in English can read a paragraph in Spanish or Japanese and still sound like the same person; Qwen3 covers a narrower ten. A persona field lets the voice write in character as well as speak, expanding a topic into copy before it ever hits synthesis.
 
 The second is the part that ties the whole platform together. That same cloned reference can sing. Drop your voice onto a music generation and the model conditions its vocal timbre on your recording, zero-shot, at no extra cost. There is no training step and no second capture. The clip you recorded to narrate an audiobook is the same clip that puts your voice on a chorus.
 
+Those two zero-shot paths do not actually work the same way underneath, even though both start from the identical file. Narration leans on whatever cloning method each TTS engine already ships with internally. ChatterBox listens to the reference audio directly and needs nothing else. Qwen3 does better with a transcript of what you said in the reference clip alongside the audio, and falls back to a plainer voice fingerprint when there isn't one. TADA wants that transcript even more; without it, the platform has to guess one with a separate speech-to-text pass, and a guessed transcript is the one place voice quality gets a little unpredictable, since the same upload can land closer to your voice on one attempt and further from it on the next. Singing runs on a completely different piece of machinery. ACE-Step 1.5 carries its own small encoder built specifically to listen to a voice and turn it into a single embedding the main model conditions on while it generates, the same way it already conditions on a style prompt or a lyric. A short reference gets looped to fill out the window that encoder expects; a longer one gets sampled from the front, middle, and back instead of just the start. There's no separate strength dial for this either. Once a voice is attached to a generation, the model commits to it fully.
+
 <Mermaid chart={`
 flowchart TD
-    REC["One continuous\nrecording"] --> REF["Canonical reference\ncleaned, 48 kHz"]
+    REC["One continuous\nrecording"] --> REF["Canonical reference\ncleaned, 48 kHz mono"]
 
     REF --> TTS["Narration\nTTS in your voice"]
     REF --> SING["Music\nzero-shot\nvocal timbre"]
 
-    TTS --> LANG["23 languages\nacross engines"]
+    TTS --> LANG["up to 23 languages,\nengine-dependent"]
     SING --> SONG["Your voice on\na generated track"]
 
     style REC fill:#0d1b2a,stroke:#3a86ff,color:#fff
@@ -215,6 +231,8 @@ flowchart TD
 `} />
 
 The recorder itself is careful about the thing that actually determines clone quality: clean, continuous, phonetically varied audio. It runs one uninterrupted capture with a rotating teleprompter, watches your input level live, and rejects a take that is mostly silence before it ever uploads. On the worker side, the reference gets trimmed, de-offset, and normalized before it becomes the canonical clip every engine conditions on. The single biggest lever on how much a clone sounds like you is the quality of that one recording, so that is where the tool puts its effort.
+
+Cloning itself is gated by tier rather than metered by credits. Free accounts can narrate with the built-in voices but cannot clone their own. Pro allows up to five cloned voice profiles. Studio removes the cap entirely. TADA sits a step above even that, reserved for Studio regardless of how many clone slots are left, since it is the engine that most rewards a careful recording and most punishes a rushed one.
 
 ## Serverless GPUs, Held Together by Discipline
 

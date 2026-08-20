@@ -74,7 +74,7 @@ flowchart TD
     style RENDER fill:#0d1b2a,stroke:#3a86ff,color:#fff
 `} />
 
-Credits are deducted before the GPU is asked to do anything, and refunded automatically if the job dies. That ordering is deliberate. It means the ledger can never promise work it did not pay for. A worker that crashes at import time, a host with the wrong driver, a job that silently vanishes, all of these resolve back to the user getting their credits returned, rather than a track stuck forever in a "generating" state. A watchdog sweeps for jobs that went quiet and reconciles them. None of this is visible when everything works, which is the point.
+Credits are deducted before the GPU is asked to do anything, and refunded automatically if the job dies. That ordering is deliberate: the ledger can never promise work it did not pay for, so a track never gets stuck forever in a "generating" state waiting on a job that is never coming back. None of this is visible when everything works, which is the point.
 
 ## Spend Fidelity, Not Guesswork
 
@@ -236,7 +236,7 @@ The recorder itself is careful about the thing that actually determines clone qu
 
 Cloning itself is gated by tier rather than metered by credits. Free accounts can narrate with the built-in voices but cannot clone their own. Pro allows up to five cloned voice profiles. Studio removes the cap entirely. TADA sits a step above even that, reserved for Studio regardless of how many clone slots are left, since it is the engine that most rewards a careful recording and most punishes a rushed one.
 
-## Serverless GPUs, Held Together by Discipline
+## Two Tiers, Decoupled on Purpose
 
 ---
 
@@ -279,9 +279,9 @@ graph TB
     style VOICE fill:#7b2cbf,stroke:#9d4edd,color:#fff
 `} />
 
-The failure surface of this design is large, and most of the engineering behind EchoSonic lives there, not in the models. Serverless GPU work is a distributed system with all the usual hazards: a job dispatched to a worker that never boots, a callback that fires twice, a host whose driver is a version behind, a cancel that stops billing but not the running kernel. Each one has a specific answer. Credits are held before dispatch and refunded on any terminal failure. Callbacks are idempotent against retries. Cancels reach into the worker mid-inference through a polled flag, so a stopped job actually stops burning GPU. A cron watchdog reconciles anything that slips through, marks it failed, and returns the credits, and it goes out of its way not to wake the database when there is no work in flight.
+The reason to split it this way is economic as much as technical. A GPU large enough to run a diffusion transformer is expensive to hold open and idle, and music generation is bursty by nature, so paying for one only while it is actually inferencing is the difference between a viable product and a hobby project. The web tier stays cheap and always-on, handling auth, billing, and orchestration, while the GPU fleet scales to zero between jobs and back up under load. The two sides never talk to each other directly. A generation is dispatched as a message, not a function call, and the worker reports back through a callback whenever it finishes, whether that is three seconds or three minutes later. That decoupling is what lets the fleet grow and shrink independently, without the web tier ever blocking on it.
 
-The result reads, from the user's side, as a tool that simply works: press generate, watch a waveform appear, edit it into something you meant. The distributed-systems care that makes that true is invisible, which is exactly how it should be.
+The result reads, from the user's side, as a tool that simply works: press generate, watch a waveform appear, edit it into something you meant. The architecture that makes an ephemeral, bursty GPU fleet feel like a dedicated one is invisible, which is exactly how it should be.
 
 ## Machines Have Always Been in the Band
 

@@ -11,6 +11,7 @@ export const metadata: Metadata = genPageMetadata({
   description:
     'All posts on BitWise: deep dives into backend engineering, distributed systems, AI/ML, and infrastructure.',
   path: 'blog',
+  image: '/static/og/blog.png',
 })
 
 export default async function BlogPage(props: { searchParams: Promise<{ page: string }> }) {

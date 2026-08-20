@@ -9,6 +9,7 @@ export const metadata = genPageMetadata({
   description:
     'Browse all topics on BitWise — backend engineering, distributed systems, AI/ML, blockchain, and infrastructure.',
   path: 'tags',
+  image: '/static/og/tags.png',
 })
 
 export default async function Page() {

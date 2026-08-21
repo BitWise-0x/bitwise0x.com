@@ -2,7 +2,7 @@
 title: "EchoSonic: From a sentence to a finished track\nWritten, sung, and mixed by you"
 date: '2026-08-18'
 lastmod: '2026-08-19'
-tags: ['ai', 'projects', 'generative-ai', 'music-ai', 'voice-ai', 'diffusion', 'transformers', 'machine-learning', 'nextjs', 'typescript', 'gpu']
+tags: ['ai', 'projects', 'generative-ai', 'music-ai', 'voice-ai', 'diffusion', 'transformers', 'machine-learning']
 draft: false
 summary: 'A production music platform that turns one line of intent into a finished track, then hands you a studio to edit it. Repaint a passage, add a layer, morph the style, clone your own voice, and sing it in any language.'
 images: ['/static/images/blog/echosonic/hero.jpg']
@@ -20,7 +20,7 @@ canonicalUrl: 'https://bitwise0x.com/blog/introducing-echosonic'
 AI music got good faster than almost anyone expected. A sentence of plain description now comes back as a complete song, structured and mixed, with a vocal that sings the words you gave it, and a wave of prompt-to-song sites has grown up around that capability. Nearly all of them end where the model ends. A track appears, and when the second verse sags or the voice is not the one you heard in your head, there is nothing to reach for. The song was never really yours. It just happened near you.
 
 <ZoomableImage
-  src="/static/images/blog/echosonic/studio.png"
+  src="/static/images/blog/echosonic/studio.jpg"
   alt="EchoSonic feature overview"
   width={1600}
   height={1000}
@@ -32,49 +32,11 @@ AI music got good faster than almost anyone expected. A sentence of plain descri
 
 ---
 
-The front door is a single prompt. You write what you want in plain language, optionally paste or generate lyrics, choose how much fidelity to spend, and press generate. Everything past that point is machinery, and the machinery is the actual product.
+The front door is a single prompt. You write what you want in plain language, optionally paste or generate lyrics, choose how much fidelity to spend, and press generate. Everything past that point, the editing, the stems, the voice work, is the actual product.
 
-<ZoomableImage
-  src="/static/images/blog/echosonic/landing.jpg"
-  alt="EchoSonic landing page"
-  width={1200}
-  height={630}
-/>
+Underneath the prompt sits a real generative model, [ACE-Step 1.5](https://github.com/ace-step/ACE-Step-1.5), trained on music rather than on speech or images. It is an open-weight model, with checkpoints anyone can pull from Hugging Face, and that choice shapes the whole product in ways worth coming back to later. You describe style and instrumentation, and the lyrics, if there are any, get their own line to sing rather than being stapled onto a backing track. What comes back is a genuine mixed recording with a waveform you can scrub, not a MIDI sketch waiting to be rendered.
 
-Underneath the prompt sits a real generative model, [ACE-Step 1.5](https://github.com/ace-step/ACE-Step-1.5), a diffusion transformer trained on music rather than on speech or images. It is an open-weight model, MIT-licensed code with checkpoints anyone can pull from Hugging Face, and that choice shapes the whole product in ways worth coming back to later. A prompt describes style and instrumentation. The lyrics, if there are any, are conditioned separately, so the model is placing a vocal line against an arrangement instead of stapling words onto a backing track. The result comes back as a genuine mixed recording with a waveform you can scrub, not a MIDI sketch waiting to be rendered.
-
-What matters operationally is that a generation is never a single blocking request. The moment you press the button, EchoSonic reserves the credits, hands the job to a GPU that may not exist yet, and starts streaming status back to your browser. You watch the track cook in real time rather than staring at a spinner and hoping.
-
-<Mermaid chart={`
-flowchart TD
-    USER["Browser\nprompt + lyrics + quality"] --> API["tRPC API\nvalidate + tier gate"]
-    API --> CREDIT{"enough credits?"}
-    CREDIT -- "no" --> BLOCK["paused until\nrenewal / top-up"]
-    CREDIT -- "yes" --> DISPATCH["deduct credits,\nwrite ledger,\ndispatch to worker"]
-
-    DISPATCH --> GPU
-
-    subgraph GPU["GPU worker (cold-start safe)"]
-        direction LR
-        INFER["ACE-Step 1.5\ndiffusion inference"] --> UPLOAD["encode + upload\naudio to storage"]
-    end
-
-    GPU --> CB["callback to API:\nwrite version + peaks,\npush SSE event"]
-    CB --> RENDER["browser renders\nwaveform + player"]
-
-    style USER fill:#0d1b2a,stroke:#3a86ff,color:#fff
-    style API fill:#14213d,stroke:#565f89,color:#fff
-    style CREDIT fill:#343a40,stroke:#6c757d,color:#fff
-    style BLOCK fill:#b5651d,stroke:#d4a574,color:#fff
-    style DISPATCH fill:#14213d,stroke:#565f89,color:#fff
-    style GPU fill:#1b4332,stroke:#40916c,color:#fff
-    style INFER fill:#2d6a4f,stroke:#40916c,color:#fff
-    style UPLOAD fill:#2d6a4f,stroke:#40916c,color:#fff
-    style CB fill:#7b2cbf,stroke:#9d4edd,color:#fff
-    style RENDER fill:#0d1b2a,stroke:#3a86ff,color:#fff
-`} />
-
-Credits are deducted before the GPU is asked to do anything, and refunded automatically if the job dies. That ordering is deliberate: the ledger can never promise work it did not pay for, so a track never gets stuck forever in a "generating" state waiting on a job that is never coming back. None of this is visible when everything works, which is the point.
+Pressing generate does not freeze the page. The track appears as it renders, so you watch it take shape instead of staring at a spinner and hoping.
 
 ## Spend Fidelity, Not Guesswork
 
@@ -89,10 +51,10 @@ There is a quality dial, and it is honest about what it costs. EchoSonic exposes
 | Premium | xl | 8 | 30 | Studio |
 | Max Quality | xl-sft | 50 | 50 | Studio |
 
-The economics are fungible on purpose. One pool of credits buys generations, edits, stems, and voice narration alike, and the per-action cost lives as a single source of truth in the codebase, not a literal scattered across a dozen screens. Repricing one action is a one-line change, and the cost the summary card shows you gets computed by the exact same function the server charges with, so the number you see and the number you pay can never drift apart.
+The economics are fungible on purpose. One pool of credits buys generations, edits, stems, and voice narration alike, and the price a summary card quotes you before an action is the price you actually pay for it. There is no separate meter running behind the one you can see.
 
 <ZoomableImage
-  src="/static/images/blog/echosonic/pricing.png"
+  src="/static/images/blog/echosonic/pricing.jpg"
   alt="EchoSonic pricing tiers"
   width={1600}
   height={1400}
@@ -116,7 +78,7 @@ Some positioning is unavoidable here. The household names in AI music, Suno and 
   height={800}
 />
 
-EchoSonic runs on open weights and says so. ACE-Step 1.5 publishes its code, its checkpoints, and its paper, and anyone with a consumer GPU and a free afternoon can run the same model at home. Building on that is a deliberate trade. The model cannot be the moat, so the product has to be, and this article is mostly a tour of what that product actually is: the version history that never overwrites a take, the ledger that refunds failed jobs, the stem mixer, the voice pipeline, the serverless fleet that makes a research model behave like an appliance. Even the pricing table above is a small act of transparency. Draft, Quality, Premium, and Max are not tiers of a mystery. They are four named checkpoints of a documented model, and the editing operations in the next section, repaint, cover, morph, are capabilities the model itself was trained for, surfaced as controls instead of left buried in a research README.
+EchoSonic runs on open weights and says so. ACE-Step 1.5 publishes its code, its checkpoints, and its paper, and anyone with the right hardware and a free afternoon can run the same model at home. Building on that is a deliberate trade. The model cannot be the moat, so the product has to be, and this article is mostly a tour of what that product actually is: the version history that never overwrites a take, the stem mixer, the voice cloning, the editing surface that turns a first draft into a finished track. Even the pricing table above is a small act of transparency. Draft, Quality, Premium, and Max are not tiers of a mystery. They are four named checkpoints of a documented model, and the editing operations in the next section, repaint, cover, morph, are capabilities the model itself was trained for, surfaced as controls instead of left buried in a research README.
 
 ## The Draft Is Where the Work Begins
 
@@ -125,7 +87,7 @@ EchoSonic runs on open weights and says so. ACE-Step 1.5 publishes its code, its
 A first generation is a starting point, and EchoSonic treats it that way. Every finished track becomes a card in a library, and every card is its own small studio. You never leave the song to edit it. The edit tools live right there on the song.
 
 <ZoomableImage
-  src="/static/images/blog/echosonic/reshape.png"
+  src="/static/images/blog/echosonic/reshape.jpg"
   alt="EchoSonic edit surface and version history"
   width={1600}
   height={1000}
@@ -161,7 +123,7 @@ flowchart TD
     end
 
     EDITS --> HIST["Version history"]
-    HIST --> PROMOTE["Make current\npointer flip, no re-render"]
+    HIST --> PROMOTE["Make current\ninstant, no re-render"]
 
     style GEN fill:#0d1b2a,stroke:#3a86ff,color:#fff
     style EDITS fill:#14213d,stroke:#565f89,color:#fff
@@ -177,7 +139,7 @@ flowchart TD
     style PROMOTE fill:#7b2cbf,stroke:#9d4edd,color:#fff
 `} />
 
-Every edit lands as a new version on the song, never a silent overwrite. The original take stays exactly where it was. Your edit sits beside it in a history you can play through. When you find the version you want, "Make current" promotes it, and that promotion is a pure pointer flip, no GPU work, no credits, no new render. The take you chose simply becomes the face of the song, and future edits branch from it. Nothing you generated is ever thrown away to make room for what you generated next.
+Every edit lands as a new version on the song, never a silent overwrite. The original take stays exactly where it was. Your edit sits beside it in a history you can play through. When you find the version you want, "Make current" promotes it, and that promotion is instant, no credits and no new render. The take you chose simply becomes the face of the song, and future edits branch from it. Nothing you generated is ever thrown away to make room for what you generated next.
 
 ## Inside Cover: What Actually Happens When You Restyle a Song
 
@@ -191,7 +153,7 @@ The second knob is about when the new prompt takes over. For most of the denoisi
 
 That is also why the prompt box for Cover starts empty rather than pre-filled with the song's original description. A short instruction like "jazz piano version" works. Pasting in the song's full original prompt on top of it does not, because the source audio is already carrying that description into the sampler directly, and a second, denser copy of the same information competes with it instead of adding anything.
 
-None of this requires the source to already live in your EchoSonic library, either. "Cover from audio" is the same operation pointed at a file you upload from your own computer instead of a song you generated here: a field recording, an old demo, a track you bounced out of another DAW. Drop it in, write what you want it to become, and it runs through the identical mechanism, your file anchoring the structure while the prompt reshapes everything else. Because there is no existing song to inherit settings from, the upload path asks for a few things the in-library version already knows: which model tier to render at, whether the result should have vocals, and the lyrics if it does. That also means picking a higher model tier on an upload is checked against your subscription the same way a fresh generation would be, which the in-library version never has to think about, since it always renders at whatever tier the original song was made on.
+None of this requires the source to already live in your EchoSonic library, either. "Cover from audio" is the same operation pointed at a file you upload from your own computer instead of a song you generated here: a field recording, an old demo, a track you bounced out of another DAW. Drop it in, write what you want it to become, and it runs through the identical mechanism, your file anchoring the structure while the prompt reshapes everything else. Because there is no existing song to inherit settings from, the upload path asks for a few things the in-library version already knows: which quality to render at, whether the result should have vocals, and the lyrics if it does.
 
 Morph, sitting right next to Cover in the edit menu, sounds similar but works on a different axis entirely. Cover hands control from source to prompt at one point partway through. Morph blends the two continuously across a window of steps you can widen or narrow, more like a crossfade than a handoff, which is why a light morph nudges a song and a strong one can walk it somewhere new. Different question, different mechanism: Cover asks "how much of the original survives before the new idea takes over," Morph asks "how far along the path between old and new should this land."
 
@@ -202,7 +164,7 @@ Morph, sitting right next to Cover in the edit menu, sounds similar but works on
 The second half of EchoSonic is voice, and it runs on the same idea. Capture once, use everywhere. You record yourself reading a short teleprompter passage, one continuous take, and that single clip becomes a cloned voice you own.
 
 <ZoomableImage
-  src="/static/images/blog/echosonic/voicelab.png"
+  src="/static/images/blog/echosonic/voicelab.jpg"
   alt="EchoSonic Voice Lab"
   width={1600}
   height={1000}
@@ -212,11 +174,11 @@ From that one recording, two things become possible. The first is narration, tex
 
 The second is the part that ties the whole platform together. That same cloned reference can sing. Drop your voice onto a music generation and the model conditions its vocal timbre on your recording, zero-shot, at no extra cost. There is no training step and no second capture. The clip you recorded to narrate an audiobook is the same clip that puts your voice on a chorus.
 
-Those two zero-shot paths do not actually work the same way underneath, even though both start from the identical file. Narration leans on whatever cloning method each TTS engine already ships with internally. ChatterBox listens to the reference audio directly and needs nothing else. Qwen3 does better with a transcript of what you said in the reference clip alongside the audio, and falls back to a plainer voice fingerprint when there isn't one. TADA wants that transcript even more; without it, the platform has to guess one with a separate speech-to-text pass, and a guessed transcript is the one place voice quality gets a little unpredictable, since the same upload can land closer to your voice on one attempt and further from it on the next. Singing runs on a completely different piece of machinery. ACE-Step 1.5 carries its own small encoder built specifically to listen to a voice and turn it into a single embedding the main model conditions on while it generates, the same way it already conditions on a style prompt or a lyric. A short reference gets looped to fill out the window that encoder expects; a longer one gets sampled from the front, middle, and back instead of just the start. There's no separate strength dial for this either. Once a voice is attached to a generation, the model commits to it fully.
+Narration and singing both start from that identical file, even though each engine listens to it a little differently. The upshot for you is simple. There is nothing to configure. You attach a voice and it is used, fully, whether the output is a spoken paragraph or a sung chorus.
 
 <Mermaid chart={`
 flowchart TD
-    REC["One continuous\nrecording"] --> REF["Canonical reference\ncleaned, 48 kHz mono"]
+    REC["One continuous\nrecording"] --> REF["One reference clip\nyou own"]
 
     REF --> TTS["Narration\nTTS in your voice"]
     REF --> SING["Music\nzero-shot\nvocal timbre"]
@@ -232,56 +194,9 @@ flowchart TD
     style SONG fill:#b5651d,stroke:#d4a574,color:#fff
 `} />
 
-The recorder itself is careful about the thing that actually determines clone quality: clean, continuous, phonetically varied audio. It runs one uninterrupted capture with a rotating teleprompter, watches your input level live, and rejects a take that is mostly silence before it ever uploads. On the worker side, the reference gets trimmed, de-offset, and normalized before it becomes the canonical clip every engine conditions on. The single biggest lever on how much a clone sounds like you is the quality of that one recording, so that is where the tool puts its effort.
+The recorder itself is careful about the one thing that actually determines clone quality, which is clean, continuous, varied audio. It runs a single uninterrupted capture with a rotating teleprompter, watches your input level live, and rejects a take that is mostly silence before it ever uploads. The quality of that one recording is the biggest lever on how much a clone sounds like you, so that is where the tool puts its effort.
 
 Cloning itself is gated by tier rather than metered by credits. Free accounts can narrate with the built-in voices but cannot clone their own. Pro allows up to five cloned voice profiles. Studio removes the cap entirely. TADA sits a step above even that, reserved for Studio regardless of how many clone slots are left, since it is the engine that most rewards a careful recording and most punishes a rushed one.
-
-## Two Tiers, Decoupled on Purpose
-
----
-
-None of this runs on a permanently rented graphics card. EchoSonic is a Next.js application on the edge with a serverless GPU backend. The web tier validates, bills, and orchestrates, and the actual inference lands on ephemeral serverless workers that spin up on demand, pull their model weights, run the job, and disappear.
-
-<Mermaid chart={`
-graph TB
-    subgraph web["Web tier (edge)"]
-        direction LR
-        UI["Next.js\nApp Router"] --> TRPC["tRPC API"] --> AUTH["Auth\n+ Billing"]
-    end
-
-    subgraph gpu["Serverless GPU workers"]
-        direction LR
-        MUSIC["Music worker\nACE-Step 1.5"]
-        VOICE["Voice worker\nTTS + cloning"]
-    end
-
-    subgraph data["State"]
-        direction LR
-        PG["Postgres"]
-        REDIS["Redis"]
-        R2["Object storage\naudio + stems"]
-    end
-
-    web -->|dispatch| gpu
-    gpu -.->|upload + callback| data
-    web --> data
-
-    style web fill:#0d1b2a,stroke:#3a86ff,color:#fff
-    style data fill:#1b263b,stroke:#3a86ff,color:#fff
-    style gpu fill:#1b4332,stroke:#40916c,color:#fff
-    style UI fill:#14213d,stroke:#565f89,color:#fff
-    style TRPC fill:#14213d,stroke:#565f89,color:#fff
-    style AUTH fill:#14213d,stroke:#565f89,color:#fff
-    style PG fill:#2d6a4f,stroke:#40916c,color:#fff
-    style REDIS fill:#2d6a4f,stroke:#40916c,color:#fff
-    style R2 fill:#2d6a4f,stroke:#40916c,color:#fff
-    style MUSIC fill:#7b2cbf,stroke:#9d4edd,color:#fff
-    style VOICE fill:#7b2cbf,stroke:#9d4edd,color:#fff
-`} />
-
-The reason to split it this way is economic as much as technical. A GPU large enough to run a diffusion transformer is expensive to hold open and idle, and music generation is bursty by nature, so paying for one only while it is actually inferencing is the difference between a viable product and a hobby project. The web tier stays cheap and always-on, handling auth, billing, and orchestration, while the GPU fleet scales to zero between jobs and back up under load. The two sides never talk to each other directly. A generation is dispatched as a message, not a function call, and the worker reports back through a callback whenever it finishes, whether that is three seconds or three minutes later. That decoupling is what lets the fleet grow and shrink independently, without the web tier ever blocking on it.
-
-The result reads, from the user's side, as a tool that simply works: press generate, watch a waveform appear, edit it into something you meant. The architecture that makes an ephemeral, bursty GPU fleet feel like a dedicated one is invisible, which is exactly how it should be.
 
 ## Machines Have Always Been in the Band
 
@@ -307,3 +222,10 @@ So the question that matters is not whether using a model counts as cheating. It
 Generation stopped being the hard part of AI music somewhere in the last two years. A plausible track in a minute is available in half a dozen places, this one included. What is still rare is everything after that minute, and that is where the effort went: a passage you can repaint without losing the rest, a history that keeps every take, stems with real faders, a voice you recorded once and can put anywhere. A first draft in sixty seconds is a good demo. A draft you can keep shaping, in your own voice, in any language, without ever needing to have been a producer, that is a tool.
 
 Start free at [echosonic.io](https://echosonic.io). Every account opens on a full Studio trial, no card required, which is the only honest way to argue for a product whose point is the part you reach after the first song exists.
+
+<ZoomableImage
+  src="/static/images/blog/echosonic/landing.jpg"
+  alt="EchoSonic landing page"
+  width={1200}
+  height={630}
+/>

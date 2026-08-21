@@ -17,9 +17,9 @@ canonicalUrl: 'https://bitwise0x.com/blog/introducing-echosonic'
   height={1260}
 />
 
-AI music got good faster than almost anyone expected. A sentence of plain description now comes back as a complete song, structured and mixed, with a vocal that sings the words you gave it, and a wave of prompt-to-song sites has grown up around that capability. Nearly all of them end where the model ends. A track appears, and when the second verse sags or the voice is not the one you heard in your head, there is nothing to reach for. The song was never really yours. It just happened near you.
+AI music got good faster than almost anyone expected. A sentence of plain description now comes back as a complete song, structured and mixed, with a vocal singing your lyrics, and a wave of prompt-to-song sites has grown up around that capability. Nearly all of them end where the model ends. A track appears, and when the second verse sags or the voice is not the one you heard in your head, there is nothing to reach for. The song was never really yours. It just happened near you.
 
-[EchoSonic](https://echosonic.io) states its whole argument on the front page. From a sentence to a finished track, written, sung, and mixed by you. It starts the same way as every other prompt-to-song site, and then refuses to stop there. You describe a song, "a slow-burning trip-hop track, brushed drums, a voice that sounds like it is remembering something," and a minute later there is audio: a structured track with an intro, a body, and an ending, not just a loop. What separates it from the prompt-and-pray sites is everything that happens after that minute. The draft is a working surface. You can re-synthesize just the passage you dislike, pull the mix apart into stems, or record your voice once and have it sing the chorus in a language you have never spoken. The whole platform is built around the stretch between a first draft and a track you would actually put your name on.
+[EchoSonic](https://echosonic.io) starts the same way as every other prompt-to-song site, and then refuses to stop there. You describe a song, "a slow-burning trip-hop track, brushed drums, a voice that sounds like it is remembering something," and a minute later there is audio: a structured track with an intro, a body, and an ending, not just a loop. What separates it from the prompt-and-pray sites is everything that happens after that minute. The draft is a working surface. You can re-synthesize just the passage you dislike, pull the mix apart into stems, or record your voice once and have it sing the chorus in a language you have never spoken. The whole platform is built around the stretch between a first draft and a track you would actually put your name on.
 
 <ZoomableImage
   src="/static/images/blog/echosonic/studio.jpg"
@@ -28,44 +28,15 @@ AI music got good faster than almost anyone expected. A sentence of plain descri
   height={1000}
 />
 
-Scroll past the hero and the homepage lays the pieces out plainly. Generation, a studio editor, voice cloning, stem separation, effects, and sharing, each one a stage of the same pipeline rather than a separate product bolted on. The rest of this article walks that pipeline in the order you would actually meet it.
+The pipeline has five stages: generation, a studio editor, voice cloning, stem separation, and effects, each one feeding the next rather than sitting bolted on as a separate product. What follows walks that pipeline in the order you would actually meet it.
 
 ## From a Sentence to a Song
 
 ---
 
-The front door is a single prompt. You write what you want in plain language, optionally paste or generate lyrics, choose how much fidelity to spend, and press generate. Everything past that point, the editing, the stems, the voice work, is the actual product.
+You write what you want in plain language, optionally paste or generate lyrics, and generate. Everything past that point, the editing, the stems, the voice work, is the actual product.
 
 Underneath the prompt sits a real generative model, [ACE-Step 1.5](https://github.com/ace-step/ACE-Step-1.5), trained on music rather than on speech or images. It is an open-weight model, with checkpoints anyone can pull from Hugging Face, and that choice shapes the whole product in ways worth coming back to later. You describe style and instrumentation, and the lyrics, if there are any, get their own line to sing rather than being stapled onto a backing track. What comes back is a genuine mixed recording with a waveform you can scrub, not a MIDI sketch waiting to be rendered.
-
-Pressing generate does not freeze the page. The track appears as it renders, so you watch it take shape instead of staring at a spinner and hoping.
-
-## Spend Fidelity, Not Guesswork
-
----
-
-There is a quality dial, and it is honest about what it costs. EchoSonic exposes four operating points on the underlying model, from a fast distilled draft to the full high-fidelity checkpoint, and each one carries a plainly stated credit price so you are never surprised by an overage. You do not buy a subscription and then find out later that the good model is metered separately behind it.
-
-| Preset | Model | Inference steps | Credits (≤30s) | Tier |
-| ------ | ----- | --------------- | -------------- | ---- |
-| Draft | turbo | 8 | 5 | Free |
-| Quality | sft | 50 | 15 | Pro |
-| Premium | xl | 8 | 30 | Studio |
-| Max Quality | xl-sft | 50 | 50 | Studio |
-
-The economics are fungible on purpose. One pool of credits buys generations, edits, stems, and voice narration alike, and the price a summary card quotes you before an action is the price you actually pay for it. There is no separate meter running behind the one you can see.
-
-<ZoomableImage
-  src="/static/images/blog/echosonic/pricing.jpg"
-  alt="EchoSonic pricing tiers"
-  width={1600}
-  height={1400}
-/>
-
-Three tiers stack on top of that. Free gives you a daily trickle of credits and the draft model, enough to learn the tool. Pro unlocks the full-fidelity Quality checkpoint and a monthly credit budget. Studio opens the two premium models, the largest budget, and the full editing surface. Every new account starts on a Studio trial with no card required, because the whole argument of the product lives in the parts you only reach once you have a first draft to work on.
-
-> [!NOTE]
-> When credits run out, generation pauses. It does not silently bill you for an overage. You wait for the monthly renewal or buy a one-time pack. Predictable cost was a design goal, not an afterthought.
 
 ## The Model Is Not the Moat
 
@@ -80,7 +51,7 @@ Some positioning is unavoidable here. The household names in AI music, Suno and 
   height={800}
 />
 
-EchoSonic runs on open weights and says so. ACE-Step 1.5 publishes its code, its checkpoints, and its paper, and anyone with the right hardware and a free afternoon can run the same model at home. Building on that is a deliberate trade. The model cannot be the moat, so the product has to be, and this article is mostly a tour of what that product actually is: the version history that never overwrites a take, the stem mixer, the voice cloning, the editing surface that turns a first draft into a finished track. Even the pricing table above is a small act of transparency. Draft, Quality, Premium, and Max are not tiers of a mystery. They are four named checkpoints of a documented model, and the editing operations in the next section, repaint, cover, morph, are capabilities the model itself was trained for, surfaced as controls instead of left buried in a research README.
+EchoSonic runs on open weights and says so. ACE-Step 1.5 publishes its code, its checkpoints, and its paper, and anyone with the right hardware and a free afternoon can run the same model at home. Building on that is a deliberate trade. The model cannot be the moat, so the product has to be, and this article is mostly a tour of what that product actually is: the version history that never overwrites a take, the stem mixer, the voice cloning, the editing surface that turns a first draft into a finished track. EchoSonic also exposes several distilled and full-precision checkpoints of the same model rather than hiding a single one behind the interface, and the editing operations in the next section, repaint, cover, morph, are capabilities the model itself was trained for, surfaced as controls instead of left buried in a research README.
 
 ## The Draft Is Where the Work Begins
 
@@ -141,7 +112,7 @@ flowchart TD
     style PROMOTE fill:#7b2cbf,stroke:#9d4edd,color:#fff
 `} />
 
-Every edit lands as a new version on the song, never a silent overwrite. The original take stays exactly where it was. Your edit sits beside it in a history you can play through. When you find the version you want, "Make current" promotes it, and that promotion is instant, no credits and no new render. The take you chose simply becomes the face of the song, and future edits branch from it. Nothing you generated is ever thrown away to make room for what you generated next.
+Every edit lands as a new version on the song, never a silent overwrite. The original take stays exactly where it was. Your edit sits beside it in a history you can play through. When you find the version you want, "Make current" promotes it instantly, with no new render. The take you chose simply becomes the face of the song, and future edits branch from it. Nothing you generated is ever thrown away to make room for what you generated next.
 
 ## Inside Cover: What Actually Happens When You Restyle a Song
 
@@ -174,7 +145,7 @@ The second half of EchoSonic is voice, and it runs on the same idea. Capture onc
 
 From that one recording, two things become possible. The first is narration, text-to-speech in your own voice, spread across seven engines that trade off speed, expressiveness, and language coverage. [Kokoro](https://github.com/hexgrad/kokoro) runs free and instant for a quick read. [ChatterBox](https://github.com/resemble-ai/chatterbox) and [Qwen3](https://github.com/QwenLM/Qwen3-TTS) sit in the middle. [TADA](https://github.com/HumeAI/tada) is the studio-grade option for long-form. A roster like that only exists because open voice models have quietly gotten excellent. A closed vendor sells you its one voice stack. A platform built on open engines can pick the right one per job and swap in a better one the month it appears, and the reference clip that defines your voice stays a file you own, not an asset locked inside somebody's walled model. ChatterBox alone clones zero-shot across 23 languages, so a voice recorded in English can read a paragraph in Spanish or Japanese and still sound like the same person; Qwen3 covers a narrower ten. A persona field lets the voice write in character as well as speak, expanding a topic into copy before it ever hits synthesis.
 
-The second is the part that ties the whole platform together. That same cloned reference can sing. Drop your voice onto a music generation and the model conditions its vocal timbre on your recording, zero-shot, at no extra cost. There is no training step and no second capture. The clip you recorded to narrate an audiobook is the same clip that puts your voice on a chorus.
+The second is the part that ties the whole platform together. That same cloned reference can sing. Drop your voice onto a music generation and the model conditions its vocal timbre on your recording, zero-shot. There is no training step and no second capture. The clip you recorded to narrate an audiobook is the same clip that puts your voice on a chorus.
 
 Narration and singing both start from that identical file, even though each engine listens to it a little differently. The upshot for you is simple. There is nothing to configure. You attach a voice and it is used, fully, whether the output is a spoken paragraph or a sung chorus.
 
@@ -197,8 +168,6 @@ flowchart TD
 `} />
 
 The recorder itself is careful about the one thing that actually determines clone quality, which is clean, continuous, varied audio. It runs a single uninterrupted capture with a rotating teleprompter, watches your input level live, and rejects a take that is mostly silence before it ever uploads. The quality of that one recording is the biggest lever on how much a clone sounds like you, so that is where the tool puts its effort.
-
-Cloning itself is gated by tier rather than metered by credits. Free accounts can narrate with the built-in voices but cannot clone their own. Pro allows up to five cloned voice profiles. Studio removes the cap entirely. TADA sits a step above even that, reserved for Studio regardless of how many clone slots are left, since it is the engine that most rewards a careful recording and most punishes a rushed one.
 
 ## Machines Have Always Been in the Band
 
@@ -223,7 +192,7 @@ So the question that matters is not whether using a model counts as cheating. It
 
 Generation stopped being the hard part of AI music somewhere in the last two years. A plausible track in a minute is available in half a dozen places, this one included. What is still rare is everything after that minute, and that is where the effort went: a passage you can repaint without losing the rest, a history that keeps every take, stems with real faders, a voice you recorded once and can put anywhere. A first draft in sixty seconds is a good demo. A draft you can keep shaping, in your own voice, in any language, without ever needing to have been a producer, that is a tool.
 
-Start free at [echosonic.io](https://echosonic.io). Every account opens on a full Studio trial, no card required, which is the only honest way to argue for a product whose point is the part you reach after the first song exists.
+Try it at [echosonic.io](https://echosonic.io).
 
 <ZoomableImage
   src="/static/images/blog/echosonic/hero.jpg"

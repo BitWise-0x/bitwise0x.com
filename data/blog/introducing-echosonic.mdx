@@ -36,9 +36,9 @@ The pipeline has five stages: generation, a studio editor, voice cloning, stem s
 
 You write what you want in plain language, optionally paste or generate lyrics, and generate. Everything past that point, the editing, the stems, the voice work, is the actual product.
 
-Underneath the prompt sits a real generative model, [ACE-Step 1.5](https://github.com/ace-step/ACE-Step-1.5), trained on music rather than on speech or images. It is an open-weight model, with checkpoints anyone can pull from Hugging Face, and that choice shapes the whole product in ways worth coming back to later. You describe style and instrumentation, and the lyrics, if there are any, get their own line to sing rather than being stapled onto a backing track. What comes back is a genuine mixed recording with a waveform you can scrub, not a MIDI sketch waiting to be rendered.
+Underneath the prompt sits a real generative model, trained on music rather than on speech or images. You describe style and instrumentation, and the lyrics, if there are any, get their own line to sing rather than being stapled onto a backing track. What comes back is a genuine mixed recording with a waveform you can scrub, not a MIDI sketch waiting to be rendered.
 
-## The Model Is Not the Moat
+## The Draft Is Not the Product
 
 ---
 
@@ -51,7 +51,7 @@ Some positioning is unavoidable here. The household names in AI music, Suno and 
   height={800}
 />
 
-EchoSonic runs on open weights and says so. ACE-Step 1.5 publishes its code, its checkpoints, and its paper, and anyone with the right hardware and a free afternoon can run the same model at home. Building on that is a deliberate trade. The model cannot be the moat, so the product has to be, and this article is mostly a tour of what that product actually is: the version history that never overwrites a take, the stem mixer, the voice cloning, the editing surface that turns a first draft into a finished track. EchoSonic also exposes several distilled and full-precision checkpoints of the same model rather than hiding a single one behind the interface, and the editing operations in the next section, repaint, cover, morph, are capabilities the model itself was trained for, surfaced as controls instead of left buried in a research README.
+EchoSonic takes a different bet: generation is a commodity, not a moat, so the product has to earn its place after the first draft lands. This article is mostly a tour of what that means in practice: the version history that never overwrites a take, the stem mixer, the voice cloning, the editing surface that turns a first draft into a finished track. Repaint, cover, morph, and the rest are not filters bolted on top. They are real editing controls, not a research demo with a chat box in front of it.
 
 ## The Draft Is Where the Work Begins
 
@@ -114,21 +114,13 @@ flowchart TD
 
 Every edit lands as a new version on the song, never a silent overwrite. The original take stays exactly where it was. Your edit sits beside it in a history you can play through. When you find the version you want, "Make current" promotes it instantly, with no new render. The take you chose simply becomes the face of the song, and future edits branch from it. Nothing you generated is ever thrown away to make room for what you generated next.
 
-## Inside Cover: What Actually Happens When You Restyle a Song
+## Cover and Morph Are Not the Same Question
 
 ---
 
-Cover is worth pulling apart, because "keep the structure, change the style" is doing a lot of quiet work under one button, and it works on more than just songs EchoSonic already generated for you. The diffusion sampler that generates a track builds the audio step by step out of noise, and Cover controls that process with two separate knobs rather than one.
+Cover and Morph sit next to each other in the edit menu and sound similar, but they answer different questions, and getting that distinction right took real tuning. Cover asks how much of the original survives before a new idea takes over completely, a "Melody retention" slider controlling how much of the source track anchors the result, and a handoff point deciding when the new prompt takes the wheel. Push either knob too far and a cover collapses back into the original with nothing changed, a failure mode the product deliberately guards against rather than exposing as a rough edge for you to discover. Morph asks a subtler question: how far along the path between old and new should this land. Instead of a handoff, it blends source and target continuously, so a light touch nudges a song and a heavy one walks it somewhere new.
 
-The first is how much of the song's own audio anchors the starting point. At zero, the sampler starts from pure noise the same as any fresh generation, and the source only shapes things loosely through the model's own encoded sense of it. Turn that knob up and the sampler instead starts from the source track's own waveform with noise added back in, so the result is built directly on top of what is already there instead of imagined from scratch. In the product this is the "Melody retention" slider.
-
-The second knob is about when the new prompt takes over. For most of the denoising process the source song is still steering the sound, and only in the final stretch, the last quarter or so of the steps, does the model switch to following your new caption instead. That handoff point is what the "Cover" label controls. Turned all the way up, the source would steer the entire process and the caption would never really get a say, which in practice just reproduces the original song. EchoSonic caps that slider below the point where it stops doing anything, precisely because the team found that exact failure mode: an early version let the knob reach full strength, and a cover at full strength sounded identical to the source it started from.
-
-That is also why the prompt box for Cover starts empty rather than pre-filled with the song's original description. A short instruction like "jazz piano version" works. Pasting in the song's full original prompt on top of it does not, because the source audio is already carrying that description into the sampler directly, and a second, denser copy of the same information competes with it instead of adding anything.
-
-None of this requires the source to already live in your EchoSonic library, either. "Cover from audio" is the same operation pointed at a file you upload from your own computer instead of a song you generated here: a field recording, an old demo, a track you bounced out of another DAW. Drop it in, write what you want it to become, and it runs through the identical mechanism, your file anchoring the structure while the prompt reshapes everything else. Because there is no existing song to inherit settings from, the upload path asks for a few things the in-library version already knows: which quality to render at, whether the result should have vocals, and the lyrics if it does.
-
-Morph, sitting right next to Cover in the edit menu, sounds similar but works on a different axis entirely. Cover hands control from source to prompt at one point partway through. Morph blends the two continuously across a window of steps you can widen or narrow, more like a crossfade than a handoff, which is why a light morph nudges a song and a strong one can walk it somewhere new. Different question, different mechanism: Cover asks "how much of the original survives before the new idea takes over," Morph asks "how far along the path between old and new should this land."
+Cover also works on audio you did not generate here. "Cover from audio" runs the identical operation on a file you upload, a field recording, an old demo, a track bounced out of another DAW, your file anchoring the structure while the prompt reshapes everything else around it.
 
 ## Your Voice, in Any Language
 
@@ -143,7 +135,7 @@ The second half of EchoSonic is voice, and it runs on the same idea. Capture onc
   height={1000}
 />
 
-From that one recording, two things become possible. The first is narration, text-to-speech in your own voice, spread across seven engines that trade off speed, expressiveness, and language coverage. [Kokoro](https://github.com/hexgrad/kokoro) runs free and instant for a quick read. [ChatterBox](https://github.com/resemble-ai/chatterbox) and [Qwen3](https://github.com/QwenLM/Qwen3-TTS) sit in the middle. [TADA](https://github.com/HumeAI/tada) is the studio-grade option for long-form. A roster like that only exists because open voice models have quietly gotten excellent. A closed vendor sells you its one voice stack. A platform built on open engines can pick the right one per job and swap in a better one the month it appears, and the reference clip that defines your voice stays a file you own, not an asset locked inside somebody's walled model. ChatterBox alone clones zero-shot across 23 languages, so a voice recorded in English can read a paragraph in Spanish or Japanese and still sound like the same person; Qwen3 covers a narrower ten. A persona field lets the voice write in character as well as speak, expanding a topic into copy before it ever hits synthesis.
+From that one recording, two things become possible. The first is narration, text-to-speech in your own voice, spread across multiple engines that trade off speed, expressiveness, and language coverage, from a free instant read up to a studio-grade option built for long-form. The platform picks the right engine per job and can swap in a better one as they improve, and the reference clip that defines your voice stays a file you own, not an asset locked inside somebody's walled model. Voice cloning holds up across more than a dozen languages, so a voice recorded in English can read a paragraph in Spanish or Japanese and still sound like the same person. A persona field lets the voice write in character as well as speak, expanding a topic into copy before it ever hits synthesis.
 
 The second is the part that ties the whole platform together. That same cloned reference can sing. Drop your voice onto a music generation and the model conditions its vocal timbre on your recording, zero-shot. There is no training step and no second capture. The clip you recorded to narrate an audiobook is the same clip that puts your voice on a chorus.
 

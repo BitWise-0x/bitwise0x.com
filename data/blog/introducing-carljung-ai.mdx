@@ -29,10 +29,10 @@ Depth psychology gives a voice-based reflection tool an actual shape. Archetype,
 
 <Mermaid chart={`
 flowchart TD
-    Q["12-question assessment\nmost-like / least-like, per question"] --> SCORE["net scoring\nmost +1, least -1 per archetype"]
+    Q["12-question assessment\nmost-like / least-like, per question"] --> SCORE["scoring\nweighs what's claimed\nagainst what's disowned"]
     SCORE --> PROFILE["Profile\ndominant + secondary + tertiary"]
-    SCORE --> REJECT["Rejection tally\nhow often each archetype was named least-like"]
-    REJECT --> SHADOW["Shadow archetype\nmost-rejected, excluding the dominant"]
+    SCORE --> REJECT["Rejection signal\nhow often each archetype\nwas pushed away"]
+    REJECT --> SHADOW["Shadow archetype\nmost consistently rejected"]
 
     PROFILE --> SESSION
     SHADOW --> SESSION
@@ -44,9 +44,9 @@ flowchart TD
     end
 
     SESSION --> NOTES["Reflection notes\nengagement, themes, shadow appearance\nvisible to the user"]
-    NOTES --> READY["Stage-readiness score\nweighted average of last 5 sessions"]
+    NOTES --> READY["Stage-readiness score\nbuilt from recent sessions"]
 
-    READY --> GATE{"score >= 80%"}
+    READY --> GATE{"threshold met?"}
     GATE -- "not yet" --> SESSION
     GATE -- "yes" --> ADVANCE["advance to next stage"]
 
@@ -86,7 +86,7 @@ Individuation, in Jung's account, is the lifelong work of integrating the parts 
 
 ---
 
-The path in starts with an archetype assessment. Twelve forced-choice questions, styled after Carol Pearson's Pearson-Marr Archetype Indicator, ask not just which answer feels closest but which one feels furthest away. Each question offers five options spanning protection, self-expression, understanding, impact, and mastery. Pearson's twelve archetypes fall into three families: Ego archetypes (Innocent, Orphan, Hero, Caregiver), Soul archetypes (Explorer, Destroyer, Lover, Creator), and Self archetypes (Ruler, Magician, Sage, Jester). The forced-choice format is a deliberate departure from ordinary Likert self-report, where a person rates each trait on its own and rejection has to be guessed from whatever scores lowest. Asking most-like and least-like in the same breath measures rejection directly, as its own signal, rather than treating it as a byproduct of everything else scoring higher. Each archetype comes up across exactly five questions, so no pattern in the set has a structural head start toward looking dominant. The two picks per question net against each other, with a point gained for what is claimed and a point lost for what is disowned, so the shadow ends up with the same resolution as the dominant rather than trailing behind it. What comes out the other side is a dominant archetype, a secondary and tertiary pattern underneath it, and a shadow, whichever archetype the person most consistently pushed away. The percentages describe rank within one person's own answers, not standing against a population. In simulation, a genuinely leaning respondent's single dominant is recovered correctly around 88% of the time.
+The path in starts with an archetype assessment. Twelve forced-choice questions, styled after Carol Pearson's Pearson-Marr Archetype Indicator, ask not just which answer feels closest but which one feels furthest away. Each question offers five options spanning protection, self-expression, understanding, impact, and mastery, drawn from Pearson's twelve archetypes across three families: Ego, Soul, and Self. The forced-choice format is a deliberate departure from ordinary Likert self-report, where a person rates each trait on its own and rejection has to be guessed from whatever scores lowest. Asking most-like and least-like in the same breath measures rejection directly, as its own signal, rather than treating it as a byproduct of everything else scoring higher. The result is a dominant archetype, a secondary and tertiary pattern underneath it, and a shadow, whichever archetype the person most consistently pushed away. The percentages describe rank within one person's own answers, not standing against a population.
 
 <ZoomableImage
   src="/static/images/blog/carljung/assessment.png"
@@ -153,7 +153,7 @@ flowchart TD
 
 The Sage-dominant profile above turns up exactly this kind of note. A session marked "Defended" reads as engagement that is actively avoiding deeper emotional content, a retreat into a builder persona after prior vulnerable work, control of the frame kept through a dual role of builder and patient. The "How the Shadow Appeared" note is more specific still. The Caregiver shadow, the one this person rejected three times in the assessment, did not show up as movement toward compassion or toward being cared for. Offered a moment of being noticed, the person refused it flat out. The resistance note ties that refusal straight to the prosody trace: 74% embarrassment, 21% awkwardness, and 21% shame, recorded on the exact line where the person claimed to feel nothing. The words said one thing. The voice, read in parallel, said another. That gap is the note.
 
-Those notes are not decorative. They feed a stage-readiness score built from a person's last five sessions, and reaching 80% is what moves someone from one stage of individuation to the next. So progress tracks demonstrated engagement, not elapsed time or a closing self-report. And the system holds nothing back from the person it is about. Every private note the persona writes about a session, resistance patterns and shadow appearances included, stays visible to the user who lived it. Self-discovery conducted through a black box would defeat its own purpose.
+Those notes are not decorative. They feed a stage-readiness score built from a person's recent sessions, and clearing a threshold on that score is what moves someone from one stage of individuation to the next. So progress tracks demonstrated engagement, not elapsed time or a closing self-report. And the system holds nothing back from the person it is about. Every private note the persona writes about a session, resistance patterns and shadow appearances included, stays visible to the user who lived it. Self-discovery conducted through a black box would defeat its own purpose.
 
 This is what the project is built on. A shadow theme raised with genuine discomfort audible in the voice is a materially different event than the same words delivered flat, and a system reading only the transcript cannot tell those two moments apart. Whether that distinction actually deepens a self-reflection practice, or just decorates it with a more interesting metric, is not a question the design can answer on its own. It gets answered by what happens across real sessions, over real time.
 

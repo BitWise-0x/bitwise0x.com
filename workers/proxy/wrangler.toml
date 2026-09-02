@@ -1,0 +1,9 @@
+name = "bitwise0x-proxy"
+main = "src/index.js"
+compatibility_date = "2025-01-01"
+
+# Serve the tracker and its beacon endpoint from the apex under /i/*.
+# The zone must already be active in this Cloudflare account.
+routes = [
+  { pattern = "bitwise0x.com/i/*", zone_name = "bitwise0x.com" }
+]

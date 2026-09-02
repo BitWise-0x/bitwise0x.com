@@ -23,8 +23,12 @@ const siteMetadata = {
     // content security policy in the `next.config.js` file.
     // supports Plausible, Simple Analytics, Umami, Posthog or Google Analytics.
     umamiAnalytics: {
+      // Served first-party through the Cloudflare Worker in workers/proxy so
+      // content blockers matching cloud.umami.is do not strip it. Falls back to
+      // the cloud endpoints when the proxy env vars are unset (local dev).
       src: process.env.NEXT_UMAMI_SRC || 'https://cloud.umami.is/script.js',
       umamiWebsiteId: process.env.NEXT_UMAMI_ID, // e.g. 123e4567-e89b-12d3-a456-426614174000
+      umamiHostUrl: process.env.NEXT_UMAMI_HOST_URL, // first-party beacon base, e.g. https://bitwise0x.com/i
     },
     // plausibleAnalytics: {
     //   plausibleDataDomain: '',

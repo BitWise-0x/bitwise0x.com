@@ -48,6 +48,7 @@ jobs:
           NEXT_PUBLIC_GISCUS_CATEGORY_ID: ${{ vars.NEXT_PUBLIC_GISCUS_CATEGORY_ID }}
           NEXT_UMAMI_ID: ${{ vars.NEXT_UMAMI_ID }}
           NEXT_UMAMI_SRC: ${{ vars.NEXT_UMAMI_SRC }}
+          NEXT_UMAMI_HOST_URL: ${{ vars.NEXT_UMAMI_HOST_URL }}
       - uses: actions/upload-pages-artifact@v3
         with:
           path: ./out

@@ -40,7 +40,7 @@ export default function ProjectsList({ title = 'Projects' }: { title?: string })
             <li key={title} className="py-6 sm:py-12">
               <article className="flex flex-col gap-4 sm:flex-row sm:gap-6">
                 {thumbnail && (
-                  <div className="shrink-0">
+                  <div className="order-2 shrink-0 sm:order-1">
                     {learnMoreHref ? (
                       <Link href={learnMoreHref} aria-hidden="true" tabIndex={-1}>
                         {thumbnail}
@@ -50,7 +50,7 @@ export default function ProjectsList({ title = 'Projects' }: { title?: string })
                     )}
                   </div>
                 )}
-                <div className="space-y-3">
+                <div className="order-1 space-y-3 sm:order-2">
                   {tagline && (
                     <p className="text-muted text-sm leading-6 font-medium uppercase">{tagline}</p>
                   )}

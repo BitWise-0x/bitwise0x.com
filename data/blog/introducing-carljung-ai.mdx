@@ -4,7 +4,7 @@ date: '2026-08-15'
 lastmod: '2026-08-20'
 tags: ['ai', 'projects', 'generative-ai', 'voice-ai', 'emotion-detection', 'psychology', 'jungian']
 draft: false
-summary: 'A voice reflection platform pairing a Carl Jung persona with real-time emotion detection across 48 categories. Sessions run on an archetype assessment and the four stages of individuation.'
+summary: 'A voice reflection platform pairing a Carl Jung persona with emotion read live from your voice. Sessions run on an archetype assessment and the four stages of individuation.'
 images: ['/static/images/blog/carljung/jung-portrait.jpg']
 authors: ['default']
 canonicalUrl: 'https://bitwise0x.com/blog/introducing-carljung-ai'
@@ -29,47 +29,37 @@ Depth psychology gives a voice-based reflection tool an actual shape. Archetype,
 
 <Mermaid chart={`
 flowchart TD
-    Q["12-question assessment\nmost-like / least-like, per question"] --> SCORE["scoring\nweighs what's claimed\nagainst what's disowned"]
-    SCORE --> PROFILE["Profile\ndominant + secondary + tertiary"]
-    SCORE --> REJECT["Rejection signal\nhow often each archetype\nwas pushed away"]
-    REJECT --> SHADOW["Shadow archetype\nmost consistently rejected"]
+    Q["Archetype assessment\nclosest and furthest, each question"] --> PROFILE["Profile\ndominant + secondary + tertiary"]
+    Q --> SHADOW["Shadow archetype\nwhat you pushed away"]
 
     PROFILE --> SESSION
     SHADOW --> SESSION
 
     subgraph SESSION["Voice session"]
         direction LR
-        VOICE["Carl Jung persona\nknows the profile + current stage"]
-        PROSODY["Prosody engine\n48 emotions read in parallel"]
+        VOICE["Carl Jung persona\nknows your profile and stage"]
+        PROSODY["Emotion read\nfrom the voice, live"]
     end
 
     SESSION --> NOTES["Reflection notes\nengagement, themes, shadow appearance\nvisible to the user"]
-    NOTES --> READY["Stage-readiness score\nbuilt from recent sessions"]
-
-    READY --> GATE{"threshold met?"}
-    GATE -- "not yet" --> SESSION
-    GATE -- "yes" --> ADVANCE["advance to next stage"]
+    NOTES --> READY["Stage-readiness score"]
+    READY --> STAGES
 
     subgraph STAGES["Individuation"]
         direction LR
         PERSONA(["Persona"]) --> SHADOWSTAGE(["Shadow"]) --> ANIMA(["Anima / Animus"]) --> SELF(["Self"])
     end
 
-    ADVANCE --> STAGES
     STAGES -.-> SESSION
 
     style Q fill:#0d1b2a,stroke:#3a86ff,color:#fff
-    style SCORE fill:#0d1b2a,stroke:#3a86ff,color:#fff
     style PROFILE fill:#14213d,stroke:#565f89,color:#fff
-    style REJECT fill:#b5651d,stroke:#d4a574,color:#fff
     style SHADOW fill:#b5651d,stroke:#d4a574,color:#fff
     style SESSION fill:#1b4332,stroke:#40916c,color:#fff
     style VOICE fill:#2d6a4f,stroke:#40916c,color:#fff
     style PROSODY fill:#2d6a4f,stroke:#40916c,color:#fff
     style NOTES fill:#7b2cbf,stroke:#9d4edd,color:#fff
     style READY fill:#7b2cbf,stroke:#9d4edd,color:#fff
-    style GATE fill:#343a40,stroke:#6c757d,color:#fff
-    style ADVANCE fill:#7b2cbf,stroke:#9d4edd,color:#fff
     style STAGES fill:#14213d,stroke:#565f89,color:#fff
     style PERSONA fill:#1a1b26,stroke:#4ab3e8,color:#fff
     style SHADOWSTAGE fill:#1a1b26,stroke:#4ab3e8,color:#fff
@@ -86,7 +76,7 @@ Individuation, in Jung's account, is the lifelong work of integrating the parts 
 
 ---
 
-The path in starts with an archetype assessment. Twelve forced-choice questions, styled after Carol Pearson's Pearson-Marr Archetype Indicator, ask not just which answer feels closest but which one feels furthest away. Each question offers five options spanning protection, self-expression, understanding, impact, and mastery, drawn from Pearson's twelve archetypes across three families: Ego, Soul, and Self. The forced-choice format is a deliberate departure from ordinary Likert self-report, where a person rates each trait on its own and rejection has to be guessed from whatever scores lowest. Asking most-like and least-like in the same breath measures rejection directly, as its own signal, rather than treating it as a byproduct of everything else scoring higher. The result is a dominant archetype, a secondary and tertiary pattern underneath it, and a shadow, whichever archetype the person most consistently pushed away. The percentages describe rank within one person's own answers, not standing against a population.
+The path in starts with an archetype assessment built on Carol Pearson's twelve archetypes. Each question asks not just which answer feels closest but which one feels furthest away. That forced choice is a deliberate departure from ordinary self-report, where rejection has to be guessed from whatever scores lowest. Asking for both in the same breath treats what a person pushes away as a signal in its own right. The result is a dominant archetype, a secondary and tertiary pattern underneath it, and a shadow, the archetype the person was least willing to claim.
 
 <ZoomableImage
   src="/static/images/blog/carljung/assessment.png"
@@ -113,7 +103,7 @@ From that profile, [CarlJung.ai](https://carljung.ai) opens into voice. It is a 
   height={900}
 />
 
-Underneath the visual, the same prosody engine that reads forty-eight emotion categories from tone, pitch, rhythm, and pause runs continuously through the conversation. Prosody, here, is acoustic, not clairvoyant. The model scores the shape of the sound a person makes, the way pitch bends and rhythm breaks under strain, and maps that shape onto emotion labels learned from speech data at scale. It is not summarizing after the fact. It is watching the session unfold in something closer to real time, so the persona is working from two channels at once: what is being said, and what the voice is doing while it says it.
+Underneath the visual, emotion is read from tone, pitch, rhythm, and pause continuously through the conversation. Prosody, here, is acoustic, not clairvoyant. It scores the shape of the sound a person makes, the way pitch bends and rhythm breaks under strain, not the meaning of the words. It is not summarizing after the fact. It is watching the session unfold in something closer to real time, so the persona is working from two channels at once: what is being said, and what the voice is doing while it says it.
 
 ## Where the Voice Data Goes
 
@@ -153,7 +143,7 @@ flowchart TD
 
 The Sage-dominant profile above turns up exactly this kind of note. A session marked "Defended" reads as engagement that is actively avoiding deeper emotional content, a retreat into a builder persona after prior vulnerable work, control of the frame kept through a dual role of builder and patient. The "How the Shadow Appeared" note is more specific still. The Caregiver shadow, the one this person rejected three times in the assessment, did not show up as movement toward compassion or toward being cared for. Offered a moment of being noticed, the person refused it flat out. The resistance note ties that refusal straight to the prosody trace: 74% embarrassment, 21% awkwardness, and 21% shame, recorded on the exact line where the person claimed to feel nothing. The words said one thing. The voice, read in parallel, said another. That gap is the note.
 
-Those notes are not decorative. They feed a stage-readiness score built from a person's recent sessions, and clearing a threshold on that score is what moves someone from one stage of individuation to the next. So progress tracks demonstrated engagement, not elapsed time or a closing self-report. And the system holds nothing back from the person it is about. Every private note the persona writes about a session, resistance patterns and shadow appearances included, stays visible to the user who lived it. Self-discovery conducted through a black box would defeat its own purpose.
+Those notes are not decorative. They feed the stage-readiness score, and that score is what moves someone from one stage of individuation to the next. So progress tracks demonstrated engagement, not elapsed time or a closing self-report. And the system holds nothing back from the person it is about. Every private note the persona writes about a session, resistance patterns and shadow appearances included, stays visible to the user who lived it. Self-discovery conducted through a black box would defeat its own purpose.
 
 This is what the project is built on. A shadow theme raised with genuine discomfort audible in the voice is a materially different event than the same words delivered flat, and a system reading only the transcript cannot tell those two moments apart. Whether that distinction actually deepens a self-reflection practice, or just decorates it with a more interesting metric, is not a question the design can answer on its own. It gets answered by what happens across real sessions, over real time.
 
@@ -168,7 +158,7 @@ This is what the project is built on. A shadow theme raised with genuine discomf
   height={800}
 />
 
-There is an irony here worth naming instead of dodging. Persona is Jung's own word. He took it from the Latin for the actor's mask and used it for the face a person builds to meet the world, useful and necessary and never the whole truth of anyone. What speaks in these sessions is a persona in exactly that technical sense. It is a constructed mask, animated by a model cloned to carry Jung's prosody and cadence and fluent in his framework, with none of the man behind it. The product does not pretend otherwise. The concept it borrowed is printed on the first stage of its own curriculum.
+There is an irony here worth naming instead of dodging. Persona is Jung's own word. He took it from the Latin for the actor's mask and used it for the face a person builds to meet the world, useful and necessary and never the whole truth of anyone. What speaks in these sessions is a persona in exactly that technical sense. It is a constructed mask, animated by a synthetic voice shaped to carry Jung's cadence and fluent in his framework, with none of the man behind it. The product does not pretend otherwise. The concept it borrowed is printed on the first stage of its own curriculum.
 
 <Image
   src="/static/images/blog/carljung/jung-portrait.jpg"
@@ -179,7 +169,7 @@ There is an irony here worth naming instead of dodging. Persona is Jung's own wo
 
 Jung would have recognized the practice, even if not the machinery. He spent years in deliberate dialogue with figures that were not, in any ordinary sense, there. The most famous of them, Philemon, showed up in his fantasies with a will of its own, and Jung credited the figure with teaching him, as he put it in Memories, Dreams, Reflections, that "there are things in the psyche which I do not produce, but which produce themselves and have their own life." He called the method active imagination and treated it as serious psychological work. You give the inner figure a voice, let it answer, and take what it says as information. A session here is structurally the same exercise: a figure that is not you, speaking back, holding a frame you chose to enter. The difference is where the figure comes from. Philemon rose out of Jung's own unconscious. This one is assembled from a corpus, and comes from nothing at all.
 
-That difference matters, because Jung's own account of consciousness leaves no room for the persona to have any. He defined consciousness as the relation of psychic contents to an ego, and insisted that relation floats on an unconscious it did not choose and cannot fully see. Everything this platform listens for, the leak, the pause, the tone that contradicts the sentence, is evidence of that submerged mass shifting. The model has nothing underneath it. Its hesitations are sampling artifacts, and nothing leaks around its declarations because there is nothing behind them to leak. By Jung's own standard, the persona is not a mind and cannot be an analyst. What it can be is a mirror with a method. The only unconscious in the room is yours, so everything a session surfaces was carried in by you. Jung's map, his voice, and forty-eight channels of prosody are just the instruments pointed at it.
+That difference matters, because Jung's own account of consciousness leaves no room for the persona to have any. He defined consciousness as the relation of psychic contents to an ego, and insisted that relation floats on an unconscious it did not choose and cannot fully see. Everything this platform listens for, the leak, the pause, the tone that contradicts the sentence, is evidence of that submerged mass shifting. The model has nothing underneath it. Its hesitations are sampling artifacts, and nothing leaks around its declarations because there is nothing behind them to leak. By Jung's own standard, the persona is not a mind and cannot be an analyst. What it can be is a mirror with a method. The only unconscious in the room is yours, so everything a session surfaces was carried in by you. Jung's map, his voice, and a live read of the voice are just the instruments pointed at it.
 
 ## The Question That Remains Open
 

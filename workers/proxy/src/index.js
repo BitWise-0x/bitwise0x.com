@@ -21,7 +21,9 @@ export default {
       return proxyScript()
     }
 
-    if (url.pathname === '/i/send' && request.method === 'POST') {
+    // The tracker builds its beacon URL as data-host-url + /api/send, so with
+    // data-host-url = https://bitwise0x.com/i the path is /i/api/send.
+    if (url.pathname === '/i/api/send' && request.method === 'POST') {
       return proxySend(request)
     }
 
@@ -46,17 +48,17 @@ async function proxyScript() {
 }
 
 async function proxySend(request) {
-  const body = await request.arrayBuffer()
+  const body = await withClientIp(request)
 
   const headers = new Headers()
-  headers.set('Content-Type', request.headers.get('Content-Type') || 'application/json')
+  headers.set('Content-Type', 'application/json')
   // Umami parses the visitor's UA server-side; without it every hit is "unknown".
   const userAgent = request.headers.get('User-Agent')
   if (userAgent) headers.set('User-Agent', userAgent)
-  // Without a forwarded client IP the upstream sees Cloudflare's edge and every
-  // visitor collapses to one location.
-  const clientIp = request.headers.get('CF-Connecting-IP')
-  if (clientIp) headers.set('X-Forwarded-For', clientIp)
+  // Session cache token issued by the previous beacon; without it umami
+  // re-resolves the session on every hit.
+  const cache = request.headers.get('x-umami-cache')
+  if (cache) headers.set('x-umami-cache', cache)
 
   const upstream = await fetch(SEND_UPSTREAM, {
     method: 'POST',
@@ -68,4 +70,25 @@ async function proxySend(request) {
     status: upstream.status,
     headers: { 'Content-Type': upstream.headers.get('Content-Type') || 'text/plain' },
   })
+}
+
+// Umami Cloud sits behind Cloudflare too, so its edge stamps cf-connecting-ip
+// (which it prefers over X-Forwarded-For) with this Worker's egress address and
+// every visitor collapses to one location. Umami trusts payload.ip over any
+// header and geolocates it from its own database, so put the visitor's IP there.
+async function withClientIp(request) {
+  const raw = await request.text()
+  const clientIp = request.headers.get('CF-Connecting-IP')
+  if (!clientIp) return raw
+
+  let body
+  try {
+    body = JSON.parse(raw)
+  } catch {
+    return raw
+  }
+  if (!body || typeof body.payload !== 'object' || body.payload === null) return raw
+
+  body.payload.ip = clientIp
+  return JSON.stringify(body)
 }

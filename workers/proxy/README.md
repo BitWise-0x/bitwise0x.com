@@ -17,14 +17,21 @@ path (`/i/*`) removes the third-party hostname the lists key on.
 
 | Request            | Upstream                    |
 | ------------------ | --------------------------- |
-| `GET  /i/e.js`     | `cloud.umami.is/script.js`  |
-| `POST /i/send`     | `cloud.umami.is/api/send`   |
+| `GET  /i/e.js`      | `cloud.umami.is/script.js`  |
+| `POST /i/api/send`  | `cloud.umami.is/api/send`   |
 
-The tracker reads its beacon host from the `data-host-url` attribute, so the
-site sets `umamiHostUrl` to `https://bitwise0x.com/i` and `src` to
-`https://bitwise0x.com/i/e.js`. The Worker forwards `CF-Connecting-IP` as
-`X-Forwarded-For` and the visitor `User-Agent`; without them every hit
-collapses to Cloudflare's edge IP and an unknown client.
+The tracker reads its beacon host from the `data-host-url` attribute and
+appends `/api/send` to it, so with `umamiHostUrl` set to
+`https://bitwise0x.com/i` the beacon lands on `/i/api/send`. The site also sets
+`src` to `https://bitwise0x.com/i/e.js`.
+
+The Worker forwards the visitor `User-Agent` and `x-umami-cache` headers and
+writes `CF-Connecting-IP` into `payload.ip` of the beacon body. Forwarding the
+IP as a header does not work: Umami Cloud is itself behind Cloudflare, whose
+edge stamps `cf-connecting-ip` with the Worker's egress address, and Umami
+ranks that header above `X-Forwarded-For`, so every visitor collapsed to one
+location. Umami trusts `payload.ip` over any header and geolocates it from its
+own database.
 
 ## Deploy
 
@@ -46,7 +53,7 @@ curl -s https://bitwise0x.com/i/e.js | head -c 200
 curl -s https://cloud.umami.is/script.js | head -c 200
 
 # beacon endpoint reachable (a bare POST returns the same shape as upstream)
-curl -si -X POST https://bitwise0x.com/i/send \
+curl -si -X POST https://bitwise0x.com/i/api/send \
   -H 'Content-Type: application/json' \
   -d '{"type":"event","payload":{"website":"23e367e0-635e-4f0e-a5ab-4b2b41c8acc0","url":"/"}}'
 ```

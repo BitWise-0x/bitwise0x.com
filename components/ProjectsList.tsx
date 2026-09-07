@@ -51,9 +51,7 @@ export default function ProjectsList({ title = 'Projects' }: { title?: string })
                   </div>
                 )}
                 <div className="order-1 space-y-3 sm:order-2">
-                  {tagline && (
-                    <p className="eyebrow">{tagline}</p>
-                  )}
+                  {tagline && <p className="eyebrow">{tagline}</p>}
                   <h2 className="text-2xl leading-8 font-bold tracking-tight">
                     {learnMoreHref ? (
                       <Link href={learnMoreHref} className="text-heading">

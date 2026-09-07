@@ -166,6 +166,15 @@ a.text-heading:hover {
   color: var(--color-primary-500);
 }
 
+/* Eyebrow: uppercase kicker above a heading, in the brand blue */
+.eyebrow {
+  color: var(--color-primary-500);
+  font-size: 0.875rem;
+  line-height: 1.5rem;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+
 /* Semantic backgrounds */
 .bg-page {
   background-color: var(--color-white, #fff);

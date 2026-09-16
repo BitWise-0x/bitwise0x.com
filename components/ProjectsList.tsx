@@ -69,6 +69,8 @@ export default function ProjectsList({ title = 'Projects' }: { title?: string })
                           href={learnMoreHref}
                           className="text-link text-base leading-6 font-medium"
                           aria-label={`Learn more about ${title}`}
+                          data-umami-event="project-learn-more"
+                          data-umami-event-project={title}
                         >
                           Learn more &rarr;
                         </Link>
@@ -78,6 +80,8 @@ export default function ProjectsList({ title = 'Projects' }: { title?: string })
                           href={href}
                           className="text-link text-base leading-6 font-medium"
                           aria-label={`Visit ${title}`}
+                          data-umami-event="project-visit"
+                          data-umami-event-project={title}
                         >
                           {getHostname(href)} &rarr;
                         </Link>

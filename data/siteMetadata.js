@@ -29,6 +29,11 @@ const siteMetadata = {
       src: process.env.NEXT_UMAMI_SRC || 'https://cloud.umami.is/script.js',
       umamiWebsiteId: process.env.NEXT_UMAMI_ID, // e.g. 123e4567-e89b-12d3-a456-426614174000
       umamiHostUrl: process.env.NEXT_UMAMI_HOST_URL, // first-party beacon base, e.g. https://bitwise0x.com/i
+      // Core Web Vitals per visitor. pliny spreads these through as data-* on
+      // the script tag. See docs/umami-analytics.md for the full attribute set.
+      dataPerformance: 'true',
+      // TOC anchor links otherwise register as a separate pageview per heading.
+      dataExcludeHash: 'true',
     },
     // plausibleAnalytics: {
     //   plausibleDataDomain: '',

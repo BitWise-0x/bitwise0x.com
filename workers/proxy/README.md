@@ -3,6 +3,10 @@
 A Cloudflare Worker that serves the Umami Cloud tracker from the site's own
 origin so content blockers do not strip it.
 
+For the full integration (site config, deploy flow, tracking, acquisition, and
+diagrams), see [`docs/umami-analytics.md`](../../docs/umami-analytics.md). This
+README covers the Worker itself.
+
 ## Why
 
 Umami Cloud serves its script from `cloud.umami.is` and receives beacons at
@@ -15,10 +19,10 @@ path (`/i/*`) removes the third-party hostname the lists key on.
 
 ## Routes
 
-| Request            | Upstream                    |
-| ------------------ | --------------------------- |
-| `GET  /i/e.js`      | `cloud.umami.is/script.js`  |
-| `POST /i/api/send`  | `cloud.umami.is/api/send`   |
+| Request            | Upstream                   |
+| ------------------ | -------------------------- |
+| `GET  /i/e.js`     | `cloud.umami.is/script.js` |
+| `POST /i/api/send` | `cloud.umami.is/api/send`  |
 
 The tracker reads its beacon host from the `data-host-url` attribute and
 appends `/api/send` to it, so with `umamiHostUrl` set to

@@ -53,6 +53,8 @@ const SocialIcon = ({ kind, href, size = 8 }: SocialIconProps) => {
       target="_blank"
       rel="noopener noreferrer"
       href={href}
+      data-umami-event="social-click"
+      data-umami-event-platform={kind}
     >
       <span className="sr-only">{kind}</span>
       <SocialSvg className={`fill-current ${sizeClasses[size] || 'h-8 w-8'}`} />

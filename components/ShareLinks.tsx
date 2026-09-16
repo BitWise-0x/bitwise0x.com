@@ -12,35 +12,54 @@ export default function ShareLinks({ path, title }: ShareLinksProps) {
   const [copied, setCopied] = useState(false)
   const url = `${siteMetadata.siteUrl}/${path}`
 
+  // Links posted to X, Bluesky, or pasted from a native share arrive with no
+  // referrer and would show as "Direct" in umami. Tag the shared URL so the
+  // channel is attributed. utm_campaign is the page slug, so shares of
+  // different pages stay distinguishable in the dashboard.
+  const campaign = path.split('/').filter(Boolean).pop() || 'home'
+  const shareUrl = (source: string, medium: string) => {
+    const tagged = new URL(url)
+    tagged.searchParams.set('utm_source', source)
+    tagged.searchParams.set('utm_medium', medium)
+    tagged.searchParams.set('utm_campaign', campaign)
+    return tagged.toString()
+  }
+
   const handleCopyLink = async () => {
-    await navigator.clipboard.writeText(url)
+    await navigator.clipboard.writeText(shareUrl('copy', 'share'))
     setCopied(true)
     setTimeout(() => setCopied(false), 2000)
   }
 
   const handleShare = async () => {
     if (navigator.share) {
-      await navigator.share({ url })
+      await navigator.share({ url: shareUrl('native', 'share') })
     } else {
       await handleCopyLink()
     }
   }
 
   const handleShareToX = () => {
+    const shared = shareUrl('x', 'social')
     const text = title ? `${title}` : ''
-    const xUrl = `https://x.com/intent/tweet?url=${encodeURIComponent(url)}&text=${encodeURIComponent(text)}`
+    const xUrl = `https://x.com/intent/tweet?url=${encodeURIComponent(shared)}&text=${encodeURIComponent(text)}`
     window.open(xUrl, '_blank', 'noopener,noreferrer')
   }
 
   const handleShareToBluesky = () => {
-    const text = title ? `${title} ${url}` : url
+    const shared = shareUrl('bluesky', 'social')
+    const text = title ? `${title} ${shared}` : shared
     const bskyUrl = `https://bsky.app/intent/compose?text=${encodeURIComponent(text)}`
     window.open(bskyUrl, '_blank', 'noopener,noreferrer')
   }
 
   return (
     <div className="prose-summary flex flex-wrap items-center gap-x-3 gap-y-1 pt-6 pb-6 text-sm">
-      <button onClick={handleShareToX} className="text-link inline-flex items-center gap-1">
+      <button
+        onClick={handleShareToX}
+        data-umami-event="share-x"
+        className="text-link inline-flex items-center gap-1"
+      >
         <svg
           className="h-3.5 w-3.5 fill-current"
           viewBox="0 0 24 24"
@@ -51,7 +70,11 @@ export default function ShareLinks({ path, title }: ShareLinksProps) {
         X
       </button>
       <span className="text-muted">·</span>
-      <button onClick={handleShareToBluesky} className="text-link inline-flex items-center gap-1">
+      <button
+        onClick={handleShareToBluesky}
+        data-umami-event="share-bluesky"
+        className="text-link inline-flex items-center gap-1"
+      >
         <svg
           className="h-3.5 w-3.5 fill-current"
           viewBox="0 0 24 24"
@@ -62,11 +85,11 @@ export default function ShareLinks({ path, title }: ShareLinksProps) {
         Bluesky
       </button>
       <span className="text-muted">·</span>
-      <button onClick={handleShare} className="text-link">
+      <button onClick={handleShare} data-umami-event="share-native" className="text-link">
         Share
       </button>
       <span className="text-muted">·</span>
-      <button onClick={handleCopyLink} className="text-link">
+      <button onClick={handleCopyLink} data-umami-event="share-copy-link" className="text-link">
         {copied ? 'Copied!' : 'Copy link'}
       </button>
     </div>

@@ -16,7 +16,15 @@ const CustomLink = ({ href, ...rest }: LinkProps & AnchorHTMLAttributes<HTMLAnch
   }
 
   return (
-    <a className="break-words" target="_blank" rel="noopener noreferrer" href={href} {...rest} />
+    <a
+      className="break-words"
+      target="_blank"
+      rel="noopener noreferrer"
+      href={href}
+      data-umami-event="outbound-click"
+      data-umami-event-url={typeof href === 'string' ? href : undefined}
+      {...rest}
+    />
   )
 }
 

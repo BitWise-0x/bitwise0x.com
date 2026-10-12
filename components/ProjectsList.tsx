@@ -51,7 +51,6 @@ export default function ProjectsList({ title = 'Projects' }: { title?: string })
                   </div>
                 )}
                 <div className="order-1 space-y-3 sm:order-2">
-                  {tagline && <p className="eyebrow">{tagline}</p>}
                   <h2 className="text-2xl leading-8 font-bold tracking-tight">
                     {learnMoreHref ? (
                       <Link href={learnMoreHref} className="text-heading">
@@ -61,6 +60,7 @@ export default function ProjectsList({ title = 'Projects' }: { title?: string })
                       title
                     )}
                   </h2>
+                  {tagline && <p className="eyebrow">{tagline}</p>}
                   <div className="prose prose-summary max-w-none">{description}</div>
                   {(learnMoreHref || href) && (
                     <div className="flex flex-wrap gap-x-6 gap-y-2">

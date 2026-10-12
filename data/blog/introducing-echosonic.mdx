@@ -1,10 +1,10 @@
 ---
 title: "EchoSonic: From a sentence to a finished track\nWritten, sung, and mixed by you"
 date: '2026-08-18'
-lastmod: '2026-08-19'
+lastmod: '2026-10-11'
 tags: ['ai', 'projects', 'generative-ai', 'music-ai', 'voice-ai', 'machine-learning']
 draft: false
-summary: 'A production music platform that turns one line of intent into a finished track, then hands you a studio to edit it. Repaint a passage, add a layer, morph the style, clone your own voice, and sing it in any language.'
+summary: 'An AI music service that turns a description into a finished track and then lets you keep working on it. Redo one section, add an instrument, change the style, build a band around your own recording, and sing it in your own voice.'
 images: ['/static/images/blog/echosonic/hero.jpg']
 authors: ['default']
 canonicalUrl: 'https://bitwise0x.com/blog/introducing-echosonic'
@@ -17,25 +17,22 @@ canonicalUrl: 'https://bitwise0x.com/blog/introducing-echosonic'
   height={1260}
 />
 
-AI music got good faster than almost anyone expected. A sentence of plain description now comes back as a complete song, structured and mixed, with a vocal singing your lyrics, and a wave of prompt-to-song sites has grown up around that capability. Nearly all of them end where the model ends. A track appears, and when the second verse sags or the voice is not the one you heard in your head, there is nothing to reach for. The song was never really yours. It just happened near you.
+The quality of AI-generated music has improved remarkably over the past two years. A single sentence describing a song now returns a complete track, with a vocal singing your lyrics, and a growing number of services offer exactly this. The limitation I kept running into is what happens afterwards. If the second verse is weak, or the voice is not the one you had in mind, the only option is to generate the entire track again and hope for a better result.
 
-[EchoSonic](https://echosonic.io) starts the same way as every other prompt-to-song site, and then refuses to stop there. You describe a song, "a slow-burning trip-hop track, brushed drums, a voice that sounds like it is remembering something," and a minute later there is audio: a structured track with an intro, a body, and an ending, not just a loop. What separates it from the prompt-and-pray sites is everything that happens after that minute. The draft is a working surface. You can re-synthesize just the passage you dislike, pull the mix apart into stems, or record your voice once and have it sing the chorus in a language you have never spoken. The whole platform is built around the stretch between a first draft and a track you would actually put your name on.
+I built [EchoSonic](https://echosonic.io) to address that limitation. It begins the same way as other prompt-to-song services. You describe what you want, for example "a slow-burning trip-hop track, brushed drums, a voice that sounds like it is remembering something", and roughly a minute later you have a full track. However, that track is treated as a draft rather than the finished product. You can regenerate only the section you dislike, add an instrument, change the style, or have the song sung in your own voice.
 
-The pipeline has five stages: generation, a studio editor, voice cloning, stem separation, and effects, each one feeding the next rather than sitting bolted on as a separate product. What follows walks that pipeline in the order you would actually meet it.
+In this post, I cover what the service offers in the order you would encounter it:
 
-## From a Sentence to a Song
+1. Generating a song from a description
+2. Editing the draft
+3. Starting from your own audio
+4. Cloning your voice for narration and singing
 
----
-
-You write what you want in plain language, optionally paste or generate lyrics, and generate. Everything past that point, the editing, the stems, the voice work, is the actual product.
-
-Underneath the prompt sits a real generative model, trained on music rather than on speech or images. You describe style and instrumentation, and the lyrics, if there are any, get their own line to sing rather than being stapled onto a backing track. What comes back is a genuine mixed recording with a waveform you can scrub, not a MIDI sketch waiting to be rendered.
-
-## The Draft Is Not the Product
+## Generating a Song
 
 ---
 
-Some positioning is unavoidable here. The household names in AI music, Suno and Udio, run closed models behind marketing version numbers, and "what exactly is this model" is a question their own users cannot answer. That is not a claim that their output is bad. The tracks are often excellent. It is a claim about the relationship. You rent access to a black box, the box changes whenever the company decides it should, and everything you make inside it depends on the box staying open.
+You write what you want in plain language. If you have lyrics you can provide them, and if you do not, EchoSonic can write them for you. The result is a mixed recording with an intro, a body and an ending rather than a loop.
 
 <Image
   src="/static/images/blog/echosonic/modular-synth.jpg"
@@ -44,13 +41,13 @@ Some positioning is unavoidable here. The household names in AI music, Suno and 
   height={800}
 />
 
-EchoSonic makes a different bet. Getting a track back is the easy part, so the product has to earn its place after that draft lands. This article is mostly a tour of what that means in practice: the version history that never overwrites a take, the stem mixer, the voice cloning, the editing surface that turns a first draft into a finished track. Repaint, cover, morph, and the rest are not filters bolted on top. They are real editing controls, not a research demo with a chat box in front of it.
+Generation by itself is no longer a differentiator. Suno and Udio both do it well, and their output is often excellent. The more useful question, in my view, is what you can do with a track once you have it, and that is where most of the effort on EchoSonic has gone.
 
-## The Draft Is Where the Work Begins
+## Editing the Draft
 
 ---
 
-A first generation is a starting point, and EchoSonic treats it that way. Every finished track becomes a card in a library, and every card is its own small studio. You never leave the song to edit it. The edit tools live right there on the song.
+Every finished track is added to your library, where it can be edited directly. There are five operations available on a song.
 
 <ZoomableImage
   src="/static/images/blog/echosonic/reshape.jpg"
@@ -59,67 +56,58 @@ A first generation is a starting point, and EchoSonic treats it that way. Every 
   height={1000}
 />
 
-The edit vocabulary is where the tool stops being a novelty and starts being an instrument:
-
-- **Re-roll** spins the same song again: same prompt, same lyrics, a different take. It is the B-side, for when the arrangement was right but the performance was not.
-- **Repaint** regenerates a time window you select on the waveform. Drag two handles across the passage you dislike, preview exactly what falls inside the selection, and re-synthesize only that stretch while the rest of the track holds.
-- **Cover** keeps the song's own structure as an anchor and lets a new prompt re-render everything else, its bones staying put while its clothes change.
-- **Morph** is the subtle one. Instead of re-rendering under a new prompt, it walks the audio partway toward a new idea and lets you choose how far. A gentle morph nudges; a strong one transforms.
-- **Add a layer** generates a single new instrument part that fits what is already there and mixes it in, so a bare sketch grows an arrangement one stem at a time.
-- **Auto-arrange** takes a thin recording and fills out what is missing, letting you name the instruments you want or letting the model decide.
-- **Reconstruct stems** splits the track into separate per-instrument parts, so you can mute, solo, and mix them with real dB faders and export the result.
+- **Re-roll** generates the same song again with the same prompt and lyrics. This is useful when the idea was right but the performance was not.
+- **Repaint** regenerates one section and leaves the rest alone. You select the passage you dislike and only that passage changes.
+- **Cover** keeps the structure of the song and renders it again in a new style.
+- **Morph** moves the song part of the way toward a new idea, and you decide how far.
+- **Add a layer** writes one new instrument part that fits the track and mixes it in.
 
 <Mermaid chart={`
 flowchart TD
-    GEN["Generated track\nv1 baseline"]
+    PROMPT["A description"] --> GEN["Draft track"]
+    AUDIO["Your own recording"] --> GEN
 
     GEN --> EDITS
 
-    subgraph EDITS["Edits, each writes a version"]
+    subgraph EDITS["Each one writes a version"]
         direction LR
-        REPAINT["Repaint"] --- COVER["Cover"] --- MORPH["Morph"]
-        LAYER["Add a layer"] --- ARRANGE["Auto-arrange"]
-    end
-
-    GEN --> SIDE
-
-    subgraph SIDE["Side outputs, no version"]
-        direction LR
-        REROLL["Re-roll\nsibling take"] --- STEMS["Reconstruct\nstems"]
+        REROLL["Re-roll"] --- REPAINT["Repaint"] --- COVER["Cover"]
+        MORPH["Morph"] --- LAYER["Add a layer"]
     end
 
     EDITS --> HIST["Version history"]
-    HIST --> PROMOTE["Make current\ninstant, no re-render"]
+    HIST --> PROMOTE["Make current\nany version you prefer"]
 
+    style PROMPT fill:#14213d,stroke:#565f89,color:#fff
+    style AUDIO fill:#14213d,stroke:#565f89,color:#fff
     style GEN fill:#0d1b2a,stroke:#3a86ff,color:#fff
     style EDITS fill:#14213d,stroke:#565f89,color:#fff
-    style SIDE fill:#1b263b,stroke:#565f89,color:#fff
     style REPAINT fill:#14213d,stroke:#565f89,color:#fff
     style COVER fill:#14213d,stroke:#565f89,color:#fff
     style MORPH fill:#b5651d,stroke:#d4a574,color:#fff
     style LAYER fill:#2d6a4f,stroke:#40916c,color:#fff
-    style ARRANGE fill:#2d6a4f,stroke:#40916c,color:#fff
     style REROLL fill:#14213d,stroke:#565f89,color:#fff
-    style STEMS fill:#2d6a4f,stroke:#40916c,color:#fff
     style HIST fill:#7b2cbf,stroke:#9d4edd,color:#fff
     style PROMOTE fill:#7b2cbf,stroke:#9d4edd,color:#fff
 `} />
 
-Every edit lands as a new version on the song, never a silent overwrite. The original take stays exactly where it was. Your edit sits beside it in a history you can play through. When you find the version you want, "Make current" promotes it instantly, with no new render. The take you chose simply becomes the face of the song, and future edits branch from it. Nothing you generated is ever thrown away to make room for what you generated next.
+Each of these saves a new version rather than replacing the song. The original remains untouched, the history can be played through, and whichever version you prefer can be made the current one. This is what makes editing practical, since you can experiment without the risk of losing a take you already had.
 
-## Cover and Morph Are Not the Same Question
+Cover and Morph sound similar, so it is worth making a distinction. Cover determines how much of the original survives under a new style. Morph determines how far the song travels between the old idea and the new one. Cover is the better choice when you want the same song in a different genre, while Morph suits a smaller adjustment.
 
----
-
-Cover and Morph sit next to each other in the edit menu and sound similar, but they answer different questions. Cover asks how much of the original survives before a new idea takes over, with a "Melody retention" slider deciding how tightly the source track anchors the result. Morph asks a subtler question: how far along the path between old and new should this land. A light touch nudges a song and a heavy one walks it somewhere new.
-
-Cover also works on audio you did not generate here. "Cover from audio" runs the identical operation on a file you upload, a field recording, an old demo, a track bounced out of another DAW, your file anchoring the structure while the prompt reshapes everything else around it.
-
-## Your Voice, in Any Language
+## Starting from Your Own Audio
 
 ---
 
-The second half of EchoSonic is voice, and it runs on the same idea. Capture once, use everywhere. You record yourself reading a short teleprompter passage, one continuous take, and that single clip becomes a cloned voice you own.
+A prompt is not the only starting point. If you already have a recording, for example an old demo or a voice memo, you can upload it and cover it. The recording provides the structure and the prompt determines the style.
+
+The reverse is also possible. You sing or play a part, choose the instruments you want, and EchoSonic writes a band that follows your take, which remains in the mix.
+
+## Your Voice
+
+---
+
+The other half of EchoSonic is voice. You record yourself reading for about a minute, and that single recording becomes a cloned voice.
 
 <ZoomableImage
   src="/static/images/blog/echosonic/voicelab.jpg"
@@ -128,21 +116,20 @@ The second half of EchoSonic is voice, and it runs on the same idea. Capture onc
   height={1000}
 />
 
-From that one recording, two things become possible. The first is narration, text-to-speech in your own voice, with pace and expressiveness under your control, from a quick read to a long-form piece. The reference clip that defines your voice stays a file you own, not an asset locked inside somebody's walled model. Voice cloning holds up across more than a dozen languages, so a voice recorded in English can read a paragraph in Spanish or Japanese and still sound like the same person. A persona field lets the voice write in character as well as speak, expanding a topic into copy before it ever hits synthesis.
+It can be used in two ways:
 
-The second is the part that ties the whole platform together. That same cloned reference can sing. Attach your voice to a music generation and the vocal comes back in it. There is no training step and no second capture. The clip you recorded to narrate an audiobook is the same clip that puts your voice on a chorus.
-
-Narration and singing both start from that identical file. The upshot for you is simple. There is nothing to configure. You attach a voice and it is used, fully, whether the output is a spoken paragraph or a sung chorus.
+1. **Narration.** Any text can be read back in your own voice, from a short paragraph to an entire chapter. You control the pace and how expressive the read is. A cloned voice carries across more than a dozen languages, so a voice recorded in English can read Spanish or Japanese and still sound like you.
+2. **Singing.** The same voice can be attached to a song, and the vocal is returned in it. Songs can be sung in eleven languages.
 
 <Mermaid chart={`
 flowchart TD
-    REC["One continuous\nrecording"] --> REF["One reference clip\nyou own"]
+    REC["One recording\nabout a minute"] --> REF["Your cloned voice"]
 
-    REF --> TTS["Narration\nTTS in your voice"]
-    REF --> SING["Music\nsung in your voice"]
+    REF --> TTS["Narration\nany text, read in your voice"]
+    REF --> SING["Singing\nyour voice on a song"]
 
     TTS --> LANG["more than a dozen\nlanguages"]
-    SING --> SONG["Your voice on\na generated track"]
+    SING --> SONG["eleven\nlanguages"]
 
     style REC fill:#0d1b2a,stroke:#3a86ff,color:#fff
     style REF fill:#7b2cbf,stroke:#9d4edd,color:#fff
@@ -152,9 +139,12 @@ flowchart TD
     style SONG fill:#b5651d,stroke:#d4a574,color:#fff
 `} />
 
-The recorder itself is careful about the one thing that actually determines clone quality, which is clean, continuous, varied audio. It runs a single uninterrupted capture with a rotating teleprompter, watches your input level live, and rejects a take that is mostly silence before it ever uploads. The quality of that one recording is the biggest lever on how much a clone sounds like you, so that is where the tool puts its effort.
+There is no training step and no second recording for singing. The clip you recorded to narrate a chapter is the same one that places your voice on a chorus.
 
-## Machines Have Always Been in the Band
+> [!TIP]
+> The resemblance of a clone depends largely on the quality of the recording. A quiet room and one continuous, varied read matter more than any setting.
+
+## Is This Still Making Music
 
 ---
 
@@ -165,17 +155,15 @@ The recorder itself is careful about the one thing that actually determines clon
   height={1010}
 />
 
-In September 1906, John Philip Sousa published an essay in Appleton's Magazine called "The Menace of Mechanical Music," warning that the phonograph and the player piano would destroy amateur music-making in America, a nation of idle throats letting a machine do the singing. He was wrong, and wrong in a specific, useful way. Recorded music made more musicians than it retired, and Sousa's own band went on to record prolifically. Every mechanical intrusion since has replayed his argument. The synthesizer was going to put orchestras out of work. The drum machine famously had no soul. Sampling was theft until it was hip-hop. Auto-Tune was cheating right up until it became an aesthetic. Each one settled into the same place: an instrument, with players who are obviously good at it and players who obviously are not.
+In 1906 John Philip Sousa published an essay called "The Menace of Mechanical Music", warning that the phonograph and the player piano would end amateur music-making in America. He was mistaken. Recorded music produced more musicians than it retired. The same argument resurfaced for the synthesizer, the drum machine, sampling and Auto-Tune, and each of them was eventually accepted as one more instrument.
 
-It would be convenient to file generative models into that lineage and call it done, and it would be lazy. A synthesizer is silent until someone plays it. A sampler holds only what someone chose to feed it. The player piano, the machine Sousa actually feared, performs nothing but the roll a human punched. A generative model is the first music machine that proposes the entire performance on its own, arrangement, timbre, phrasing, singer included. The honest position is that this is genuinely new, not another amplifier waiting for its guitar.
+However, I do not think generative models fit neatly into that list. A synthesizer is silent until someone plays it, whereas a model proposes the entire performance by itself, the singer included. That is genuinely new and should be acknowledged as such. The question that matters to me is whether there is still room for a person to express intent through it. This is the reason EchoSonic is built around editing. The model makes a proposal, and you decide what remains.
 
-So the question that matters is not whether using a model counts as cheating. It is where intent gets to live. Music has absorbed every machine so far because each one left room for a person to mean something through it, and that is the real design brief behind EchoSonic's editing surface, whether or not it was ever phrased that way. Repaint is punching in a take. The stem mixer is a console. Morph is a pedal you ride. The version history is a shelf of tape reels. Every operation exists to give intent somewhere to land after the machine has made its proposal. Sousa feared machines would kill the amateur. The word originally meant one who does a thing for love, and the more interesting possibility runs opposite his prediction: a machine that turns listeners back into amateurs in that older sense, people shaping songs because they finally can.
-
-## What EchoSonic Is Actually For
+## Conclusion
 
 ---
 
-Generation stopped being the hard part of AI music somewhere in the last two years. A plausible track in a minute is available in half a dozen places, this one included. What is still rare is everything after that minute, and that is where the effort went: a passage you can repaint without losing the rest, a history that keeps every take, stems with real faders, a voice you recorded once and can put anywhere. A first draft in sixty seconds is a good demo. A draft you can keep shaping, in your own voice, in any language, without ever needing to have been a producer, that is a tool.
+Generating a plausible track in a minute is no longer the difficult part of AI music. It is available from half a dozen services, this one included. What strikes me is how little most of them allow you to do after that minute. EchoSonic is my attempt to address that. You can repaint a section without losing the rest, keep every version, add an instrument later, and place your own voice on the result, without needing any background as a producer.
 
 Try it at [echosonic.io](https://echosonic.io).
 

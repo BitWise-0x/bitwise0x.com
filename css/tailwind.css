@@ -166,7 +166,7 @@ a.text-heading:hover {
   color: var(--color-primary-500);
 }
 
-/* Eyebrow: uppercase kicker above a heading, in the brand blue */
+/* Eyebrow: uppercase kicker under a heading, in the brand blue */
 .eyebrow {
   color: var(--color-primary-500);
   font-size: 0.875rem;

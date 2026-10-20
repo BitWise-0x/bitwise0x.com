@@ -26,7 +26,7 @@ export default function ProjectsList({ title = 'Projects' }: { title?: string })
       <ul className="divide-theme divide-y">
         {projectsData.map(({ title, tagline, description, imgSrc, href, learnMoreHref }) => {
           const thumbnail = imgSrc && (
-            <div className="relative aspect-video w-full overflow-hidden rounded-md sm:w-[280px]">
+            <div className="relative aspect-video w-full overflow-hidden rounded-md sm:aspect-auto sm:h-full sm:min-h-[158px] sm:w-[280px]">
               <Image
                 src={imgSrc}
                 alt=""
@@ -42,7 +42,12 @@ export default function ProjectsList({ title = 'Projects' }: { title?: string })
                 {thumbnail && (
                   <div className="order-2 shrink-0 sm:order-1">
                     {learnMoreHref ? (
-                      <Link href={learnMoreHref} aria-hidden="true" tabIndex={-1}>
+                      <Link
+                        href={learnMoreHref}
+                        aria-hidden="true"
+                        tabIndex={-1}
+                        className="block h-full"
+                      >
                         {thumbnail}
                       </Link>
                     ) : (

@@ -102,7 +102,7 @@ const MobileNav = () => {
                     onClick={onToggleNav}
                   >
                     <span>GitHub</span>
-                    <Github className="text-primary-500 h-4 w-4 fill-current" />
+                    <Github className="text-primary-500 h-5.5 w-5.5 fill-current" />
                   </a>
                 </nav>
 

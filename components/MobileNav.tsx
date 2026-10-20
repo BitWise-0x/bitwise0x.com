@@ -82,7 +82,7 @@ const MobileNav = () => {
               <DialogPanel className="fixed top-0 left-0 z-70 h-full w-full bg-white/95 duration-300 dark:bg-gray-950/98">
                 <nav
                   ref={navRef}
-                  className="mt-7 flex h-full basis-0 flex-col items-start overflow-y-auto pt-2 pl-12 text-left"
+                  className="mt-16 flex h-full basis-0 flex-col items-start overflow-y-auto pt-2 pl-12 text-left"
                 >
                   {headerNavLinks.map((link) => (
                     <Link
@@ -98,7 +98,7 @@ const MobileNav = () => {
                     href={siteMetadata.github}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-heading hover:text-primary-500 mt-4 inline-flex items-center gap-2 py-2 pr-4 text-2xl font-bold tracking-widest outline-0"
+                    className="text-heading hover:text-primary-500 mb-4 inline-flex items-center gap-2 py-2 pr-4 text-2xl font-bold tracking-widest outline-0"
                     onClick={onToggleNav}
                   >
                     <Github className="text-primary-500 h-6 w-6 fill-current" />

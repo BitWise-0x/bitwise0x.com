@@ -9,7 +9,7 @@ Only the latest version deployed from the `main` branch is supported with securi
 If you discover a security vulnerability, please report it responsibly:
 
 1. **Email:** Send details to [rob@bitwise0x.com](mailto:rob@bitwise0x.com)
-2. **GitHub Security Advisories:** You can also use [GitHub's private vulnerability reporting](https://github.com/BitWise-0x/bitwise0x/security/advisories/new)
+2. **GitHub Security Advisories:** You can also use [GitHub's private vulnerability reporting](https://github.com/BitWise-0x/bitwise0x.com/security/advisories/new)
 
 Please include:
 

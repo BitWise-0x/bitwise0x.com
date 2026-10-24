@@ -10,20 +10,15 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;700&display=swap">
 <style>
+  /* dark only, like bitwise0x.com (its ThemeProvider forces the dark theme) */
   :root {
-    color-scheme: light dark;
-    --page:#fff; --text:#000; --heading:oklch(21% .034 264.665); --muted:oklch(55.1% .027 264.364);
-    --line:oklch(92.8% .006 264.531); --line-strong:oklch(87.2% .01 258.338); --well:oklch(98.5% .002 247.839);
-    --primary:oklch(66% .15 220); --primary-hover:oklch(56% .13 218); --primary-ink:#fff;
-    --btn:oklch(56% .13 218); --btn-hover:oklch(46% .11 216);
-    --sans:"Space Grotesk", ui-sans-serif, system-ui, sans-serif; --mono:"IBM Plex Mono", "JetBrains Mono", "SF Mono", Menlo, Consolas, monospace;
-  }
-  @media (prefers-color-scheme: dark) { :root {
+    color-scheme: dark;
     --page:oklch(12.9% .042 264.695); --text:#fff; --heading:oklch(96.7% .003 264.542); --muted:oklch(70.7% .022 261.325);
     --line:oklch(27.8% .033 256.848); --line-strong:oklch(37.3% .034 259.733); --well:oklch(21% .034 264.665);
     --primary:oklch(66% .15 220); --primary-hover:oklch(72% .14 222); --primary-ink:oklch(12.9% .042 264.695);
     --btn:oklch(46% .11 216); --btn-hover:oklch(56% .13 218);
-  } }
+    --sans:"Space Grotesk", ui-sans-serif, system-ui, sans-serif; --mono:"IBM Plex Mono", "JetBrains Mono", "SF Mono", Menlo, Consolas, monospace;
+  }
   * { box-sizing:border-box; }
   html { -webkit-text-size-adjust:100%; }
   body { margin:0; background:var(--page); color:var(--text); font:16px/1.5 var(--sans); -webkit-font-smoothing:antialiased; padding:0 0 calc(40px + env(safe-area-inset-bottom)); }
@@ -96,7 +91,7 @@
   <nav><a href="https://bitwise0x.com">bitwise0x.com</a></nav>
 </header>
 
-<p class="from">Connect for a Demo</p>
+<p class="from">Connect for Product Demos</p>
 <div class="grid">
   <section>
     <h2>Windows PC</h2>
@@ -105,6 +100,7 @@
     <ol>
       <li><span>Install and open RustDesk.</span></li>
       <li><span><b>Settings</b> › <b>Network</b> › switch <b>Use WebSocket</b> <b>ON</b>.</span></li>
+      <li><span>We provide connection ID.</span></li>
       <li><span>Enter the ID, <b>Connect</b>.</span></li>
     </ol>
     <details class="alt">
@@ -128,6 +124,7 @@
       <li><span>Copy the setup code, then <b>Settings</b> › <b>Network</b> › <b>Import server config</b>.
         <span class="code"><code>0nI9s2dyV3Q3kld0hzQTp0VvNFSLR0K4lVOrYVWrsya2klMtB3S1MlWORjNVRkI6ISeltmIsISbvNmL4BTZzl2d0lmYus2clRGdzVncv8iOzBHd0hmI6ISawFmIsISbvNmL4BTZzl2d0lmYus2clRGdzVnciojI0N3boJye</code><button type="button" class="btn ghost" data-copy>Copy</button></span></span></li>
       <li><span><b>Settings</b> › <b>Network</b> › switch <b>Use WebSocket</b> <b>ON</b>.</span></li>
+      <li><span>We provide connection ID.</span></li>
       <li><span>Enter the ID, <b>Connect</b>.</span></li>
     </ol>
     <details class="alt">
@@ -151,6 +148,7 @@
       <li><span>Copy the setup code, then <b>Settings</b> tab › <b>ID/Relay Server</b> › <b>Import Server Config</b> › <b>OK</b>.
         <span class="code"><code>0nI9s2dyV3Q3kld0hzQTp0VvNFSLR0K4lVOrYVWrsya2klMtB3S1MlWORjNVRkI6ISeltmIsISbvNmL4BTZzl2d0lmYus2clRGdzVncv8iOzBHd0hmI6ISawFmIsISbvNmL4BTZzl2d0lmYus2clRGdzVnciojI0N3boJye</code><button type="button" class="btn ghost" data-copy>Copy</button></span></span></li>
       <li><span><b>Settings</b> tab › switch <b>Use WebSocket</b> <b>ON</b>.</span></li>
+      <li><span>We provide connection ID.</span></li>
       <li><span><b>Connection</b> tab › enter the ID, <b>Connect</b>.</span></li>
     </ol>
     <details class="alt">
@@ -158,7 +156,7 @@
       <div class="inner qr">
         <img id="qr-img" alt="Setup code as a QR code" width="200" height="200">
         <a class="btn ghost" id="qr-save" href="#" download="bitwise-rustdesk-setup.png">Save image</a>
-        <p>Instead of step 2: in RustDesk, <b>Settings</b> tab › QR icon › scan this from another screen, or the gallery icon to pick the saved image.</p>
+        <p>Instead of step 2: in RustDesk, <b>Settings</b> tab › QR icon › <b>Scan</b>, or save to gallery and pick the saved image.</p>
       </div>
     </details>
   </section>
@@ -174,7 +172,7 @@
 </footer>
 </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js" integrity="sha512-ZDSPMa/JM1D+7kdg2x3BsruQ6T/JpJo3jWDWkCZsP+5yVyp1KfESqLI+7RqB5k24F7p2cV7i2YHh/890y6P6Sw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script>
   (function () {
     var cfg = "0nI9s2dyV3Q3kld0hzQTp0VvNFSLR0K4lVOrYVWrsya2klMtB3S1MlWORjNVRkI6ISeltmIsISbvNmL4BTZzl2d0lmYus2clRGdzVncv8iOzBHd0hmI6ISawFmIsISbvNmL4BTZzl2d0lmYus2clRGdzVnciojI0N3boJye";

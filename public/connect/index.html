@@ -49,7 +49,20 @@
   .btn:focus-visible { outline:2px solid var(--primary); outline-offset:3px; }
   .btn.ghost { background:transparent; color:var(--heading); border-color:var(--line-strong); }
   .btn.ghost:hover { border-color:var(--primary); color:var(--primary); background:transparent; }
-  .row { display:flex; gap:8px; } .row .btn { flex:1 1 0; }
+  /* split button: the main half downloads the shown variant, the chevron half lists every variant */
+  .split { position:relative; display:flex; gap:1px; }
+  .split > .btn { flex:1; min-width:0; border-radius:8px 0 0 8px; }
+  .pick summary { list-style:none; width:48px; height:100%; padding:0; border-radius:0 8px 8px 0; user-select:none; }
+  .pick summary::-webkit-details-marker { display:none; }
+  .pick summary::after { content:""; width:7px; height:7px; border-right:1.5px solid currentColor; border-bottom:1.5px solid currentColor; transform:translateY(-2px) rotate(45deg); transition:transform .15s ease; }
+  .pick[open] summary { background:var(--btn-hover); }
+  .pick[open] summary::after { transform:translateY(1px) rotate(-135deg); }
+  .pick .menu { position:absolute; left:0; right:0; top:calc(100% + 6px); z-index:10; padding:4px; background:var(--well); border:1px solid var(--line-strong); border-radius:8px; box-shadow:0 16px 40px oklch(0% 0 0 / .5); }
+  .pick .menu a { display:flex; flex-direction:column; justify-content:center; min-height:52px; padding:8px 12px; border-radius:6px; color:var(--heading); text-decoration:none; font-weight:600; transition:background-color .15s ease; }
+  .pick .menu a span { color:var(--muted); font-size:13px; font-weight:400; }
+  .pick .menu a:hover { background:var(--line); }
+  .pick .menu a:focus-visible { outline:2px solid var(--primary); outline-offset:-2px; }
+  .pick .menu a[aria-current] { color:var(--primary); }
   .why { color:var(--muted); font-size:15px; margin:0 0 16px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
   ol { margin-top:18px !important; }
   ol { list-style:none; counter-reset:step; padding:0; margin:0; }
@@ -115,9 +128,15 @@
   <section>
     <h2>Mac</h2>
     <p class="why">Official RustDesk disk image.</p>
-    <div class="row">
-      <a class="btn" href="https://github.com/rustdesk/rustdesk/releases/download/1.5.0/rustdesk-1.5.0-aarch64.dmg">Apple Silicon</a>
-      <a class="btn" href="https://github.com/rustdesk/rustdesk/releases/download/1.5.0/rustdesk-1.5.0-x86_64.dmg">Intel</a>
+    <div class="split">
+      <a class="btn" href="https://github.com/rustdesk/rustdesk/releases/download/1.5.0/rustdesk-1.5.0-aarch64.dmg">Apple Silicon Mac</a>
+      <details class="pick">
+        <summary class="btn" aria-label="Choose Mac type"></summary>
+        <div class="menu">
+          <a href="https://github.com/rustdesk/rustdesk/releases/download/1.5.0/rustdesk-1.5.0-aarch64.dmg" aria-current="true" data-label="Apple Silicon Mac">Apple Silicon<span>About This Mac shows Chip</span></a>
+          <a href="https://github.com/rustdesk/rustdesk/releases/download/1.5.0/rustdesk-1.5.0-x86_64.dmg" data-label="Intel Mac">Intel<span>About This Mac shows Processor</span></a>
+        </div>
+      </details>
     </div>
     <ol>
       <li><span>Install and open RustDesk.</span></li>
@@ -139,9 +158,15 @@
   <section>
     <h2>Phone or tablet</h2>
     <p class="why">Official RustDesk app.</p>
-    <div class="row">
+    <div class="split">
       <a class="btn" href="https://apps.apple.com/app/rustdesk-remote-desktop/id1581225015">App Store</a>
-      <a class="btn" href="https://play.google.com/store/apps/details?id=com.carriez.flutter_hbb">Google Play</a>
+      <details class="pick">
+        <summary class="btn" aria-label="Choose store"></summary>
+        <div class="menu">
+          <a href="https://apps.apple.com/app/rustdesk-remote-desktop/id1581225015" aria-current="true" data-label="App Store">App Store<span>iPhone and iPad</span></a>
+          <a href="https://play.google.com/store/apps/details?id=com.carriez.flutter_hbb" data-label="Google Play" data-android>Google Play<span>Android</span></a>
+        </div>
+      </details>
     </div>
     <ol>
       <li><span>Install and open RustDesk.</span></li>
@@ -187,6 +212,24 @@
         if (navigator.clipboard && navigator.clipboard.writeText) { navigator.clipboard.writeText(cfg).then(done, fallback); } else { fallback(); }
       });
     });
+    var picks = document.querySelectorAll(".pick");
+    var choose = function (item) {
+      var split = item.closest(".split"), main = split.querySelector(":scope > .btn");
+      main.href = item.href; main.textContent = item.getAttribute("data-label");
+      Array.prototype.forEach.call(split.querySelectorAll(".menu a"), function (a) { if (a === item) a.setAttribute("aria-current", "true"); else a.removeAttribute("aria-current"); });
+    };
+    Array.prototype.forEach.call(picks, function (pick) {
+      // picking a variant downloads it and makes it the main button's target
+      Array.prototype.forEach.call(pick.querySelectorAll(".menu a"), function (a) {
+        a.addEventListener("click", function () { choose(a); pick.open = false; });
+      });
+    });
+    var closeAll = function (except) { Array.prototype.forEach.call(picks, function (p) { if (p !== except) p.open = false; }); };
+    document.addEventListener("click", function (e) { closeAll(e.target.closest(".pick")); });
+    document.addEventListener("keydown", function (e) { if (e.key === "Escape") closeAll(null); });
+    // the Mac CPU cannot be read from the browser (Safari reports Intel on Apple Silicon), so only the store is preselected
+    var play = document.querySelector("[data-android]");
+    if (play && /Android/i.test(navigator.userAgent)) choose(play);
     if (!window.qrcode) return;
     var q = qrcode(0, "M"); q.addData("config=" + cfg); q.make();
     var svg = q.createSvgTag({ cellSize: 8, margin: 4 });

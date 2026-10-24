@@ -47,7 +47,7 @@ Generation by itself is no longer a differentiator. Suno and Udio both do it wel
 
 ---
 
-Every finished track is added to your library, where it can be edited directly. There are five operations available on a song.
+Every finished track is added to your library and opens on its own page, where it can be edited. There are five operations available on a song.
 
 <ZoomableImage
   src="/static/images/blog/echosonic/reshape.jpg"
@@ -107,7 +107,7 @@ The reverse is also possible. You sing or play a part, choose the instruments yo
 
 ---
 
-The other half of EchoSonic is voice. You record yourself reading for about a minute, and that single recording becomes a cloned voice.
+The other half of EchoSonic is voice. You record yourself reading for about 90 seconds, and that single recording becomes a cloned voice.
 
 <ZoomableImage
   src="/static/images/blog/echosonic/voicelab.jpg"
@@ -123,7 +123,7 @@ It can be used in two ways:
 
 <Mermaid chart={`
 flowchart TD
-    REC["One recording\nabout a minute"] --> REF["Your cloned voice"]
+    REC["One recording\nabout 90 seconds"] --> REF["Your cloned voice"]
 
     REF --> TTS["Narration\nany text, read in your voice"]
     REF --> SING["Singing\nyour voice on a song"]

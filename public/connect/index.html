@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Connect to BitWise</title>
+<meta name="description" content="Set up the RustDesk viewer once, then enter the ID BitWise gives you during the demo.">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;700&display=swap">
+<style>
+  :root {
+    color-scheme: light dark;
+    --page:#fff; --text:#000; --heading:oklch(21% .034 264.665); --muted:oklch(55.1% .027 264.364);
+    --line:oklch(92.8% .006 264.531); --line-strong:oklch(87.2% .01 258.338); --well:oklch(98.5% .002 247.839);
+    --primary:oklch(66% .15 220); --primary-hover:oklch(56% .13 218); --primary-ink:#fff;
+    --btn:oklch(56% .13 218); --btn-hover:oklch(46% .11 216);
+    --sans:"Space Grotesk", ui-sans-serif, system-ui, sans-serif; --mono:"IBM Plex Mono", "JetBrains Mono", "SF Mono", Menlo, Consolas, monospace;
+  }
+  @media (prefers-color-scheme: dark) { :root {
+    --page:oklch(12.9% .042 264.695); --text:#fff; --heading:oklch(96.7% .003 264.542); --muted:oklch(70.7% .022 261.325);
+    --line:oklch(27.8% .033 256.848); --line-strong:oklch(37.3% .034 259.733); --well:oklch(21% .034 264.665);
+    --primary:oklch(66% .15 220); --primary-hover:oklch(72% .14 222); --primary-ink:oklch(12.9% .042 264.695);
+    --btn:oklch(46% .11 216); --btn-hover:oklch(56% .13 218);
+  } }
+  * { box-sizing:border-box; }
+  html { -webkit-text-size-adjust:100%; }
+  body { margin:0; background:var(--page); color:var(--text); font:16px/1.5 var(--sans); -webkit-font-smoothing:antialiased; padding:0 0 calc(40px + env(safe-area-inset-bottom)); }
+  .wrap { max-width:48rem; margin:0 auto; padding:0 16px; }
+  @media (min-width:640px) { .wrap { padding:0 24px; } }
+  @media (min-width:1280px) { .wrap { max-width:64rem; padding:0; } }
+  @media (min-width:768px) { header { padding-bottom:72px; } }
+  header .logo svg { width:100%; height:auto; display:block; }
+  header { --logo-w:clamp(15.5rem, 24vw, 18rem); display:flex; align-items:flex-start; justify-content:space-between; padding:40px 0; margin-bottom:24px; }
+  header .brand { width:var(--logo-w); }
+  /* the logo's viewBox is 0 10 218 48 and the three dots are centred at y=43, i.e. 33/218 of the logo width below its top;
+     the 44px-tall link is centred on that line */
+  header nav { margin-top:calc(var(--logo-w) * 33 / 218 - 22px); }
+  @media (max-width:639px) { header nav { display:none; } }
+  header .logo { display:block; }
+  header .tag { color:var(--muted); margin:4px 0 0; font:500 10px/1.5 var(--mono); letter-spacing:.2em; text-transform:uppercase; }
+  @media (min-width:768px) { header .tag { font-size:12px; } }
+  header nav a { font-weight:500; color:var(--heading); text-decoration:none; transition:color .15s ease; min-height:44px; display:inline-flex; align-items:center; }
+  header nav a:hover { color:var(--primary); }
+  .from { color:var(--muted); font-size:22px; line-height:30px; font-weight:700; letter-spacing:-.02em; margin:0; padding:0; }
+  .grid { display:grid; gap:56px 48px; grid-template-columns:1fr; padding-top:52px; }
+  @media (min-width:768px) { .grid { grid-template-columns:1fr 1fr; } }
+  @media (min-width:1280px) { .grid { grid-template-columns:1fr 1fr 1fr; column-gap:80px; } }
+  h2 { font-size:28px; line-height:36px; font-weight:700; letter-spacing:-.025em; color:var(--heading); margin:0 0 12px; padding-bottom:12px; border-bottom:1px solid var(--line); }
+  .btn { display:inline-flex; align-items:center; justify-content:center; width:100%; min-height:48px; padding:10px 18px; border-radius:8px; border:1px solid transparent; background:var(--btn); color:#fff; font:inherit; font-weight:600; text-decoration:none; cursor:pointer; transition:background-color .15s ease, border-color .15s ease, color .15s ease, transform .08s ease; }
+  .btn:hover { background:var(--btn-hover); }
+  .btn:active { transform:translateY(1px) scale(.99); }
+  .btn:focus-visible { outline:2px solid var(--primary); outline-offset:3px; }
+  .btn.ghost { background:transparent; color:var(--heading); border-color:var(--line-strong); }
+  .btn.ghost:hover { border-color:var(--primary); color:var(--primary); background:transparent; }
+  .row { display:flex; gap:8px; } .row .btn { flex:1 1 0; }
+  .why { color:var(--muted); font-size:15px; margin:0 0 16px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  ol { margin-top:18px !important; }
+  ol { list-style:none; counter-reset:step; padding:0; margin:0; }
+  ol li { counter-increment:step; display:grid; grid-template-columns:24px 1fr; gap:6px; align-items:baseline; padding:8px 0; }
+  ol li::before { content:counter(step, decimal-leading-zero); font:500 13px/1 var(--mono); color:var(--primary); }
+  b { font-weight:600; color:var(--heading); }
+  .code { margin:8px 0 0; display:flex; gap:8px; align-items:stretch; }
+  .code code { flex:1; min-width:0; font:500 12px/1.45 var(--mono); background:var(--well); border:1px solid var(--line); border-radius:8px; padding:10px 12px; overflow-wrap:anywhere; max-height:5.4em; overflow-y:auto; overscroll-behavior:contain; -webkit-overflow-scrolling:touch; color:var(--muted); user-select:all; -webkit-user-select:all; cursor:text; }
+  .code .btn { width:auto; min-width:84px; }
+  details.alt { margin-top:14px; }
+  details.alt summary { list-style:none; display:inline-flex; align-items:center; gap:8px; min-height:44px; font-weight:600; color:var(--primary); cursor:pointer; user-select:none; transition:color .15s ease; }
+  details.alt summary::-webkit-details-marker { display:none; }
+  details.alt summary:hover { color:var(--primary-hover); }
+  details.alt summary::after { content:""; width:7px; height:7px; border-right:1.5px solid currentColor; border-bottom:1.5px solid currentColor; transform:translateY(-2px) rotate(45deg); transition:transform .15s ease; }
+  details.alt[open] summary::after { transform:translateY(1px) rotate(-135deg); }
+  details.alt .inner { margin-top:10px; }
+  details.alt .inner p { color:var(--muted); font-size:14px; margin:10px 0 0; }
+  .qr img { display:block; width:200px; height:200px; border:1px solid var(--line); border-radius:8px; background:#fff; margin:0 0 10px; }
+  .qr .btn { width:auto; min-width:120px; }
+  footer { margin-top:88px; color:var(--muted); font-size:14px; text-align:center; }
+  footer p { margin:6px 0; }
+  footer details summary { cursor:pointer; min-height:44px; display:inline-flex; align-items:center; color:var(--heading); font-weight:500; }
+  footer details summary:hover { color:var(--primary); }
+  .sha { font:500 12px/1.6 var(--mono); overflow-wrap:anywhere; }
+  footer a { color:var(--primary); text-decoration:none; font-weight:500; transition:color .15s ease; } footer a:hover { color:var(--primary-hover); }
+  footer details .sha { text-align:center; }
+  @media (prefers-reduced-motion: reduce) { .btn, summary, header nav a { transition:none; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <div class="brand">
+    <a class="logo" href="https://bitwise0x.com" aria-label="BitWise">
+      <svg xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMinYMid meet" viewBox="0 10 218 48"><defs><linearGradient id="logo_svg__a" x1="0%" x2="100%" y1="0%" y2="0%"><stop offset="0%" stop-color="#4ab3e8"></stop><stop offset="100%" stop-color="#1c9ad6"></stop></linearGradient></defs><text y="54" fill="url(#logo_svg__a)" font-family="'IBM Plex Mono', 'JetBrains Mono', 'SF Mono', 'Menlo', monospace" font-size="38" font-weight="700" letter-spacing="-0.5">BitWise</text><circle cx="173" cy="43" r="6" fill="url(#logo_svg__a)" opacity="0.5"><animate attributeName="cy" calcMode="spline" dur="4s" keySplines="0 0 1 1;0.42 0 0.58 1;0.42 0 0.58 1;0 0 1 1" keyTimes="0;0.80;0.85;0.90;1" repeatCount="indefinite" values="43;43;38;43;43"></animate><animate attributeName="opacity" dur="4s" keyTimes="0;0.80;0.85;0.90;1" repeatCount="indefinite" values="0.5;0.5;0.9;0.5;0.5"></animate></circle><circle cx="191" cy="43" r="6" fill="url(#logo_svg__a)" opacity="0.7"><animate attributeName="cy" calcMode="spline" dur="4s" keySplines="0 0 1 1;0.42 0 0.58 1;0.42 0 0.58 1;0 0 1 1" keyTimes="0;0.815;0.865;0.915;1" repeatCount="indefinite" values="43;43;38;43;43"></animate><animate attributeName="opacity" dur="4s" keyTimes="0;0.815;0.865;0.915;1" repeatCount="indefinite" values="0.7;0.7;1;0.7;0.7"></animate></circle><circle cx="209" cy="43" r="6" fill="url(#logo_svg__a)"><animate attributeName="cy" calcMode="spline" dur="4s" keySplines="0 0 1 1;0.42 0 0.58 1;0.42 0 0.58 1;0 0 1 1" keyTimes="0;0.83;0.88;0.93;1" repeatCount="indefinite" values="43;43;38;43;43"></animate><animate attributeName="opacity" dur="4s" keyTimes="0;0.83;0.88;0.93;1" repeatCount="indefinite" values="1;1;0.6;1;1"></animate></circle></svg>
+    </a>
+    <p class="tag">Intelligent Backends</p>
+  </div>
+  <nav><a href="https://bitwise0x.com">bitwise0x.com</a></nav>
+</header>
+
+<p class="from">Connect for a Demo</p>
+<div class="grid">
+  <section>
+    <h2>Windows PC</h2>
+    <p class="why">Official RustDesk 1.5.0 installer.</p>
+    <a class="btn" href="https://github.com/BitWise-0x/bitwise0x.com/releases/latest/download/rustdesk-licensed-0nI9s2dyV3Q3kld0hzQTp0VvNFSLR0K4lVOrYVWrsya2klMtB3S1MlWORjNVRkI6ISeltmIsISbvNmL4BTZzl2d0lmYus2clRGdzVncv8iOzBHd0hmI6ISawFmIsISbvNmL4BTZzl2d0lmYus2clRGdzVnciojI0N3boJye.exe">Download for Windows</a>
+    <ol>
+      <li><span>Install and open RustDesk.</span></li>
+      <li><span><b>Settings</b> › <b>Network</b> › switch <b>Use WebSocket</b> <b>ON</b>.</span></li>
+      <li><span>Enter the ID, <b>Connect</b>.</span></li>
+    </ol>
+    <details class="alt">
+      <summary>One-click alternative</summary>
+      <div class="inner">
+        <a class="btn ghost" href="https://bitwise0x.com/connect/BitWise-RustDesk-Windows.cmd" download>Download the setup script</a>
+        <p>Does every step. Windows warns once: <b>More info</b>, <b>Run anyway</b>.</p>
+      </div>
+    </details>
+  </section>
+
+  <section>
+    <h2>Mac</h2>
+    <p class="why">Official RustDesk 1.5.0 disk image.</p>
+    <div class="row">
+      <a class="btn" href="https://github.com/rustdesk/rustdesk/releases/download/1.5.0/rustdesk-1.5.0-aarch64.dmg">Apple Silicon</a>
+      <a class="btn" href="https://github.com/rustdesk/rustdesk/releases/download/1.5.0/rustdesk-1.5.0-x86_64.dmg">Intel</a>
+    </div>
+    <ol>
+      <li><span>Install and open RustDesk.</span></li>
+      <li><span>Copy the setup code, then <b>Settings</b> › <b>Network</b> › <b>Import server config</b>.
+        <span class="code"><code>0nI9s2dyV3Q3kld0hzQTp0VvNFSLR0K4lVOrYVWrsya2klMtB3S1MlWORjNVRkI6ISeltmIsISbvNmL4BTZzl2d0lmYus2clRGdzVncv8iOzBHd0hmI6ISawFmIsISbvNmL4BTZzl2d0lmYus2clRGdzVnciojI0N3boJye</code><button type="button" class="btn ghost" data-copy>Copy</button></span></span></li>
+      <li><span><b>Settings</b> › <b>Network</b> › switch <b>Use WebSocket</b> <b>ON</b>.</span></li>
+      <li><span>Enter the ID, <b>Connect</b>.</span></li>
+    </ol>
+    <details class="alt">
+      <summary>One-click alternative</summary>
+      <div class="inner">
+        <a class="btn ghost" href="https://bitwise0x.com/connect/BitWise-RustDesk-macOS.command" download>Download the setup script</a>
+        <p>Does every step. macOS blocks it once: <b>Privacy &amp; Security</b>, <b>Open Anyway</b>.</p>
+      </div>
+    </details>
+  </section>
+
+  <section>
+    <h2>Phone or tablet</h2>
+    <p class="why">Official RustDesk app.</p>
+    <div class="row">
+      <a class="btn" href="https://apps.apple.com/app/rustdesk-remote-desktop/id1581225015">App Store</a>
+      <a class="btn" href="https://play.google.com/store/apps/details?id=com.carriez.flutter_hbb">Google Play</a>
+    </div>
+    <ol>
+      <li><span>Install and open RustDesk.</span></li>
+      <li><span>Copy the setup code, then <b>Settings</b> tab › <b>ID/Relay Server</b> › <b>Import Server Config</b> › <b>OK</b>.
+        <span class="code"><code>0nI9s2dyV3Q3kld0hzQTp0VvNFSLR0K4lVOrYVWrsya2klMtB3S1MlWORjNVRkI6ISeltmIsISbvNmL4BTZzl2d0lmYus2clRGdzVncv8iOzBHd0hmI6ISawFmIsISbvNmL4BTZzl2d0lmYus2clRGdzVnciojI0N3boJye</code><button type="button" class="btn ghost" data-copy>Copy</button></span></span></li>
+      <li><span><b>Settings</b> tab › switch <b>Use WebSocket</b> <b>ON</b>.</span></li>
+      <li><span><b>Connection</b> tab › enter the ID, <b>Connect</b>.</span></li>
+    </ol>
+    <details class="alt">
+      <summary>QR code</summary>
+      <div class="inner qr">
+        <img id="qr-img" alt="Setup code as a QR code" width="200" height="200">
+        <a class="btn ghost" id="qr-save" href="#" download="bitwise-rustdesk-setup.png">Save image</a>
+        <p>Instead of step 2: in RustDesk, <b>Settings</b> tab › QR icon › scan this from another screen, or the gallery icon to pick the saved image.</p>
+      </div>
+    </details>
+  </section>
+</div>
+
+<footer>
+  <p>Only trust links from <a href="https://bitwise0x.com/connect/">bitwise0x.com</a></p>
+  <p><b>Server:</b> rustdesk.bitwise0x.com</p>
+  <details>
+    <summary>Checksums, SHA-256</summary>
+    <p class="sha">Windows installer: 8555777215510d83d2d61c9dc984e4fcc838bd7e79f9d18a42585431f5e8bb47<br>Mac, Apple silicon: 3929b0a4321e7d0f561a317059798be882d65decc59681eb77061f8efe56fbf4<br>Mac, Intel: 1ca3cbfbe7f2bd28b50c93fcd50d4a0b671dc76d18be27cea99d3a65767eb526</p>
+  </details>
+</footer>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"></script>
+<script>
+  (function () {
+    var cfg = "0nI9s2dyV3Q3kld0hzQTp0VvNFSLR0K4lVOrYVWrsya2klMtB3S1MlWORjNVRkI6ISeltmIsISbvNmL4BTZzl2d0lmYus2clRGdzVncv8iOzBHd0hmI6ISawFmIsISbvNmL4BTZzl2d0lmYus2clRGdzVnciojI0N3boJye";
+    Array.prototype.forEach.call(document.querySelectorAll("[data-copy]"), function (btn) {
+      var label = btn.textContent;
+      btn.addEventListener("click", function () {
+        var done = function () { btn.textContent = "Copied"; setTimeout(function () { btn.textContent = label; }, 1800); };
+        var fallback = function () {
+          var ta = document.createElement("textarea"); ta.value = cfg; ta.setAttribute("readonly", ""); ta.style.position = "fixed"; ta.style.opacity = "0";
+          document.body.appendChild(ta); ta.select(); try { document.execCommand("copy"); done(); } catch (e) {} document.body.removeChild(ta);
+        };
+        if (navigator.clipboard && navigator.clipboard.writeText) { navigator.clipboard.writeText(cfg).then(done, fallback); } else { fallback(); }
+      });
+    });
+    if (!window.qrcode) return;
+    var q = qrcode(0, "M"); q.addData("config=" + cfg); q.make();
+    var svg = q.createSvgTag({ cellSize: 8, margin: 4 });
+    var img = document.getElementById("qr-img"), save = document.getElementById("qr-save");
+    var svgUrl = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(svg);
+    img.src = svgUrl; save.href = svgUrl; save.setAttribute("download", "bitwise-rustdesk-setup.svg");
+    var tmp = new Image();
+    tmp.onload = function () {
+      var c = document.createElement("canvas"); c.width = tmp.width * 2; c.height = tmp.height * 2;
+      var ctx = c.getContext("2d"); ctx.fillStyle = "#fff"; ctx.fillRect(0, 0, c.width, c.height); ctx.drawImage(tmp, 0, 0, c.width, c.height);
+      try { var png = c.toDataURL("image/png"); img.src = png; save.href = png; save.setAttribute("download", "bitwise-rustdesk-setup.png"); } catch (e) {}
+    };
+    tmp.src = svgUrl;
+  })();
+</script>
+</body>
+</html>

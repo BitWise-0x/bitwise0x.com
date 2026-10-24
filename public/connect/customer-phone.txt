@@ -1,0 +1,10 @@
+To view a BitWise desktop from your phone:
+
+1. Install "RustDesk Remote Desktop" (App Store or Google Play).
+2. Copy this whole line:
+   0nI9s2dyV3Q3kld0hzQTp0VvNFSLR0K4lVOrYVWrsya2klMtB3S1MlWORjNVRkI6ISeltmIsISbvNmL4BTZzl2d0lmYus2clRGdzVncv8iOzBHd0hmI6ISawFmIsISbvNmL4BTZzl2d0lmYus2clRGdzVnciojI0N3boJye
+3. In RustDesk open the Settings tab, tap "ID/Relay Server", then "Import Server Config". It fills itself from what you copied. Tap OK.
+4. Still in Settings, switch on "Use WebSocket".
+5. Open the Connection tab, enter the ID we give you, and tap Connect.
+
+Your own status in the app stays on "Connecting"; that is normal and does not stop you from connecting to us.

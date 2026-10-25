@@ -80,6 +80,9 @@
   details.alt[open] summary::after { transform:translateY(1px) rotate(-135deg); }
   details.alt .inner { margin-top:10px; }
   details.alt .inner p { color:var(--muted); font-size:14px; margin:10px 0 0; }
+  /* the QR panel floats over the page on wide layouts, so opening it does not push the footer down */
+  details.pop { position:relative; }
+  @media (min-width:768px) { details.pop .inner { position:absolute; left:0; right:0; top:calc(100% + 6px); z-index:10; margin:0; padding:12px; background:var(--well); border:1px solid var(--line-strong); border-radius:8px; box-shadow:0 16px 40px oklch(0% 0 0 / .5); } }
   .qr img { display:block; width:200px; height:200px; border:1px solid var(--line); border-radius:8px; background:#fff; margin:0 0 10px; }
   .qr .btn { min-width:120px; }
   footer { margin-top:88px; color:var(--muted); font-size:14px; text-align:center; }
@@ -176,7 +179,7 @@
       <li><span>We provide connection ID.</span></li>
       <li><span><b>Connection</b> tab › enter the ID, <b>Connect</b>.</span></li>
     </ol>
-    <details class="alt">
+    <details class="alt pop">
       <summary>QR code</summary>
       <div class="inner qr">
         <img id="qr-img" alt="Setup code as a QR code" width="200" height="200">

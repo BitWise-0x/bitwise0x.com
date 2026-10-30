@@ -1,12 +1,10 @@
 import { ReactNode } from 'react'
 import Image from '@/components/Image'
-import Bleed from 'pliny/ui/Bleed'
 import { CoreContent } from 'pliny/utils/contentlayer'
 import type { Blog } from 'contentlayer/generated'
 import Comments from '@/components/Comments'
 import Link from '@/components/Link'
-import PageTitle from '@/components/PageTitle'
-import SectionContainer from '@/components/SectionContainer'
+import { formatDate } from 'pliny/utils/formatDate'
 import siteMetadata from '@/data/siteMetadata'
 import ScrollTopAndComment from '@/components/ScrollTopAndComment'
 
@@ -18,66 +16,55 @@ interface LayoutProps {
 }
 
 export default function PostMinimal({ content, next, prev, children }: LayoutProps) {
-  const { slug, title, images } = content
+  const { path, slug, date, title, images, readingTime } = content
+  const basePath = path.split('/')[0]
   const displayImage = images && images.length > 0 ? images[0] : '/static/images/social-banner.png'
 
   return (
-    <SectionContainer>
+    <article className="post">
       <ScrollTopAndComment />
-      <article>
-        <div>
-          <div className="space-y-1 pb-10 text-center">
-            <div className="w-full">
-              <Bleed>
-                <div className="relative aspect-2/1 w-full">
-                  <Image
-                    src={displayImage}
-                    alt={title}
-                    fill
-                    sizes="100vw"
-                    className="object-cover"
-                  />
-                </div>
-              </Bleed>
-            </div>
-            <div className="relative pt-10">
-              <PageTitle>{title}</PageTitle>
-            </div>
-          </div>
-          <div className="prose dark:prose-invert max-w-none py-4">{children}</div>
-          {siteMetadata.comments && (
-            <div className="prose-summary pt-6 pb-6 text-center" id="comment">
-              <Comments slug={slug} />
-            </div>
+
+      <div className="post-banner">
+        <Image src={displayImage} alt={title} width={1280} height={640} />
+      </div>
+
+      <header className="post-head">
+        <p className="kicker">
+          <span className="led-pulse" />
+          <time dateTime={date} suppressHydrationWarning>
+            {formatDate(date, siteMetadata.locale)}
+          </time>
+          {readingTime && <span>· {Math.ceil(readingTime.minutes)} min read</span>}
+        </p>
+        <h1>{title}</h1>
+      </header>
+
+      <div className="prose dark:prose-invert max-w-none">{children}</div>
+
+      <footer className="post-foot">
+        <div className="ledger-pager">
+          {prev && prev.path ? (
+            <Link href={`/${prev.path}`} aria-label={`Previous post: ${prev.title}`}>
+              &larr; {prev.title}
+            </Link>
+          ) : (
+            <Link href={`/${basePath}`} aria-label="Back to blog">
+              &larr; Back to blog
+            </Link>
           )}
-          <footer>
-            <div className="flex flex-col text-sm font-medium sm:flex-row sm:justify-between sm:text-base">
-              {prev && prev.path && (
-                <div className="pt-4 xl:pt-8">
-                  <Link
-                    href={`/${prev.path}`}
-                    className="text-link"
-                    aria-label={`Previous post: ${prev.title}`}
-                  >
-                    &larr; {prev.title}
-                  </Link>
-                </div>
-              )}
-              {next && next.path && (
-                <div className="pt-4 xl:pt-8">
-                  <Link
-                    href={`/${next.path}`}
-                    className="text-link"
-                    aria-label={`Next post: ${next.title}`}
-                  >
-                    {next.title} &rarr;
-                  </Link>
-                </div>
-              )}
-            </div>
-          </footer>
+          {next && next.path && (
+            <Link href={`/${next.path}`} aria-label={`Next post: ${next.title}`}>
+              {next.title} &rarr;
+            </Link>
+          )}
         </div>
-      </article>
-    </SectionContainer>
+      </footer>
+
+      {siteMetadata.comments && (
+        <div className="post-comments" id="comment">
+          <Comments slug={slug} />
+        </div>
+      )}
+    </article>
   )
 }

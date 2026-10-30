@@ -25,14 +25,12 @@ export default function RelatedPosts({ currentSlug, currentTags, posts }: Relate
   if (related.length === 0) return null
 
   return (
-    <div className="py-6">
-      <h2 className="text-muted pb-3 text-xs tracking-wide uppercase">Related Articles</h2>
-      <ul className="space-y-2">
+    <div className="related-posts">
+      <h2 className="ledger-head">Related</h2>
+      <ul>
         {related.map((post) => (
           <li key={post.slug}>
-            <Link href={`/blog/${post.slug}`} className="text-link">
-              {post.title}
-            </Link>
+            <Link href={`/blog/${post.slug}`}>{post.title}</Link>
           </li>
         ))}
       </ul>

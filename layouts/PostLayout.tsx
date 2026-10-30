@@ -3,9 +3,6 @@ import { CoreContent } from 'pliny/utils/contentlayer'
 import type { Blog, Authors } from 'contentlayer/generated'
 import Comments from '@/components/Comments'
 import Link from '@/components/Link'
-import PageTitle from '@/components/PageTitle'
-import SectionContainer from '@/components/SectionContainer'
-import Image from '@/components/Image'
 import Tag from '@/components/Tag'
 import siteMetadata from '@/data/siteMetadata'
 import ScrollTopAndComment from '@/components/ScrollTopAndComment'
@@ -13,7 +10,6 @@ import ShareLinks from '@/components/ShareLinks'
 import RelatedPosts from '@/components/RelatedPosts'
 
 const postDateTemplate: Intl.DateTimeFormatOptions = {
-  weekday: 'long',
   year: 'numeric',
   month: 'long',
   day: 'numeric',
@@ -36,122 +32,73 @@ export default function PostLayout({
   relatedPosts,
   children,
 }: LayoutProps) {
-  const { filePath, path, slug, date, title, tags } = content
+  const { path, slug, date, title, tags, readingTime } = content
   const basePath = path.split('/')[0]
+  const authorNames = authorDetails.map((a) => a.name).join(', ')
 
   return (
-    <SectionContainer>
+    <article className="post">
       <ScrollTopAndComment />
-      <article>
-        <div className="xl:divide-theme xl:divide-y">
-          <header className="pt-6 xl:pb-6">
-            <div className="space-y-1 text-center">
-              <dl className="space-y-10">
-                <div>
-                  <dt className="sr-only">Published on</dt>
-                  <dd className="text-muted text-base leading-6 font-medium">
-                    <time dateTime={date} suppressHydrationWarning>
-                      {new Date(date).toLocaleDateString(siteMetadata.locale, postDateTemplate)}
-                    </time>
-                  </dd>
-                </div>
-              </dl>
-              <div>
-                <PageTitle>{title}</PageTitle>
-              </div>
+
+      <header className="post-head">
+        <p className="kicker">
+          <span className="led-pulse" />
+          <time dateTime={date} suppressHydrationWarning>
+            {new Date(date).toLocaleDateString(siteMetadata.locale, postDateTemplate)}
+          </time>
+          {readingTime && <span>· {Math.ceil(readingTime.minutes)} min read</span>}
+          {authorNames && <span>· {authorNames}</span>}
+        </p>
+        <h1>{title}</h1>
+      </header>
+
+      <div className="prose dark:prose-invert max-w-none">{children}</div>
+
+      <ShareLinks path={path} title={title} />
+
+      {relatedPosts && <RelatedPosts currentSlug={slug} currentTags={tags} posts={relatedPosts} />}
+
+      <footer className="post-foot">
+        {tags && tags.length > 0 && (
+          <div className="post-tags">
+            <h2 className="ledger-head">Tags</h2>
+            <div className="flex flex-wrap">
+              {tags.map((tag) => (
+                <Tag key={tag} text={tag} />
+              ))}
             </div>
-          </header>
-          <div className="divide-theme grid-rows-[auto_1fr] divide-y pb-8 xl:grid xl:grid-cols-4 xl:gap-x-6 xl:divide-y-0">
-            <dl className="border-theme pt-6 pb-10 xl:border-b xl:pt-11">
-              <dt className="sr-only">Authors</dt>
-              <dd>
-                <ul className="flex flex-wrap justify-center gap-4 sm:space-x-12 xl:block xl:space-y-8 xl:space-x-0">
-                  {authorDetails.map((author) => (
-                    <li className="flex items-center space-x-2" key={author.name}>
-                      {author.avatar && (
-                        <Image
-                          src={author.avatar}
-                          width={38}
-                          height={38}
-                          alt="avatar"
-                          className="h-10 w-10 rounded-full"
-                        />
-                      )}
-                      <dl className="text-sm leading-5 font-medium whitespace-nowrap">
-                        <dt className="sr-only">Name</dt>
-                        <dd className="text-heading">{author.name}</dd>
-                        <dt className="sr-only">Twitter</dt>
-                        <dd>
-                          {author.twitter && (
-                            <Link href={author.twitter} className="text-link">
-                              {author.twitter
-                                .replace('https://twitter.com/', '@')
-                                .replace('https://x.com/', '@')}
-                            </Link>
-                          )}
-                        </dd>
-                      </dl>
-                    </li>
-                  ))}
-                </ul>
-              </dd>
-            </dl>
-            <div className="divide-theme divide-y xl:col-span-3 xl:row-span-2 xl:pb-0">
-              <div className="prose dark:prose-invert max-w-none pt-10 pb-8">{children}</div>
-              <ShareLinks path={path} title={title} />
-              {relatedPosts && (
-                <RelatedPosts currentSlug={slug} currentTags={tags} posts={relatedPosts} />
-              )}
-              {siteMetadata.comments && (
-                <div className="prose-summary pt-6 pb-6 text-center" id="comment">
-                  <Comments slug={slug} />
-                </div>
-              )}
-            </div>
-            <footer>
-              <div className="divide-theme text-sm leading-5 font-medium xl:col-start-1 xl:row-start-2 xl:divide-y">
-                {tags && (
-                  <div className="py-4 xl:py-8">
-                    <h2 className="text-muted text-xs tracking-wide uppercase">Tags</h2>
-                    <div className="flex flex-wrap">
-                      {tags.map((tag) => (
-                        <Tag key={tag} text={tag} />
-                      ))}
-                    </div>
-                  </div>
-                )}
-                {(next || prev) && (
-                  <div className="flex justify-between py-4 xl:block xl:space-y-8 xl:py-8">
-                    {prev && prev.path && (
-                      <div>
-                        <h2 className="text-muted text-xs tracking-wide uppercase">
-                          Previous Article
-                        </h2>
-                        <div className="text-link">
-                          <Link href={`/${prev.path}`}>{prev.title}</Link>
-                        </div>
-                      </div>
-                    )}
-                    {next && next.path && (
-                      <div>
-                        <h2 className="text-muted text-xs tracking-wide uppercase">Next Article</h2>
-                        <div className="text-link">
-                          <Link href={`/${next.path}`}>{next.title}</Link>
-                        </div>
-                      </div>
-                    )}
-                  </div>
-                )}
-              </div>
-              <div className="pt-4 xl:pt-8">
-                <Link href={`/${basePath}`} className="text-link" aria-label="Back to blog">
-                  &larr; Back to blog
-                </Link>
-              </div>
-            </footer>
           </div>
+        )}
+
+        {(next || prev) && (
+          <div className="post-nav">
+            {prev && prev.path && (
+              <div>
+                <h2 className="ledger-head">Previous</h2>
+                <Link href={`/${prev.path}`}>{prev.title}</Link>
+              </div>
+            )}
+            {next && next.path && (
+              <div>
+                <h2 className="ledger-head">Next</h2>
+                <Link href={`/${next.path}`}>{next.title}</Link>
+              </div>
+            )}
+          </div>
+        )}
+
+        <div className="ledger-pager">
+          <Link href={`/${basePath}`} aria-label="Back to blog">
+            &larr; Back to blog
+          </Link>
         </div>
-      </article>
-    </SectionContainer>
+      </footer>
+
+      {siteMetadata.comments && (
+        <div className="post-comments" id="comment">
+          <Comments slug={slug} />
+        </div>
+      )}
+    </article>
   )
 }

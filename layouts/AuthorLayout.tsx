@@ -1,7 +1,9 @@
-import { ReactNode } from 'react'
+import { ReactNode, SVGProps, ComponentType } from 'react'
 import type { Authors } from 'contentlayer/generated'
-import SocialIcon from '@/components/social-icons'
 import Image from '@/components/Image'
+import Link from '@/components/Link'
+import LedgerLead from '@/components/LedgerLead'
+import { Mail, Github, Linkedin, X, Bluesky } from '@/components/social-icons/icons'
 
 interface Props {
   children: ReactNode
@@ -11,39 +13,42 @@ interface Props {
 export default function AuthorLayout({ children, content }: Props) {
   const { name, avatar, occupation, company, email, twitter, bluesky, linkedin, github } = content
 
+  const links: { label: string; href?: string; Icon: ComponentType<SVGProps<SVGSVGElement>> }[] = [
+    { label: 'Email', href: email ? `mailto:${email}` : undefined, Icon: Mail },
+    { label: 'GitHub', href: github, Icon: Github },
+    { label: 'LinkedIn', href: linkedin, Icon: Linkedin },
+    { label: 'X', href: twitter, Icon: X },
+    { label: 'Bluesky', href: bluesky, Icon: Bluesky },
+  ]
+
   return (
-    <>
-      <div className="divide-theme divide-y">
-        <div className="space-y-2 pt-6 pb-8 md:space-y-5">
-          <h1 className="page-title">About</h1>
+    <div>
+      <LedgerLead kicker="Operator" title="About">
+        {occupation}
+        {company ? ` · ${company}` : ''}
+      </LedgerLead>
+
+      <aside className="author-card">
+        {avatar && <Image src={avatar} alt="" width={192} height={192} className="author-avatar" />}
+        <div className="author-meta">
+          <h3>{name}</h3>
+          {company && <p className="tag">{company}</p>}
+          <ul className="author-links">
+            {links
+              .filter((l) => l.href)
+              .map(({ label, href, Icon }) => (
+                <li key={label}>
+                  <Link href={href as string}>
+                    <Icon className="icon" />
+                    {label}
+                  </Link>
+                </li>
+              ))}
+          </ul>
         </div>
-        <div className="items-start space-y-2 xl:grid xl:grid-cols-3 xl:space-y-0 xl:gap-x-8">
-          <div className="flex flex-col items-center space-x-2 pt-8">
-            {avatar && (
-              <Image
-                src={avatar}
-                alt="avatar"
-                width={192}
-                height={192}
-                className="h-48 w-48 rounded-full"
-              />
-            )}
-            <h3 className="pt-4 pb-0 text-xl leading-8 font-bold tracking-tight">{name}</h3>
-            <div className="text-muted">{company}</div>
-            <div className="text-muted text-center text-sm leading-relaxed">{occupation}</div>
-            <div className="flex space-x-3 pt-6 pb-4">
-              <SocialIcon kind="mail" href={`mailto:${email}`} size={5} />
-              <SocialIcon kind="github" href={github} size={5} />
-              <SocialIcon kind="linkedin" href={linkedin} size={5} />
-              <SocialIcon kind="x" href={twitter} size={5} />
-              <SocialIcon kind="bluesky" href={bluesky} size={5} />
-            </div>
-          </div>
-          <div className="prose dark:prose-invert max-w-none pt-12 pb-8 xl:col-span-2">
-            {children}
-          </div>
-        </div>
-      </div>
-    </>
+      </aside>
+
+      <div className="prose dark:prose-invert author-body max-w-none">{children}</div>
+    </div>
   )
 }

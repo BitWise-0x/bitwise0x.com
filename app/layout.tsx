@@ -14,6 +14,7 @@ import { Metadata } from 'next'
 
 const space_grotesk = Space_Grotesk({
   subsets: ['latin'],
+  weight: ['400', '500', '600', '700'],
   display: 'swap',
   variable: '--font-space-grotesk',
 })
@@ -85,29 +86,30 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <link
         rel="apple-touch-icon"
         sizes="180x180"
-        href={`${basePath}/static/favicons/apple-touch-icon.png?v=2`}
+        href={`${basePath}/static/favicons/apple-touch-icon.png?v=3`}
       />
       <link
         rel="icon"
         type="image/png"
         sizes="96x96"
-        href={`${basePath}/static/favicons/favicon-96x96.png?v=2`}
+        href={`${basePath}/static/favicons/favicon-96x96.png?v=3`}
       />
-      <link rel="icon" type="image/svg+xml" href={`${basePath}/static/favicons/favicon.svg?v=2`} />
-      <link rel="manifest" href={`${basePath}/static/favicons/site.webmanifest?v=2`} />
+      <link rel="icon" type="image/svg+xml" href={`${basePath}/static/favicons/favicon.svg?v=3`} />
+      <link rel="manifest" href={`${basePath}/static/favicons/site.webmanifest?v=3`} />
       <meta name="msapplication-TileColor" content="#000000" />
       <meta name="theme-color" content="#000" />
+      <meta name="color-scheme" content="dark" />
       <link rel="alternate" type="application/rss+xml" href={`${basePath}/feed.xml`} />
-      <body className="bg-page pl-[calc(100vw-100%)] text-black antialiased dark:text-white">
+      <body className="bg-page pl-[calc(100vw-100%)] antialiased">
         <ThemeProviders>
           <Analytics analyticsConfig={siteMetadata.analytics as AnalyticsConfig} />
-          <SectionContainer>
-            <SearchProvider searchConfig={siteMetadata.search as SearchConfig}>
+          <SearchProvider searchConfig={siteMetadata.search as SearchConfig}>
+            <div className="ledger-shell min-h-screen">
               <Header />
-              <main className="mb-auto">{children}</main>
-            </SearchProvider>
-            <Footer />
-          </SectionContainer>
+              <main className="min-w-0 py-9 md:pl-9">{children}</main>
+              <Footer />
+            </div>
+          </SearchProvider>
         </ThemeProviders>
       </body>
     </html>

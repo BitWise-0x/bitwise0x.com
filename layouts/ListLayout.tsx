@@ -6,7 +6,7 @@ import { formatDate } from 'pliny/utils/formatDate'
 import { CoreContent } from 'pliny/utils/contentlayer'
 import type { Blog } from 'contentlayer/generated'
 import Link from '@/components/Link'
-import Tag from '@/components/Tag'
+import LedgerLead from '@/components/LedgerLead'
 import siteMetadata from '@/data/siteMetadata'
 
 interface PaginationProps {
@@ -29,36 +29,28 @@ function Pagination({ totalPages, currentPage }: PaginationProps) {
   const nextPage = currentPage + 1 <= totalPages
 
   return (
-    <div className="space-y-2 pt-6 pb-8 md:space-y-5">
-      <nav className="flex justify-between">
-        {!prevPage && (
-          <button className="cursor-auto disabled:opacity-50" disabled={!prevPage}>
-            Previous
-          </button>
-        )}
-        {prevPage && (
-          <Link
-            href={currentPage - 1 === 1 ? `/${basePath}/` : `/${basePath}/page/${currentPage - 1}`}
-            rel="prev"
-          >
-            Previous
-          </Link>
-        )}
-        <span>
-          {currentPage} of {totalPages}
-        </span>
-        {!nextPage && (
-          <button className="cursor-auto disabled:opacity-50" disabled={!nextPage}>
-            Next
-          </button>
-        )}
-        {nextPage && (
-          <Link href={`/${basePath}/page/${currentPage + 1}`} rel="next">
-            Next
-          </Link>
-        )}
-      </nav>
-    </div>
+    <nav className="ledger-pager">
+      {prevPage ? (
+        <Link
+          href={currentPage - 1 === 1 ? `/${basePath}/` : `/${basePath}/page/${currentPage - 1}`}
+          rel="prev"
+        >
+          &larr; Previous
+        </Link>
+      ) : (
+        <span className="disabled">&larr; Previous</span>
+      )}
+      <span className="count">
+        {currentPage} / {totalPages}
+      </span>
+      {nextPage ? (
+        <Link href={`/${basePath}/page/${currentPage + 1}`} rel="next">
+          Next &rarr;
+        </Link>
+      ) : (
+        <span className="disabled">Next &rarr;</span>
+      )}
+    </nav>
   )
 }
 
@@ -79,76 +71,59 @@ export default function ListLayout({
     initialDisplayPosts.length > 0 && !searchValue ? initialDisplayPosts : filteredBlogPosts
 
   return (
-    <>
-      <div className="divide-theme divide-y">
-        <div className="space-y-2 pt-6 pb-8 md:space-y-5">
-          <h1 className="page-title">{title}</h1>
-          <div className="relative max-w-lg">
-            <label>
-              <span className="sr-only">Search articles</span>
-              <input
-                aria-label="Search articles"
-                type="text"
-                onChange={(e) => setSearchValue(e.target.value)}
-                placeholder="Search articles"
-                className="border-theme bg-page text-heading focus:border-primary-500 focus:ring-primary-500 block w-full rounded-md border px-4 py-2"
-              />
-            </label>
-            <svg
-              className="text-muted absolute top-3 right-3 h-5 w-5"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-              />
-            </svg>
-          </div>
-        </div>
-        <ul>
-          {!filteredBlogPosts.length && 'No posts found.'}
-          {displayPosts.map((post) => {
-            const { path, date, title, summary, tags } = post
-            return (
-              <li key={path} className="py-4">
-                <article className="space-y-2 xl:grid xl:grid-cols-4 xl:items-baseline xl:space-y-0">
-                  <dl>
-                    <dt className="sr-only">Published on</dt>
-                    <dd className="text-muted text-base leading-6 font-medium">
-                      <time dateTime={date} suppressHydrationWarning>
-                        {formatDate(date, siteMetadata.locale)}
-                      </time>
-                    </dd>
-                  </dl>
-                  <div className="space-y-3 xl:col-span-3">
-                    <div>
-                      <h3 className="text-2xl leading-8 font-bold tracking-tight">
-                        <Link href={`/${path}`} className="text-heading">
-                          {title}
-                        </Link>
-                      </h3>
-                      <div className="flex flex-wrap">
-                        {tags?.map((tag) => (
-                          <Tag key={tag} text={tag} />
-                        ))}
-                      </div>
-                    </div>
-                    <div className="prose prose-summary max-w-none">{summary}</div>
-                  </div>
-                </article>
-              </li>
-            )
-          })}
-        </ul>
+    <div>
+      <LedgerLead kicker="Tag" title={title}>
+        Every post filed under this topic
+      </LedgerLead>
+
+      <div className="ledger-search">
+        <label>
+          <span className="sr-only">Search articles</span>
+          <input
+            aria-label="Search articles"
+            type="text"
+            onChange={(e) => setSearchValue(e.target.value)}
+            placeholder="Filter by title, summary, or tag"
+          />
+        </label>
       </div>
+
+      <div className="ledger-head">
+        <span>Posts</span>
+        <span>Date</span>
+      </div>
+
+      <ul className="records">
+        {!filteredBlogPosts.length && <li className="ledger-empty">No posts found.</li>}
+        {displayPosts.map((post, i) => {
+          const { path, date, title: postTitle, summary, tags } = post
+
+          return (
+            <li key={path} className="record no-rid">
+              <div>
+                <h3>
+                  <Link href={`/${path}`}>{postTitle}</Link>
+                </h3>
+                {tags && tags.length > 0 && <p className="tag">{tags.join(' · ')}</p>}
+                <p className="desc">{summary}</p>
+                <div className="links">
+                  <Link href={`/${path}`}>Read</Link>
+                </div>
+              </div>
+
+              <div className="side">
+                <time dateTime={date} suppressHydrationWarning>
+                  {formatDate(date, siteMetadata.locale)}
+                </time>
+              </div>
+            </li>
+          )
+        })}
+      </ul>
+
       {pagination && pagination.totalPages > 1 && !searchValue && (
         <Pagination currentPage={pagination.currentPage} totalPages={pagination.totalPages} />
       )}
-    </>
+    </div>
   )
 }

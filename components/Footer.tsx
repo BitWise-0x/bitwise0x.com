@@ -1,26 +1,28 @@
-'use client'
-
-import { usePathname } from 'next/navigation'
 import siteMetadata from '@/data/siteMetadata'
-import SocialIcon from '@/components/social-icons'
+import Link from './Link'
+import { Mail, Github, X, Bluesky } from '@/components/social-icons/icons'
 
 export default function Footer() {
-  const pathname = usePathname()
-  const hideSocial = pathname === '/about'
+  const links = [
+    { label: 'Email', href: `mailto:${siteMetadata.email}`, Icon: Mail },
+    { label: 'GitHub', href: siteMetadata.github, Icon: Github },
+    { label: 'X', href: siteMetadata.x, Icon: X },
+    { label: 'Bluesky', href: siteMetadata.bluesky, Icon: Bluesky },
+  ]
 
   return (
-    <footer>
-      <div className="mt-16 flex flex-col items-center">
-        {!hideSocial && (
-          <div className="mb-6 flex space-x-4">
-            <SocialIcon kind="mail" href={`mailto:${siteMetadata.email}`} size={6} />
-            <SocialIcon kind="github" href={siteMetadata.github} size={6} />
-            <SocialIcon kind="x" href={siteMetadata.x} size={6} />
-            <SocialIcon kind="bluesky" href={siteMetadata.bluesky} size={6} />
-          </div>
-        )}
-        <div className="text-muted mb-8 text-sm">{`BitWise · © ${new Date().getFullYear()}`}</div>
-      </div>
+    <footer className="ledger-footer col-span-full mt-4 md:pl-9">
+      <span>{`© BitWise · ${new Date().getFullYear()}`}</span>
+      <span className="footer-links">
+        {links
+          .filter((l) => l.href)
+          .map(({ label, href, Icon }) => (
+            <Link key={label} href={href} aria-label={label}>
+              <Icon className="icon" />
+              <span>{label}</span>
+            </Link>
+          ))}
+      </span>
     </footer>
   )
 }

@@ -1,6 +1,16 @@
 import projectsData from '@/data/projectsData'
-import Image from '@/components/Image'
 import Link from '@/components/Link'
+import Image from '@/components/Image'
+
+const getHost = (url: string) => {
+  try {
+    return new URL(url).hostname.replace(/^www\./, '')
+  } catch {
+    return url
+  }
+}
+
+const isLive = (href?: string) => !!href && !getHost(href).includes('github.com')
 
 const hostLabels: Record<string, string> = {
   'echosonic.io': 'EchoSonic.io',
@@ -8,93 +18,83 @@ const hostLabels: Record<string, string> = {
   'github.com': 'GitHub.com',
 }
 
-const getHostname = (url: string) => {
-  try {
-    const host = new URL(url).hostname.replace(/^www\./, '')
-    return hostLabels[host] || host
-  } catch {
-    return url
-  }
-}
+const friendlyHost = (href: string) => hostLabels[getHost(href)] || getHost(href)
 
 export default function ProjectsList({ title = 'Projects' }: { title?: string }) {
   return (
-    <div className="divide-theme divide-y">
-      <div className="space-y-2 pt-6 pb-8 md:space-y-5">
-        <h1 className="page-title">{title}</h1>
+    <div>
+      <section className="ledger-lead ledger-hero">
+        <p className="kicker">
+          <span className="led-pulse" />
+          {title}
+        </p>
+        <h1>
+          Smart SaaS
+          <br />
+          <i>end to end</i>
+        </h1>
+        <p>
+          The layers and stacks that products run on, from the data layer up through deployment,
+          each one below live or open source
+        </p>
+      </section>
+
+      <div className="ledger-head">
+        <span>Project</span>
+        <span>Status</span>
       </div>
-      <ul className="divide-theme divide-y">
-        {projectsData.map(({ title, tagline, description, imgSrc, href, learnMoreHref }) => {
-          const thumbnail = imgSrc && (
-            <div className="relative aspect-video w-full overflow-hidden rounded-md sm:w-[280px]">
-              <Image
-                src={imgSrc}
-                alt=""
-                fill
-                sizes="(max-width: 640px) 100vw, 280px"
-                className="object-cover object-center"
-              />
-            </div>
-          )
+
+      <ul className="records">
+        {projectsData.map((project, i) => {
+          const { title: name, tagline, description, imgSrc, href, learnMoreHref } = project
+          const live = isLive(href)
+
           return (
-            <li key={title} className="py-6 sm:py-12">
-              <article className="flex flex-col gap-4 sm:flex-row sm:gap-6">
-                {thumbnail && (
-                  <div className="order-2 shrink-0 sm:order-1">
-                    {learnMoreHref ? (
+            <li key={name} className={imgSrc ? 'record no-rid has-thumb' : 'record no-rid'}>
+              {imgSrc && (
+                <Link
+                  href={learnMoreHref || href || '#'}
+                  aria-hidden="true"
+                  tabIndex={-1}
+                  className="record-thumb"
+                >
+                  <Image src={imgSrc} alt="" width={340} height={191} />
+                </Link>
+              )}
+
+              <div>
+                <h3>{learnMoreHref ? <Link href={learnMoreHref}>{name}</Link> : name}</h3>
+                {tagline && <p className="tag">{tagline}</p>}
+                <p className="desc">{description}</p>
+                {(learnMoreHref || href) && (
+                  <div className="links">
+                    {learnMoreHref && (
                       <Link
                         href={learnMoreHref}
-                        aria-hidden="true"
-                        tabIndex={-1}
-                        className="block h-full"
+                        data-umami-event="project-learn-more"
+                        data-umami-event-project={name}
                       >
-                        {thumbnail}
+                        Read
                       </Link>
-                    ) : (
-                      thumbnail
+                    )}
+                    {href && (
+                      <Link
+                        href={href}
+                        data-umami-event="project-visit"
+                        data-umami-event-project={name}
+                      >
+                        {friendlyHost(href)}
+                      </Link>
                     )}
                   </div>
                 )}
-                <div className="order-1 space-y-3 sm:order-2">
-                  <h2 className="text-2xl leading-8 font-bold tracking-tight">
-                    {learnMoreHref ? (
-                      <Link href={learnMoreHref} className="text-heading">
-                        {title}
-                      </Link>
-                    ) : (
-                      title
-                    )}
-                  </h2>
-                  {tagline && <p className="eyebrow">{tagline}</p>}
-                  <div className="prose prose-summary max-w-none">{description}</div>
-                  {(learnMoreHref || href) && (
-                    <div className="flex flex-wrap gap-x-6 gap-y-2">
-                      {learnMoreHref && (
-                        <Link
-                          href={learnMoreHref}
-                          className="text-link text-base leading-6 font-medium"
-                          aria-label={`Learn more about ${title}`}
-                          data-umami-event="project-learn-more"
-                          data-umami-event-project={title}
-                        >
-                          Learn more &rarr;
-                        </Link>
-                      )}
-                      {href && (
-                        <Link
-                          href={href}
-                          className="text-link text-base leading-6 font-medium"
-                          aria-label={`Visit ${title}`}
-                          data-umami-event="project-visit"
-                          data-umami-event-project={title}
-                        >
-                          {getHostname(href)} &rarr;
-                        </Link>
-                      )}
-                    </div>
-                  )}
-                </div>
-              </article>
+              </div>
+
+              <div className="side">
+                <span className={live ? 'pill live' : 'pill oss'}>
+                  {live ? 'Live' : 'Open source'}
+                </span>
+              </div>
             </li>
           )
         })}

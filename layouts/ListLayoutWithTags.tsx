@@ -149,7 +149,7 @@ export default function ListLayoutWithTags({
                             aria-hidden="true"
                             tabIndex={-1}
                           >
-                            <div className="relative aspect-3/4 w-full overflow-hidden rounded-md sm:w-[280px]">
+                            <div className="relative aspect-video w-full overflow-hidden rounded-md sm:w-[280px]">
                               <Image
                                 src={heroImage}
                                 alt=""

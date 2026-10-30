@@ -35,7 +35,10 @@
   header nav { display:flex; align-items:center; margin-left:auto; }
   header nav a { font:500 0.82rem/1 var(--mono); letter-spacing:.02em; color:var(--muted); text-decoration:none; min-height:36px; display:inline-flex; align-items:center; transition:color .15s ease; }
   header nav a:hover { color:var(--heading); }
-  .from { color:var(--primary); font:500 0.72rem/1.5 var(--mono); letter-spacing:.14em; text-transform:uppercase; margin:0 0 0.4rem; padding:0; }
+  .from { color:var(--primary); font:500 0.72rem/1.5 var(--mono); letter-spacing:.14em; text-transform:uppercase; margin:0 0 0.4rem; padding:0; display:flex; align-items:center; gap:0.6rem; }
+  .led-pulse { width:6px; height:6px; border-radius:50%; background:var(--primary); flex:none; animation:led-pulse 2.4s infinite; }
+  @keyframes led-pulse { 0%,100% { opacity:1; } 50% { opacity:.25; } }
+  @media (prefers-reduced-motion:reduce) { .led-pulse { animation:none; } }
   .lead-title { font-family:var(--sans); font-weight:600; font-size:clamp(1.9rem, 4.6vw, 2.5rem); line-height:1.08; letter-spacing:-.03em; color:var(--heading); margin:0; }
   .grid { display:grid; gap:56px 48px; grid-template-columns:1fr; padding-top:52px; }
   @media (min-width:768px) { .grid { grid-template-columns:1fr 1fr; } }
@@ -107,7 +110,7 @@
 </header>
 
 <section>
-  <p class="from">Live demo</p>
+  <p class="from"><span class="led-pulse"></span>Live demos</p>
   <h1 class="lead-title">Connect</h1>
 </section>
 <div class="grid">

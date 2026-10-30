@@ -33,10 +33,7 @@ export default function ProjectsList({ title = 'Projects' }: { title?: string })
           <br />
           <i>end to end</i>
         </h1>
-        <p>
-          The layers and stacks that products run on, from the data layer up through deployment,
-          each one below live or open source
-        </p>
+        <p>Stacks, smarts, intelligent backends, each one below in production or open source</p>
       </section>
 
       <div className="ledger-head">

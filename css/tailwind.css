@@ -215,11 +215,6 @@
     z-index: 40;
     background: var(--bg);
   }
-  /* mobile: keep only the logo and nav pinned, drop the status rows */
-  .rail .status { display: none; }
-  @media (min-width: 768px) {
-    .rail .status { display: grid; }
-  }
   @media (min-width: 768px) {
     .rail {
       border-right: 1px solid var(--line);
@@ -265,10 +260,14 @@
     box-shadow: 0 0 0 3px color-mix(in oklab, var(--color-signal) 22%, transparent);
   }
 
+  /* status rows: desktop rail only, hidden on mobile */
   .rail .status {
     margin-top: 1.6rem; padding-top: 1.4rem; border-top: 1px solid var(--line);
     font-family: var(--font-mono); font-size: 0.7rem; color: var(--muted); letter-spacing: 0.02em;
-    display: grid; gap: 0.5rem;
+    display: none; gap: 0.5rem;
+  }
+  @media (min-width: 768px) {
+    .rail .status { display: grid; }
   }
   .rail .status .row { display: flex; justify-content: space-between; gap: 0.5rem; align-items: center; }
   .rail .status .row b { color: var(--fg); font-weight: 500; display: flex; align-items: center; gap: 0.4rem; }

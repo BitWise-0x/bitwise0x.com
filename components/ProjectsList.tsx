@@ -22,7 +22,9 @@ const friendlyHost = (href: string) => hostLabels[getHost(href)] || getHost(href
 export default function ProjectsList({ title = 'Projects' }: { title?: string }) {
   return (
     <div>
-      <LedgerLead kicker="Work" title={title} />
+      <LedgerLead kicker="Work" title={title}>
+        Backends, distributed systems
+      </LedgerLead>
 
       <div className="ledger-head">
         <span>Project</span>

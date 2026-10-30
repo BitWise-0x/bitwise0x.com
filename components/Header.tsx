@@ -18,20 +18,22 @@ export default function Header() {
         </span>
       </Link>
 
-      <nav aria-label="Primary">
-        {headerNavLinks.map((link) => {
-          const isActive =
-            pathname === link.href || (link.href !== '/' && pathname.startsWith(`${link.href}/`))
-          return (
-            <Link key={link.title} href={link.href} aria-current={isActive ? 'page' : undefined}>
-              {link.title}
-            </Link>
-          )
-        })}
-      </nav>
+      <div className="topnav-row">
+        <nav aria-label="Primary">
+          {headerNavLinks.map((link) => {
+            const isActive =
+              pathname === link.href || (link.href !== '/' && pathname.startsWith(`${link.href}/`))
+            return (
+              <Link key={link.title} href={link.href} aria-current={isActive ? 'page' : undefined}>
+                {link.title}
+              </Link>
+            )
+          })}
+        </nav>
 
-      <div className="topnav-search">
-        <SearchButton />
+        <div className="topnav-search">
+          <SearchButton />
+        </div>
       </div>
     </header>
   )

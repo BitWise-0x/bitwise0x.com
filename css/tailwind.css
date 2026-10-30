@@ -256,8 +256,9 @@
   .topnav-search .search-btn:hover { color: var(--color-signal); }
   .topnav-search .search-btn svg { width: 1.2rem; height: 1.2rem; }
 
-  /* lead */
-  .ledger-lead { padding-bottom: 1.4rem; }
+  /* lead: the separator line lives here so it sits at the exact same
+     height on every page (fluid when switching between them) */
+  .ledger-lead { padding-bottom: 1.5rem; border-bottom: 1px solid var(--line); margin-bottom: 1.5rem; }
   .ledger-lead .kicker {
     font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.14em;
     text-transform: uppercase; color: var(--color-signal); margin: 0 0 1.1rem;
@@ -277,7 +278,7 @@
     display: flex; justify-content: space-between; align-items: baseline;
     font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.1em;
     text-transform: uppercase; color: var(--muted);
-    padding: 1.6rem 0 0.7rem;
+    padding: 0 0 0.9rem;
   }
 
   /* records */
@@ -315,8 +316,9 @@
   .record .record-body { grid-area: body; margin: 0; }
   .record .side { grid-area: side; }
   .record .record-thumb { grid-area: thumb; }
-  /* the first record's top border is the separator under the lead */
-  .records-topline { margin-top: 1.6rem; }
+  /* the lead already draws the separator, so the first record drops its own */
+  .records-topline { margin-top: 0; }
+  .records-topline .record:first-child { border-top: none; padding-top: 0; }
 
   /* DESKTOP: thumbnail left, text column right (head + body stacked),
      blog date in its own side column. thumbnail matches text height. */
@@ -347,8 +349,8 @@
   }
 
   .record h3 {
-    font-family: var(--font-sans); font-weight: 600; font-size: 1.3rem;
-    letter-spacing: -0.01em; margin: 0 0 0.25rem;
+    font-family: var(--font-sans); font-weight: 600; font-size: 1.55rem;
+    letter-spacing: -0.01em; margin: 0 0 0.3rem;
   }
   .record h3 a { color: var(--fg); text-decoration: none; }
   .record h3 a:hover { color: var(--color-signal); }
@@ -450,7 +452,7 @@
   /* tag index cloud */
   .tag-cloud {
     display: flex; flex-wrap: wrap; gap: 0.6rem;
-    padding: 1.4rem 0 0; border-top: 1px solid var(--line); margin-top: 0.7rem;
+    padding: 0;
   }
   .tag-cloud .pill { text-decoration: none; cursor: pointer; }
   .tag-cloud .pill:hover { color: var(--color-signal); border-color: color-mix(in oklab, var(--color-signal) 40%, var(--line)); }
@@ -459,8 +461,7 @@
   /* about page: info card aligned right, prose below full-width */
   .author-card {
     display: flex; gap: 1.2rem; align-items: flex-start;
-    margin: 1.6rem 0 0; padding-top: 1.8rem;
-    border-top: 1px solid var(--line);
+    margin: 0; padding-top: 0;
     max-width: 100%;
   }
   .author-card .author-avatar { width: 5rem; height: 5rem; border-radius: 8px; object-fit: cover; flex: none; }
@@ -495,7 +496,7 @@
   .post-head .kicker span { color: var(--muted); }
   .post-head h1 {
     font-family: var(--font-sans); font-weight: 600;
-    font-size: clamp(1.9rem, 4.6vw, 3rem); line-height: 1.08;
+    font-size: clamp(1.9rem, 4.6vw, 2.5rem); line-height: 1.08;
     letter-spacing: -0.03em; margin: 0; color: var(--fg); text-wrap: balance;
   }
   .post-foot {

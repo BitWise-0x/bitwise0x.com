@@ -26,13 +26,13 @@
   .wrap { max-width:1100px; margin:0 auto; padding:0 20px; }
   @media (min-width:640px) { .wrap { padding:0 24px; } }
   /* top nav bar, matching the site: 0x mark + tagline, nav link, divider */
-  header { display:flex; flex-direction:column; gap:1.3rem; padding:2.5rem 0 1.25rem; border-bottom:1px solid var(--line); margin-bottom:2.5rem; }
+  header { display:flex; align-items:center; gap:1.3rem; padding:2.5rem 0 1.25rem; border-bottom:1px solid var(--line); margin-bottom:2.5rem; }
   header .mark { display:flex; align-items:center; gap:0.85rem; text-decoration:none; flex:none; width:fit-content; }
   header .mark .glyph { width:46px; height:46px; flex:none; border:2px solid var(--heading); border-radius:9px; display:grid; place-items:center; font:600 1.5rem/1 var(--mono); color:var(--heading); }
   header .mark .mark-text { display:flex; flex-direction:column; line-height:1.05; }
   header .mark b { font-weight:600; letter-spacing:-.015em; font-size:1.85rem; color:var(--heading); }
   header .mark .tag { font:500 0.72rem/1.5 var(--mono); letter-spacing:.14em; text-transform:uppercase; color:var(--muted); margin:0.3rem 0 0; }
-  header nav { display:flex; align-items:center; }
+  header nav { display:flex; align-items:center; margin-left:auto; }
   header nav a { font:500 0.82rem/1 var(--mono); letter-spacing:.02em; color:var(--muted); text-decoration:none; min-height:36px; display:inline-flex; align-items:center; transition:color .15s ease; }
   header nav a:hover { color:var(--heading); }
   .from { color:var(--primary); font:500 0.72rem/1.5 var(--mono); letter-spacing:.14em; text-transform:uppercase; margin:0 0 0.4rem; padding:0; }
@@ -108,7 +108,7 @@
 
 <section>
   <p class="from">Live demo</p>
-  <h1 class="lead-title">Connect to BitWise</h1>
+  <h1 class="lead-title">Connect</h1>
 </section>
 <div class="grid">
   <section>

@@ -9,14 +9,14 @@ export default function Header() {
   const pathname = usePathname()
 
   return (
-    <aside className="rail">
-      <div className="mark-row">
-        <Link href="/" aria-label="BitWise" className="mark">
-          <span className="glyph">0x</span>
+    <header className="topnav">
+      <Link href="/" aria-label="BitWise" className="mark">
+        <span className="glyph">0x</span>
+        <span className="mark-text">
           <b>BitWise</b>
-        </Link>
-        <SearchButton />
-      </div>
+          <span className="mark-tagline">Intelligent Backends</span>
+        </span>
+      </Link>
 
       <nav aria-label="Primary">
         {headerNavLinks.map((link) => {
@@ -30,23 +30,9 @@ export default function Header() {
         })}
       </nav>
 
-      <div className="status">
-        <div className="row">
-          <span>operator</span>
-          <b>Rob</b>
-        </div>
-        <div className="row">
-          <span>services</span>
-          <b>
-            <span className="led-pulse" />
-            live
-          </b>
-        </div>
-        <div className="row">
-          <span>region</span>
-          <b>bitwise0x.com</b>
-        </div>
+      <div className="topnav-search">
+        <SearchButton />
       </div>
-    </aside>
+    </header>
   )
 }

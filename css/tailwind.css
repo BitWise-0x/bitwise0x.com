@@ -193,84 +193,64 @@
 }
 
 @layer components {
-  /* two-column shell */
+  /* single-column shell with a horizontal top nav */
   .ledger-shell {
-    max-width: 1180px;
+    max-width: 1100px;
     margin: 0 auto;
-    display: grid;
-    grid-template-columns: 1fr;
+    display: flex;
+    flex-direction: column;
     padding-left: max(20px, env(safe-area-inset-left, 0px));
     padding-right: max(20px, env(safe-area-inset-right, 0px));
   }
-  @media (min-width: 768px) {
-    .ledger-shell { grid-template-columns: 240px 1fr; }
-  }
 
-  /* left rail */
-  .rail {
-    border-bottom: 1px solid var(--line);
-    padding: 1.6rem 0;
+  /* top navigation bar, frozen on scroll */
+  .topnav {
     position: sticky;
     top: env(safe-area-inset-top, 0px);
     z-index: 40;
-    background: var(--bg);
+    background: color-mix(in oklab, var(--bg) 88%, transparent);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--line);
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+    padding: 1rem 0;
   }
-  @media (min-width: 768px) {
-    .rail {
-      border-right: 1px solid var(--line);
-      border-bottom: none;
-      padding: 2.2rem 1.6rem 2rem 0;
-      position: sticky;
-      top: env(safe-area-inset-top, 0px);
-      align-self: start;
-    }
-  }
-  .rail .mark-row {
-    display: flex; align-items: center; gap: 0.7rem;
-    margin-bottom: 1.6rem; width: 100%;
-  }
-  .rail .mark { display: flex; align-items: center; gap: 0.7rem; margin: 0; min-width: 0; }
-  .rail .mark-row .search-btn {
-    display: inline-flex; align-items: center; justify-content: center;
-    color: var(--muted); flex: none; margin-left: auto;
-  }
-  .rail .mark-row .search-btn:hover { color: var(--color-signal); }
-  .rail .mark-row .search-btn svg { width: 1.15rem; height: 1.15rem; }
-  .rail .mark .glyph {
+  .topnav .mark { display: flex; align-items: center; gap: 0.7rem; text-decoration: none; flex: none; }
+  .topnav .mark .glyph {
     width: 34px; height: 34px; flex: none;
     border: 1.5px solid var(--fg); border-radius: 6px;
     display: grid; place-items: center;
     font-family: var(--font-mono); font-weight: 600; font-size: 1.1rem;
     color: var(--fg);
   }
-  .rail .mark b { font-weight: 600; letter-spacing: -0.01em; font-size: 1.4rem; color: var(--fg); }
-  .rail nav { display: flex; flex-flow: row wrap; gap: 0.3rem 1.2rem; margin: 1.4rem 0; }
-  @media (min-width: 768px) {
-    .rail nav { flex-direction: column; flex-wrap: nowrap; gap: 0.1rem; }
+  .topnav .mark .mark-text { display: flex; flex-direction: column; line-height: 1.1; min-width: 0; }
+  .topnav .mark b { font-weight: 600; letter-spacing: -0.01em; font-size: 1.3rem; color: var(--fg); }
+  .topnav .mark .mark-tagline {
+    font-family: var(--font-mono); font-size: 0.62rem; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--muted); margin-top: 0.15rem;
   }
-  .rail nav a {
-    font-family: var(--font-mono); font-size: 0.85rem; letter-spacing: 0.02em;
-    color: var(--muted); text-decoration: none; padding: 0.38rem 0;
-    display: flex; align-items: center; gap: 0.55rem;
+  .topnav nav {
+    display: flex; flex-flow: row wrap; align-items: center;
+    gap: 0.4rem 1.4rem; margin-left: 1.4rem;
   }
-  .rail nav a::before { content: ""; width: 5px; height: 5px; border-radius: 50%; background: var(--line); flex: none; }
-  .rail nav a:hover, .rail nav a[aria-current] { color: var(--fg); }
-  .rail nav a[aria-current]::before {
-    background: var(--color-signal);
-    box-shadow: 0 0 0 3px color-mix(in oklab, var(--color-signal) 22%, transparent);
+  .topnav nav a {
+    font-family: var(--font-mono); font-size: 0.82rem; letter-spacing: 0.02em;
+    color: var(--muted); text-decoration: none; padding: 0.2rem 0;
+    border-bottom: 1.5px solid transparent;
   }
-
-  /* status rows: desktop rail only, hidden on mobile */
-  .rail .status {
-    margin-top: 1.6rem; padding-top: 1.4rem; border-top: 1px solid var(--line);
-    font-family: var(--font-mono); font-size: 0.7rem; color: var(--muted); letter-spacing: 0.02em;
-    display: none; gap: 0.5rem;
+  .topnav nav a:hover { color: var(--fg); }
+  .topnav nav a[aria-current] { color: var(--fg); border-bottom-color: var(--color-signal); }
+  .topnav-search { margin-left: auto; flex: none; }
+  .topnav-search .search-btn {
+    display: inline-flex; align-items: center; justify-content: center; color: var(--muted);
   }
-  @media (min-width: 768px) {
-    .rail .status { display: grid; }
+  .topnav-search .search-btn:hover { color: var(--color-signal); }
+  .topnav-search .search-btn svg { width: 1.2rem; height: 1.2rem; }
+  @media (max-width: 520px) {
+    .topnav .mark .mark-tagline { display: none; }
+    .topnav nav { margin-left: 0; width: 100%; order: 3; gap: 0.3rem 1.1rem; }
   }
-  .rail .status .row { display: flex; justify-content: space-between; gap: 0.5rem; align-items: center; }
-  .rail .status .row b { color: var(--fg); font-weight: 500; display: flex; align-items: center; gap: 0.4rem; }
 
   /* lead */
   .ledger-lead { padding-bottom: 1.4rem; }
@@ -285,10 +265,6 @@
     letter-spacing: -0.03em; margin: 0; text-wrap: balance; max-width: 20ch;
     color: var(--fg);
   }
-  /* homepage hero runs larger than a plain section header */
-  .ledger-hero h1 {
-    font-size: clamp(2.1rem, 5.2vw, 3.5rem); line-height: 1.04; max-width: 16ch;
-  }
   .ledger-lead h1 i { color: var(--color-signal); font-style: normal; }
   .ledger-lead p { max-width: 48ch; color: var(--muted); margin: 1.2rem 0 0; font-size: 1.08rem; }
 
@@ -302,66 +278,71 @@
 
   /* records */
   .records { list-style: none; margin: 0; padding: 0; }
-  /* mobile: rid + status pill on the top row, body below.
-     thumbnail (when present) spans full width between them. */
+
+  /* MOBILE: head (title + tagline) on top, then thumbnail, then body.
+     the date/side (blog) sits top-right next to the head. */
   .record {
     display: grid;
-    grid-template-columns: 40px 1fr auto;
+    grid-template-columns: 1fr auto;
     grid-template-areas:
-      "rid  .    side"
-      "body body body";
-    gap: 0.6rem 1rem;
-    padding: 1.5rem 0;
+      "head side"
+      "body body";
+    column-gap: 1rem;
+    row-gap: 0.8rem;
+    padding: 1.6rem 0;
     border-top: 1px solid var(--line);
     align-items: start;
   }
   .record.has-thumb {
     grid-template-areas:
-      "rid   .     side"
-      "thumb thumb thumb"
-      "body  body  body";
-  }
-  /* projects: no left gutter */
-  .record.no-rid {
-    grid-template-columns: 1fr auto;
-    grid-template-areas:
-      "body side";
-  }
-  .record.no-rid.has-thumb {
-    grid-template-areas:
-      "thumb side"
+      "head  side"
+      "thumb thumb"
       "body  body";
   }
-  .record .rid { grid-area: rid; }
-  .record > div:not(.side) { grid-area: body; }
+  .record .record-head { grid-area: head; margin: 0; }
+  .record .record-body { grid-area: body; margin: 0; }
   .record .side { grid-area: side; }
   .record .record-thumb { grid-area: thumb; }
+
+  /* DESKTOP: thumbnail left, text column right (head + body stacked),
+     blog date in its own side column. thumbnail matches text height. */
   @media (min-width: 768px) {
     .record {
-      grid-template-columns: 56px 1fr 150px;
-      grid-template-areas: "rid body side";
+      grid-template-columns: 1fr 150px;
+      grid-template-areas:
+        "head side"
+        "body side";
     }
     .record.has-thumb {
-      grid-template-columns: 240px 56px 1fr 150px;
-      grid-template-areas: "thumb rid body side";
-    }
-    .record.no-rid {
-      grid-template-columns: 1fr 150px;
-      grid-template-areas: "body side";
-    }
-    .record.no-rid.has-thumb {
       grid-template-columns: 320px 1fr 150px;
-      grid-template-areas: "thumb body side";
+      grid-template-areas:
+        "thumb head side"
+        "thumb body side";
+    }
+    /* projects (no .side content) collapse the side column */
+    .record.no-side {
+      grid-template-columns: 1fr;
+      grid-template-areas: "head" "body";
+    }
+    .record.no-side.has-thumb {
+      grid-template-columns: 340px 1fr;
+      grid-template-areas:
+        "thumb head"
+        "thumb body";
     }
   }
-  .record .rid { font-family: var(--font-mono); font-size: 0.78rem; color: var(--color-signal-dim); padding-top: 0.35rem; }
+
   .record h3 {
     font-family: var(--font-sans); font-weight: 600; font-size: 1.3rem;
-    letter-spacing: -0.01em; margin: 0 0 0.15rem;
+    letter-spacing: -0.01em; margin: 0 0 0.25rem;
   }
   .record h3 a { color: var(--fg); text-decoration: none; }
   .record h3 a:hover { color: var(--color-signal); }
-  .record .tag { font-family: var(--font-mono); font-size: 0.72rem; color: var(--muted); letter-spacing: 0.02em; margin: 0 0 0.7rem; }
+  /* tagline themed in the signal blue, right under the title */
+  .record .tag {
+    font-family: var(--font-mono); font-size: 0.74rem; color: var(--color-signal);
+    letter-spacing: 0.02em; margin: 0;
+  }
   .record .desc { margin: 0; color: var(--muted); font-size: 0.98rem; max-width: 62ch; }
   .record .links { display: flex; gap: 1.2rem; flex-wrap: wrap; margin-top: 0.9rem; }
   .record .links a {
@@ -377,20 +358,20 @@
   }
   @media (min-width: 768px) {
     .record .side {
-      display: grid; gap: 0.6rem; justify-items: end;
+      flex-direction: column; align-items: flex-end; gap: 0.3rem;
       padding-top: 0.35rem;
     }
   }
-  /* project thumbnail: shown on all sizes, left of the entry on desktop */
+  .record .side time { color: var(--fg); font-weight: 500; }
+
+  /* thumbnail: 16:9 on mobile, full text-height on desktop */
   .record .record-thumb {
     display: block; width: 100%; aspect-ratio: 16 / 9;
     border-radius: 6px; overflow: hidden; border: 1px solid var(--line);
   }
   .record .record-thumb img { width: 100%; height: 100%; object-fit: cover; }
-  /* desktop: keep the 16:9 image uncropped but center it vertically in the
-     entry, so empty space on tall entries splits above and below */
   @media (min-width: 768px) {
-    .record .record-thumb { align-self: center; }
+    .record .record-thumb { aspect-ratio: auto; height: 100%; align-self: stretch; }
   }
 
   .pill {
@@ -468,11 +449,11 @@
   .author-card .author-avatar { width: 5rem; height: 5rem; border-radius: 8px; object-fit: cover; flex: none; }
   .author-card .author-meta { min-width: 0; }
   .author-card h3 { font-family: var(--font-sans); font-weight: 600; font-size: 1.4rem; letter-spacing: -0.01em; margin: 0; color: var(--fg); }
-  .author-body { padding-top: 2.2rem; }
+  .author-body { padding-top: 1.4rem; }
   .author-links {
-    list-style: none; margin: 1rem 0 0; padding: 1rem 0 0; border-top: 1px solid var(--line);
+    list-style: none; margin: 0.9rem 0 0; padding: 0.9rem 0 0; border-top: 1px solid var(--line);
     font-family: var(--font-mono); font-size: 0.78rem;
-    display: grid; gap: 0.6rem;
+    display: flex; flex-flow: row wrap; gap: 0.6rem 1.6rem;
   }
   .author-links a {
     display: inline-flex; align-items: center; gap: 0.6rem;

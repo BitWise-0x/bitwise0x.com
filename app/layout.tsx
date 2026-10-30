@@ -106,7 +106,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <SearchProvider searchConfig={siteMetadata.search as SearchConfig}>
             <div className="ledger-shell min-h-screen">
               <Header />
-              <main className="min-w-0 py-9 md:pt-16 md:pb-12 md:pl-9">{children}</main>
+              <main className="min-w-0 py-9 md:py-12">{children}</main>
               <Footer />
             </div>
           </SearchProvider>

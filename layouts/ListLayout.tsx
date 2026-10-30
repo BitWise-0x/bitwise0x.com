@@ -99,12 +99,15 @@ export default function ListLayout({
           const { path, date, title: postTitle, summary, tags } = post
 
           return (
-            <li key={path} className="record no-rid">
-              <div>
+            <li key={path} className="record">
+              <div className="record-head">
                 <h3>
                   <Link href={`/${path}`}>{postTitle}</Link>
                 </h3>
                 {tags && tags.length > 0 && <p className="tag">{tags.join(' · ')}</p>}
+              </div>
+
+              <div className="record-body">
                 <p className="desc">{summary}</p>
                 <div className="links">
                   <Link href={`/${path}`}>Read</Link>

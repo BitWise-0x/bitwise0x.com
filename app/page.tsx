@@ -14,7 +14,7 @@ export default async function Page() {
           '@type': 'Person',
           name: siteMetadata.author,
           url: siteMetadata.siteUrl,
-          sameAs: [siteMetadata.github, siteMetadata.x, siteMetadata.bluesky].filter(Boolean),
+          sameAs: [siteMetadata.github, siteMetadata.x].filter(Boolean),
         },
       },
       {
@@ -22,7 +22,7 @@ export default async function Page() {
         name: 'BitWise',
         url: siteMetadata.siteUrl,
         logo: `${siteMetadata.siteUrl}/static/images/logo.png`,
-        sameAs: [siteMetadata.github, siteMetadata.x, siteMetadata.bluesky].filter(Boolean),
+        sameAs: [siteMetadata.github, siteMetadata.x].filter(Boolean),
       },
     ],
   }

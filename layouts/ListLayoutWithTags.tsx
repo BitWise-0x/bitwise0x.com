@@ -79,18 +79,21 @@ export default function ListLayoutWithTags({
           const showThumbnail = heroImage && !heroImage.includes('social-banner')
 
           return (
-            <li key={path} className={showThumbnail ? 'record no-rid has-thumb' : 'record no-rid'}>
+            <li key={path} className={showThumbnail ? 'record has-thumb' : 'record'}>
               {showThumbnail && (
                 <Link href={`/${path}`} aria-hidden="true" tabIndex={-1} className="record-thumb">
                   <Image src={heroImage} alt="" width={340} height={191} />
                 </Link>
               )}
 
-              <div>
+              <div className="record-head">
                 <h3>
                   <Link href={`/${path}`}>{postTitle}</Link>
                 </h3>
                 {tags && tags.length > 0 && <p className="tag">{tags.join(' · ')}</p>}
+              </div>
+
+              <div className="record-body">
                 <p className="desc">{summary}</p>
                 <div className="links">
                   <Link href={`/${path}`}>Read</Link>

@@ -106,7 +106,7 @@ export default async function Page(props: { params: Promise<{ slug: string[] }> 
   jsonLd['author'] = authorDetails.map((author) => ({
     '@type': 'Person',
     name: author.name,
-    sameAs: [author.github, author.twitter, author.bluesky].filter(Boolean),
+    sameAs: [author.github, author.twitter].filter(Boolean),
   }))
 
   const Layout = layouts[post.layout || defaultLayout]

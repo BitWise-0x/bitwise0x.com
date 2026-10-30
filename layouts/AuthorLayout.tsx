@@ -3,7 +3,7 @@ import type { Authors } from 'contentlayer/generated'
 import Image from '@/components/Image'
 import Link from '@/components/Link'
 import LedgerLead from '@/components/LedgerLead'
-import { Mail, Github, Linkedin, X, Bluesky } from '@/components/social-icons/icons'
+import { Mail, Github, X } from '@/components/social-icons/icons'
 
 interface Props {
   children: ReactNode
@@ -11,14 +11,12 @@ interface Props {
 }
 
 export default function AuthorLayout({ children, content }: Props) {
-  const { name, avatar, occupation, company, email, twitter, bluesky, linkedin, github } = content
+  const { name, avatar, occupation, company, email, twitter, github } = content
 
   const links: { label: string; href?: string; Icon: ComponentType<SVGProps<SVGSVGElement>> }[] = [
     { label: 'Email', href: email ? `mailto:${email}` : undefined, Icon: Mail },
     { label: 'GitHub', href: github, Icon: Github },
-    { label: 'LinkedIn', href: linkedin, Icon: Linkedin },
     { label: 'X', href: twitter, Icon: X },
-    { label: 'Bluesky', href: bluesky, Icon: Bluesky },
   ]
 
   return (

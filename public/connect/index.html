@@ -10,39 +10,37 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;700&display=swap">
 <style>
-  /* dark only, like bitwise0x.com (its ThemeProvider forces the dark theme) */
+  /* dark only, matching bitwise0x.com (its ThemeProvider forces dark). tokens
+     mirror the site's ledger palette: near-black surface, ocean-blue signal. */
   :root {
     color-scheme: dark;
-    --page:oklch(12.9% .042 264.695); --text:#fff; --heading:oklch(96.7% .003 264.542); --muted:oklch(70.7% .022 261.325);
-    --line:oklch(27.8% .033 256.848); --line-strong:oklch(37.3% .034 259.733); --well:oklch(21% .034 264.665);
-    --primary:oklch(66% .15 220); --primary-hover:oklch(72% .14 222); --primary-ink:oklch(12.9% .042 264.695);
-    --btn:oklch(46% .11 216); --btn-hover:oklch(56% .13 218);
+    --page:#0c0f0e; --text:#e7ece8; --heading:#e7ece8; --muted:#8a938f;
+    --line:#1f2623; --line-strong:#2c3430; --well:#111513;
+    --primary:oklch(72% .14 222); --primary-hover:oklch(78% .13 224); --primary-ink:#0c0f0e;
+    --btn:oklch(52% .13 220); --btn-hover:oklch(60% .14 221);
     --sans:"Space Grotesk", ui-sans-serif, system-ui, sans-serif; --mono:"IBM Plex Mono", "JetBrains Mono", "SF Mono", Menlo, Consolas, monospace;
   }
   * { box-sizing:border-box; }
   html { -webkit-text-size-adjust:100%; }
   body { margin:0; background:var(--page); color:var(--text); font:16px/1.5 var(--sans); -webkit-font-smoothing:antialiased; padding:0 0 calc(40px + env(safe-area-inset-bottom)); }
-  .wrap { max-width:48rem; margin:0 auto; padding:0 16px; }
+  .wrap { max-width:1100px; margin:0 auto; padding:0 20px; }
   @media (min-width:640px) { .wrap { padding:0 24px; } }
-  @media (min-width:1280px) { .wrap { max-width:64rem; padding:0; } }
-  @media (min-width:768px) { header { padding-bottom:72px; } }
-  header .logo svg { width:100%; height:auto; display:block; }
-  header { --logo-w:clamp(15.5rem, 24vw, 18rem); display:flex; align-items:flex-start; justify-content:space-between; padding:40px 0; margin-bottom:24px; }
-  header .brand { width:var(--logo-w); }
-  /* the logo's viewBox is 0 10 218 48 and the three dots are centred at y=43, i.e. 33/218 of the logo width below its top;
-     the 44px-tall link is centred on that line */
-  header nav { margin-top:calc(var(--logo-w) * 33 / 218 - 22px); }
-  @media (max-width:639px) { header nav { display:none; } }
-  header .logo { display:block; }
-  header .tag { color:var(--muted); margin:4px 0 0; font:500 10px/1.5 var(--mono); letter-spacing:.2em; text-transform:uppercase; }
-  @media (min-width:768px) { header .tag { font-size:12px; } }
-  header nav a { font-weight:500; color:var(--heading); text-decoration:none; transition:color .15s ease; min-height:44px; display:inline-flex; align-items:center; }
-  header nav a:hover { color:var(--primary); }
-  .from { color:var(--muted); font-size:22px; line-height:30px; font-weight:700; letter-spacing:-.02em; margin:0; padding:0; }
+  /* top nav bar, matching the site: 0x mark + tagline, nav link, divider */
+  header { display:flex; flex-direction:column; gap:1.3rem; padding:2.5rem 0 1.25rem; border-bottom:1px solid var(--line); margin-bottom:2.5rem; }
+  header .mark { display:flex; align-items:center; gap:0.85rem; text-decoration:none; flex:none; width:fit-content; }
+  header .mark .glyph { width:46px; height:46px; flex:none; border:2px solid var(--heading); border-radius:9px; display:grid; place-items:center; font:600 1.5rem/1 var(--mono); color:var(--heading); }
+  header .mark .mark-text { display:flex; flex-direction:column; line-height:1.05; }
+  header .mark b { font-weight:600; letter-spacing:-.015em; font-size:1.85rem; color:var(--heading); }
+  header .mark .tag { font:500 0.72rem/1.5 var(--mono); letter-spacing:.14em; text-transform:uppercase; color:var(--muted); margin:0.3rem 0 0; }
+  header nav { display:flex; align-items:center; }
+  header nav a { font:500 0.82rem/1 var(--mono); letter-spacing:.02em; color:var(--muted); text-decoration:none; min-height:36px; display:inline-flex; align-items:center; transition:color .15s ease; }
+  header nav a:hover { color:var(--heading); }
+  .from { color:var(--primary); font:500 0.72rem/1.5 var(--mono); letter-spacing:.14em; text-transform:uppercase; margin:0 0 0.4rem; padding:0; }
+  .lead-title { font-family:var(--sans); font-weight:600; font-size:clamp(1.9rem, 4.6vw, 2.5rem); line-height:1.08; letter-spacing:-.03em; color:var(--heading); margin:0; }
   .grid { display:grid; gap:56px 48px; grid-template-columns:1fr; padding-top:52px; }
   @media (min-width:768px) { .grid { grid-template-columns:1fr 1fr; } }
   @media (min-width:1280px) { .grid { grid-template-columns:1fr 1fr 1fr; column-gap:80px; } }
-  h2 { font-size:28px; line-height:36px; font-weight:700; letter-spacing:-.025em; color:var(--heading); margin:0 0 12px; padding-bottom:12px; border-bottom:1px solid var(--line); }
+  h2 { font-family:var(--sans); font-size:1.55rem; line-height:1.2; font-weight:600; letter-spacing:-.02em; color:var(--heading); margin:0 0 12px; padding-bottom:12px; border-bottom:1px solid var(--line); }
   .btn { display:inline-flex; align-items:center; justify-content:center; min-height:44px; padding:8px 14px; border-radius:8px; border:1px solid transparent; background:var(--btn); color:#fff; font:inherit; font-size:15px; font-weight:600; text-decoration:none; cursor:pointer; transition:background-color .15s ease, border-color .15s ease, color .15s ease, transform .08s ease; }
   .btn:hover { background:var(--btn-hover); }
   .btn:active { transform:translateY(1px) scale(.99); }
@@ -98,16 +96,20 @@
 <body>
 <div class="wrap">
 <header>
-  <div class="brand">
-    <a class="logo" href="https://bitwise0x.com" aria-label="BitWise">
-      <svg xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMinYMid meet" viewBox="0 10 218 48"><defs><linearGradient id="logo_svg__a" x1="0%" x2="100%" y1="0%" y2="0%"><stop offset="0%" stop-color="#4ab3e8"></stop><stop offset="100%" stop-color="#1c9ad6"></stop></linearGradient></defs><text y="54" fill="url(#logo_svg__a)" font-family="'IBM Plex Mono', 'JetBrains Mono', 'SF Mono', 'Menlo', monospace" font-size="38" font-weight="700" letter-spacing="-0.5">BitWise</text><circle cx="173" cy="43" r="6" fill="url(#logo_svg__a)" opacity="0.5"><animate attributeName="cy" calcMode="spline" dur="4s" keySplines="0 0 1 1;0.42 0 0.58 1;0.42 0 0.58 1;0 0 1 1" keyTimes="0;0.80;0.85;0.90;1" repeatCount="indefinite" values="43;43;38;43;43"></animate><animate attributeName="opacity" dur="4s" keyTimes="0;0.80;0.85;0.90;1" repeatCount="indefinite" values="0.5;0.5;0.9;0.5;0.5"></animate></circle><circle cx="191" cy="43" r="6" fill="url(#logo_svg__a)" opacity="0.7"><animate attributeName="cy" calcMode="spline" dur="4s" keySplines="0 0 1 1;0.42 0 0.58 1;0.42 0 0.58 1;0 0 1 1" keyTimes="0;0.815;0.865;0.915;1" repeatCount="indefinite" values="43;43;38;43;43"></animate><animate attributeName="opacity" dur="4s" keyTimes="0;0.815;0.865;0.915;1" repeatCount="indefinite" values="0.7;0.7;1;0.7;0.7"></animate></circle><circle cx="209" cy="43" r="6" fill="url(#logo_svg__a)"><animate attributeName="cy" calcMode="spline" dur="4s" keySplines="0 0 1 1;0.42 0 0.58 1;0.42 0 0.58 1;0 0 1 1" keyTimes="0;0.83;0.88;0.93;1" repeatCount="indefinite" values="43;43;38;43;43"></animate><animate attributeName="opacity" dur="4s" keyTimes="0;0.83;0.88;0.93;1" repeatCount="indefinite" values="1;1;0.6;1;1"></animate></circle></svg>
-    </a>
-    <p class="tag">Intelligent Backends</p>
-  </div>
-  <nav><a href="https://bitwise0x.com">bitwise0x.com</a></nav>
+  <a class="mark" href="https://bitwise0x.com" aria-label="BitWise">
+    <span class="glyph">0x</span>
+    <span class="mark-text">
+      <b>BitWise</b>
+      <span class="tag">Intelligent Backends</span>
+    </span>
+  </a>
+  <nav><a href="https://bitwise0x.com">&larr; bitwise0x.com</a></nav>
 </header>
 
-<p class="from">Connect for LIVE demos</p>
+<section>
+  <p class="from">Live demo</p>
+  <h1 class="lead-title">Connect to BitWise</h1>
+</section>
 <div class="grid">
   <section>
     <h2>Windows PC</h2>

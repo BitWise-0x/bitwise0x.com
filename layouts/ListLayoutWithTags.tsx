@@ -68,18 +68,16 @@ export default function ListLayoutWithTags({
         Tales from the stack
       </LedgerLead>
 
-      <div className="ledger-head">
-        <span>Posts</span>
-        <span>Date</span>
-      </div>
-
-      <ul className="records">
-        {displayPosts.map((post, i) => {
+      <ul className="records records-topline">
+        {displayPosts.map((post) => {
           const { path, date, title: postTitle, summary, tags, heroImage, readingTime } = post
           const showThumbnail = heroImage && !heroImage.includes('social-banner')
 
           return (
-            <li key={path} className={showThumbnail ? 'record has-thumb' : 'record'}>
+            <li
+              key={path}
+              className={showThumbnail ? 'record no-side has-thumb' : 'record no-side'}
+            >
               {showThumbnail && (
                 <Link href={`/${path}`} aria-hidden="true" tabIndex={-1} className="record-thumb">
                   <Image src={heroImage} alt="" width={340} height={191} />
@@ -97,14 +95,13 @@ export default function ListLayoutWithTags({
                 <p className="desc">{summary}</p>
                 <div className="links">
                   <Link href={`/${path}`}>Read</Link>
+                  <span className="meta">
+                    <time dateTime={date} suppressHydrationWarning>
+                      {formatDate(date, siteMetadata.locale)}
+                    </time>
+                    {readingTime && <span> · {Math.ceil(readingTime.minutes)} min</span>}
+                  </span>
                 </div>
-              </div>
-
-              <div className="side">
-                <time dateTime={date} suppressHydrationWarning>
-                  {formatDate(date, siteMetadata.locale)}
-                </time>
-                {readingTime && <span>{Math.ceil(readingTime.minutes)} min</span>}
               </div>
             </li>
           )

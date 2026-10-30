@@ -23,7 +23,7 @@ export default async function Page() {
       </LedgerLead>
 
       <div className="ledger-head">
-        <span>Topics</span>
+        <span></span>
         <span>{tagKeys.length} total</span>
       </div>
 

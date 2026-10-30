@@ -88,18 +88,13 @@ export default function ListLayout({
         </label>
       </div>
 
-      <div className="ledger-head">
-        <span>Posts</span>
-        <span>Date</span>
-      </div>
-
-      <ul className="records">
+      <ul className="records records-topline">
         {!filteredBlogPosts.length && <li className="ledger-empty">No posts found.</li>}
-        {displayPosts.map((post, i) => {
+        {displayPosts.map((post) => {
           const { path, date, title: postTitle, summary, tags } = post
 
           return (
-            <li key={path} className="record">
+            <li key={path} className="record no-side">
               <div className="record-head">
                 <h3>
                   <Link href={`/${path}`}>{postTitle}</Link>
@@ -111,13 +106,12 @@ export default function ListLayout({
                 <p className="desc">{summary}</p>
                 <div className="links">
                   <Link href={`/${path}`}>Read</Link>
+                  <span className="meta">
+                    <time dateTime={date} suppressHydrationWarning>
+                      {formatDate(date, siteMetadata.locale)}
+                    </time>
+                  </span>
                 </div>
-              </div>
-
-              <div className="side">
-                <time dateTime={date} suppressHydrationWarning>
-                  {formatDate(date, siteMetadata.locale)}
-                </time>
               </div>
             </li>
           )

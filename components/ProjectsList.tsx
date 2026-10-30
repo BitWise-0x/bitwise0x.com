@@ -26,11 +26,7 @@ export default function ProjectsList({ title = 'Projects' }: { title?: string })
         Backends, distributed systems
       </LedgerLead>
 
-      <div className="ledger-head">
-        <span>Project</span>
-      </div>
-
-      <ul className="records">
+      <ul className="records records-topline">
         {projectsData.map((project) => {
           const { title: name, tagline, description, imgSrc, href, learnMoreHref } = project
 

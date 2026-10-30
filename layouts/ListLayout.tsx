@@ -73,7 +73,7 @@ export default function ListLayout({
   return (
     <div>
       <LedgerLead kicker="Tag" title={title}>
-        Every post filed under this topic.
+        Every post filed under this topic
       </LedgerLead>
 
       <div className="ledger-search">
@@ -97,12 +97,9 @@ export default function ListLayout({
         {!filteredBlogPosts.length && <li className="ledger-empty">No posts found.</li>}
         {displayPosts.map((post, i) => {
           const { path, date, title: postTitle, summary, tags } = post
-          const id = `P-${String(i + 1).padStart(2, '0')}`
 
           return (
-            <li key={path} className="record">
-              <span className="rid">{id}</span>
-
+            <li key={path} className="record no-rid">
               <div>
                 <h3>
                   <Link href={`/${path}`}>{postTitle}</Link>

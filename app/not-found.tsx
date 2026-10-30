@@ -11,7 +11,7 @@ export default function NotFound() {
   return (
     <div>
       <LedgerLead kicker="Error 404" title="Not found">
-        That page does not exist, or it moved. Everything else is still where you left it.
+        That page does not exist, or it moved, but everything else is still where you left it
       </LedgerLead>
 
       <div className="ledger-pager">

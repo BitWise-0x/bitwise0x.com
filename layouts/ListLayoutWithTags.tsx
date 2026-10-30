@@ -65,8 +65,7 @@ export default function ListLayoutWithTags({
   return (
     <div>
       <LedgerLead kicker="Writing" title={title}>
-        Notes from the work: backend engineering, distributed systems, and the projects that run on
-        them.
+        Backends, distributed systems
       </LedgerLead>
 
       <div className="ledger-head">
@@ -78,11 +77,14 @@ export default function ListLayoutWithTags({
         {displayPosts.map((post, i) => {
           const { path, date, title: postTitle, summary, tags, heroImage, readingTime } = post
           const showThumbnail = heroImage && !heroImage.includes('social-banner')
-          const id = `P-${String(i + 1).padStart(2, '0')}`
 
           return (
-            <li key={path} className="record">
-              <span className="rid">{id}</span>
+            <li key={path} className={showThumbnail ? 'record no-rid has-thumb' : 'record no-rid'}>
+              {showThumbnail && (
+                <Link href={`/${path}`} aria-hidden="true" tabIndex={-1} className="record-thumb">
+                  <Image src={heroImage} alt="" width={340} height={191} />
+                </Link>
+              )}
 
               <div>
                 <h3>
@@ -100,11 +102,6 @@ export default function ListLayoutWithTags({
                   {formatDate(date, siteMetadata.locale)}
                 </time>
                 {readingTime && <span>{Math.ceil(readingTime.minutes)} min</span>}
-                {showThumbnail && (
-                  <Link href={`/${path}`} aria-hidden="true" tabIndex={-1} className="thumb">
-                    <Image src={heroImage} alt="" width={340} height={191} />
-                  </Link>
-                )}
               </div>
             </li>
           )

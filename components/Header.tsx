@@ -10,10 +10,13 @@ export default function Header() {
 
   return (
     <aside className="rail">
-      <Link href="/" aria-label="BitWise" className="mark">
-        <span className="glyph">0x</span>
-        <b>BitWise</b>
-      </Link>
+      <div className="mark-row">
+        <Link href="/" aria-label="BitWise" className="mark">
+          <span className="glyph">0x</span>
+          <b>BitWise</b>
+        </Link>
+        <SearchButton />
+      </div>
 
       <nav aria-label="Primary">
         {headerNavLinks.map((link) => {
@@ -43,10 +46,6 @@ export default function Header() {
           <span>region</span>
           <b>bitwise0x.com</b>
         </div>
-      </div>
-
-      <div className="mt-5">
-        <SearchButton />
       </div>
     </aside>
   )

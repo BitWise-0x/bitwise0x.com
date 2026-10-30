@@ -23,7 +23,7 @@ const friendlyHost = (href: string) => hostLabels[getHost(href)] || getHost(href
 export default function ProjectsList({ title = 'Projects' }: { title?: string }) {
   return (
     <div>
-      <section className="ledger-lead">
+      <section className="ledger-lead ledger-hero">
         <p className="kicker">
           <span className="led-pulse" />
           {title}
@@ -34,13 +34,13 @@ export default function ProjectsList({ title = 'Projects' }: { title?: string })
           <i>end to end</i>
         </h1>
         <p>
-          Backend engineering, distributed systems, and the infrastructure beneath them: designed,
-          built, and kept running in production. Each entry below is live or open source.
+          The layers and stacks that products run on, from the data layer up through deployment,
+          each one below live or open source
         </p>
       </section>
 
       <div className="ledger-head">
-        <span>Product</span>
+        <span>Project</span>
         <span>Status</span>
       </div>
 
@@ -48,11 +48,19 @@ export default function ProjectsList({ title = 'Projects' }: { title?: string })
         {projectsData.map((project, i) => {
           const { title: name, tagline, description, imgSrc, href, learnMoreHref } = project
           const live = isLive(href)
-          const id = `S-${String(i + 1).padStart(2, '0')}`
 
           return (
-            <li key={name} className="record">
-              <span className="rid">{id}</span>
+            <li key={name} className={imgSrc ? 'record no-rid has-thumb' : 'record no-rid'}>
+              {imgSrc && (
+                <Link
+                  href={learnMoreHref || href || '#'}
+                  aria-hidden="true"
+                  tabIndex={-1}
+                  className="record-thumb"
+                >
+                  <Image src={imgSrc} alt="" width={340} height={191} />
+                </Link>
+              )}
 
               <div>
                 <h3>{learnMoreHref ? <Link href={learnMoreHref}>{name}</Link> : name}</h3>
@@ -86,16 +94,6 @@ export default function ProjectsList({ title = 'Projects' }: { title?: string })
                 <span className={live ? 'pill live' : 'pill oss'}>
                   {live ? 'Live' : 'Open source'}
                 </span>
-                {imgSrc && (
-                  <Link
-                    href={learnMoreHref || href || '#'}
-                    aria-hidden="true"
-                    tabIndex={-1}
-                    className="thumb"
-                  >
-                    <Image src={imgSrc} alt="" width={340} height={191} />
-                  </Link>
-                )}
               </div>
             </li>
           )

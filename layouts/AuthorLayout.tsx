@@ -1,8 +1,9 @@
-import { ReactNode } from 'react'
+import { ReactNode, SVGProps, ComponentType } from 'react'
 import type { Authors } from 'contentlayer/generated'
 import Image from '@/components/Image'
 import Link from '@/components/Link'
 import LedgerLead from '@/components/LedgerLead'
+import { Mail, Github, Linkedin, X, Bluesky } from '@/components/social-icons/icons'
 
 interface Props {
   children: ReactNode
@@ -12,12 +13,12 @@ interface Props {
 export default function AuthorLayout({ children, content }: Props) {
   const { name, avatar, occupation, company, email, twitter, bluesky, linkedin, github } = content
 
-  const links: { label: string; href?: string }[] = [
-    { label: 'email', href: email ? `mailto:${email}` : undefined },
-    { label: 'github', href: github },
-    { label: 'linkedin', href: linkedin },
-    { label: 'x', href: twitter },
-    { label: 'bluesky', href: bluesky },
+  const links: { label: string; href?: string; Icon: ComponentType<SVGProps<SVGSVGElement>> }[] = [
+    { label: 'Email', href: email ? `mailto:${email}` : undefined, Icon: Mail },
+    { label: 'GitHub', href: github, Icon: Github },
+    { label: 'LinkedIn', href: linkedin, Icon: Linkedin },
+    { label: 'X', href: twitter, Icon: X },
+    { label: 'Bluesky', href: bluesky, Icon: Bluesky },
   ]
 
   return (
@@ -32,18 +33,18 @@ export default function AuthorLayout({ children, content }: Props) {
         <div className="author-meta">
           <h3>{name}</h3>
           {company && <p className="tag">{company}</p>}
-          <dl className="author-links">
+          <ul className="author-links">
             {links
               .filter((l) => l.href)
-              .map((l) => (
-                <div className="row" key={l.label}>
-                  <dt>{l.label}</dt>
-                  <dd>
-                    <Link href={l.href as string}>{l.href}</Link>
-                  </dd>
-                </div>
+              .map(({ label, href, Icon }) => (
+                <li key={label}>
+                  <Link href={href as string}>
+                    <Icon className="icon" />
+                    {label}
+                  </Link>
+                </li>
               ))}
-          </dl>
+          </ul>
         </div>
       </aside>
 

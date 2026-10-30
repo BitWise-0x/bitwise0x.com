@@ -19,7 +19,7 @@ export default async function Page() {
   return (
     <div>
       <LedgerLead kicker="Index" title="Tags">
-        Every topic written about here, by volume
+        Topics by volume
       </LedgerLead>
 
       <div className="ledger-head">

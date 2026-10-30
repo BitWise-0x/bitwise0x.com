@@ -21,7 +21,7 @@ export default async function Page() {
         '@type': 'Organization',
         name: 'BitWise',
         url: siteMetadata.siteUrl,
-        logo: `${siteMetadata.siteUrl}/static/images/social-banner.png`,
+        logo: `${siteMetadata.siteUrl}/static/images/logo.png`,
         sameAs: [siteMetadata.github, siteMetadata.x, siteMetadata.bluesky].filter(Boolean),
       },
     ],

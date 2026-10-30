@@ -9,7 +9,7 @@ const siteMetadata = {
   theme: 'dark', // system, dark or light
   siteUrl: 'https://bitwise0x.com',
   siteRepo: 'https://github.com/BitWise-0x/bitwise0x.com',
-  siteLogo: `${process.env.BASE_PATH || ''}/static/images/social-banner.svg`,
+  siteLogo: `${process.env.BASE_PATH || ''}/static/images/logo.svg`,
   socialBanner: `${process.env.BASE_PATH || ''}/static/images/social-banner.png`,
   email: 'rob@bitwise0x.com',
   github: 'https://github.com/BitWise-0x',

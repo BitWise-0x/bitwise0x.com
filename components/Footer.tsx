@@ -1,26 +1,17 @@
-'use client'
-
-import { usePathname } from 'next/navigation'
 import siteMetadata from '@/data/siteMetadata'
-import SocialIcon from '@/components/social-icons'
+import Link from './Link'
 
 export default function Footer() {
-  const pathname = usePathname()
-  const hideSocial = pathname === '/about'
-
   return (
-    <footer>
-      <div className="mt-16 flex flex-col items-center">
-        {!hideSocial && (
-          <div className="mb-6 flex space-x-4">
-            <SocialIcon kind="mail" href={`mailto:${siteMetadata.email}`} size={6} />
-            <SocialIcon kind="github" href={siteMetadata.github} size={6} />
-            <SocialIcon kind="x" href={siteMetadata.x} size={6} />
-            <SocialIcon kind="bluesky" href={siteMetadata.bluesky} size={6} />
-          </div>
-        )}
-        <div className="text-muted mb-8 text-sm">{`BitWise · © ${new Date().getFullYear()}`}</div>
-      </div>
+    <footer className="ledger-footer col-span-full mt-4 md:pl-9">
+      <span>{`© BitWise · ${new Date().getFullYear()}`}</span>
+      <span className="flex gap-3">
+        <Link href={siteMetadata.github}>GitHub</Link>
+        <span aria-hidden="true">·</span>
+        <Link href={siteMetadata.x}>X</Link>
+        <span aria-hidden="true">·</span>
+        <Link href={siteMetadata.bluesky}>Bluesky</Link>
+      </span>
     </footer>
   )
 }

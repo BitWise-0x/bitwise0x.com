@@ -654,6 +654,48 @@ input:-webkit-autofill:focus {
   vertical-align: middle;
 }
 
+/* kbar search palette: retheme pliny's modal to the ledger look.
+   scoped to the kbar overlay (the backdrop-blur positioner and #kbar-listbox),
+   overriding the compiled gray/primary utility classes it ships with. */
+.backdrop-blur.backdrop-filter:has(.max-w-xl) {
+  background: color-mix(in oklab, var(--bg) 70%, transparent) !important;
+}
+.backdrop-blur.backdrop-filter .max-w-xl > div {
+  background: var(--surface) !important;
+  border-color: var(--line) !important;
+  border-radius: 10px !important;
+  box-shadow: 0 20px 60px -20px rgba(0, 0, 0, 0.6);
+}
+.backdrop-blur.backdrop-filter input {
+  color: var(--fg) !important;
+  font-family: var(--font-sans);
+}
+.backdrop-blur.backdrop-filter input::placeholder {
+  color: var(--muted) !important;
+}
+#kbar-listbox {
+  --tw-prose-body: var(--fg);
+}
+#kbar-listbox > div[class*='uppercase'],
+.backdrop-blur.backdrop-filter [class*='border-t'] {
+  border-color: var(--line) !important;
+  color: var(--muted) !important;
+}
+#kbar-listbox a,
+#kbar-listbox [class*='text-gray'] {
+  color: var(--fg) !important;
+}
+/* active (highlighted) result row */
+#kbar-listbox [class*='bg-primary-600'] {
+  background: color-mix(in oklab, var(--color-signal) 18%, var(--surface)) !important;
+  color: var(--fg) !important;
+}
+/* the little kbd hint badge */
+.backdrop-blur.backdrop-filter [class*='border-gray-400'] {
+  color: var(--muted) !important;
+  border-color: var(--line) !important;
+}
+
 /* keep the alert callout icon, hide the type label text (NOTE/TIP/IMPORTANT/WARNING/CAUTION) */
 .markdown-alert .markdown-alert-title {
   font-size: 0;

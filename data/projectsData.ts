@@ -14,7 +14,7 @@ const projectsData: Project[] = [
     description: `Ai music service that turns a description into a finished track and
     then lets you continue working on it. Regenerate a single section, add an instrument,
     change the style, build a band around your own recording, and sing it in your own voice.`,
-    imgSrc: '/static/images/blog/echosonic/hero.jpg',
+    imgSrc: '/static/images/blog/echosonic/landing.jpg',
     href: 'https://echosonic.io',
     learnMoreHref: '/blog/introducing-echosonic',
   },
@@ -24,7 +24,7 @@ const projectsData: Project[] = [
     description: `Voice reflection sessions with a Carl Jung persona that hears how you say
     things, not just what you say. It begins with an archetype test, follows the four stages
     of individuation, and provides written notes after each session.`,
-    imgSrc: '/static/images/blog/carljung/jung-banner.jpg',
+    imgSrc: '/static/images/blog/carljung/landing.jpg',
     href: 'https://carljung.ai',
     learnMoreHref: '/blog/introducing-carljung-ai',
   },

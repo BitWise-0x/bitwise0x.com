@@ -242,19 +242,19 @@
   .rail .mark-row .search-btn:hover { color: var(--color-signal); }
   .rail .mark-row .search-btn svg { width: 1.15rem; height: 1.15rem; }
   .rail .mark .glyph {
-    width: 30px; height: 30px; flex: none;
+    width: 34px; height: 34px; flex: none;
     border: 1.5px solid var(--fg); border-radius: 6px;
     display: grid; place-items: center;
-    font-family: var(--font-mono); font-weight: 600; font-size: 0.98rem;
+    font-family: var(--font-mono); font-weight: 600; font-size: 1.1rem;
     color: var(--fg);
   }
-  .rail .mark b { font-weight: 600; letter-spacing: -0.01em; font-size: 1.2rem; color: var(--fg); }
+  .rail .mark b { font-weight: 600; letter-spacing: -0.01em; font-size: 1.4rem; color: var(--fg); }
   .rail nav { display: flex; flex-flow: row wrap; gap: 0.3rem 1.2rem; margin: 1.4rem 0; }
   @media (min-width: 768px) {
     .rail nav { flex-direction: column; flex-wrap: nowrap; gap: 0.1rem; }
   }
   .rail nav a {
-    font-family: var(--font-mono); font-size: 0.78rem; letter-spacing: 0.02em;
+    font-family: var(--font-mono); font-size: 0.85rem; letter-spacing: 0.02em;
     color: var(--muted); text-decoration: none; padding: 0.38rem 0;
     display: flex; align-items: center; gap: 0.55rem;
   }

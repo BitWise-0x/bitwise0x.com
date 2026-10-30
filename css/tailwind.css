@@ -496,8 +496,8 @@
   .post-head .kicker span { color: var(--muted); }
   .post-head h1 {
     font-family: var(--font-sans); font-weight: 600;
-    font-size: clamp(1.9rem, 4.6vw, 2.5rem); line-height: 1.08;
-    letter-spacing: -0.03em; margin: 0; color: var(--fg); text-wrap: balance;
+    font-size: clamp(1.65rem, 3.2vw, 1.9rem); line-height: 1.12;
+    letter-spacing: -0.02em; margin: 0; color: var(--fg); text-wrap: balance;
   }
   .post-foot {
     margin-top: 2.5rem; padding-top: 1.6rem; border-top: 1px solid var(--line);

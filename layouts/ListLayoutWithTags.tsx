@@ -65,7 +65,7 @@ export default function ListLayoutWithTags({
   return (
     <div>
       <LedgerLead kicker="Writing" title={title}>
-        Backends, distributed systems
+        Tales from the stack
       </LedgerLead>
 
       <div className="ledger-head">

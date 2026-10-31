@@ -78,7 +78,7 @@ export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
   viewportFit: 'cover',
-  themeColor: '#000000',
+  themeColor: '#0c0f0e',
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -93,17 +93,17 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <link
         rel="apple-touch-icon"
         sizes="180x180"
-        href={`${basePath}/static/favicons/apple-touch-icon.png?v=3`}
+        href={`${basePath}/static/favicons/apple-touch-icon.png?v=4`}
       />
       <link
         rel="icon"
         type="image/png"
         sizes="96x96"
-        href={`${basePath}/static/favicons/favicon-96x96.png?v=3`}
+        href={`${basePath}/static/favicons/favicon-96x96.png?v=4`}
       />
-      <link rel="icon" type="image/svg+xml" href={`${basePath}/static/favicons/favicon.svg?v=3`} />
-      <link rel="manifest" href={`${basePath}/static/favicons/site.webmanifest?v=3`} />
-      <meta name="msapplication-TileColor" content="#000000" />
+      <link rel="icon" type="image/svg+xml" href={`${basePath}/static/favicons/favicon.svg?v=4`} />
+      <link rel="manifest" href={`${basePath}/static/favicons/site.webmanifest?v=4`} />
+      <meta name="msapplication-TileColor" content="#0c0f0e" />
       <meta name="color-scheme" content="dark" />
       <link rel="alternate" type="application/rss+xml" href={`${basePath}/feed.xml`} />
       <body className="bg-page pl-[calc(100vw-100%)] antialiased">

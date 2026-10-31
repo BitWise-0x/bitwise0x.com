@@ -4,7 +4,7 @@ const siteMetadata = {
   author: 'Rob@BitWise',
   headerTitle: '',
   description:
-    'BitWise — backend engineering, distributed systems, and infrastructure. Projects, tools, and writing from real-world work.',
+    'BitWise: backend engineering, distributed systems, and infrastructure. Projects, tools, and writing from real-world work.',
   language: 'en-US',
   theme: 'dark', // system, dark or light
   siteUrl: 'https://bitwise0x.com',

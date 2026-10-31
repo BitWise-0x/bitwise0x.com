@@ -230,14 +230,14 @@
   }
   .topnav .mark { gap: 0.85rem; }
   .topnav .mark .glyph {
-    width: 52px; height: 52px; flex: none;
+    width: 46px; height: 46px; flex: none;
     border: 2px solid var(--fg); border-radius: 10px;
     display: grid; place-items: center;
-    font-family: var(--font-mono); font-weight: 600; font-size: 1.7rem;
+    font-family: var(--font-mono); font-weight: 600; font-size: 1.5rem;
     color: var(--fg);
   }
   .topnav .mark .mark-text { display: flex; flex-direction: column; line-height: 1.05; min-width: 0; }
-  .topnav .mark b { font-weight: 600; letter-spacing: -0.015em; font-size: 2.1rem; color: var(--fg); }
+  .topnav .mark b { font-weight: 600; letter-spacing: -0.015em; font-size: 1.9rem; color: var(--fg); }
   .topnav .mark .mark-tagline {
     font-family: var(--font-mono); font-size: 0.78rem; letter-spacing: 0.14em;
     text-transform: uppercase; color: var(--muted); margin-top: 0.3rem;

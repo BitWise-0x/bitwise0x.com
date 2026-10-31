@@ -271,7 +271,7 @@
     color: var(--fg);
   }
   .ledger-lead h1 i { color: var(--color-signal); font-style: normal; }
-  .ledger-lead p { max-width: 48ch; color: var(--muted); margin: 1.2rem 0 0; font-size: 1.08rem; }
+  .ledger-lead p { max-width: 48ch; color: var(--muted); margin: 0.5rem 0 0; font-size: 1.08rem; }
 
   /* ledger column header */
   .ledger-head {

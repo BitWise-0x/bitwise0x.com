@@ -18,14 +18,9 @@ export default async function Page() {
   const sortedTags = tagKeys.sort((a, b) => tagCounts[b] - tagCounts[a])
   return (
     <div>
-      <LedgerLead kicker="Index" title="Tags">
+      <LedgerLead kicker="Index" title="Tags" aside={`${tagKeys.length} total`}>
         Topics by volume
       </LedgerLead>
-
-      <div className="ledger-head">
-        <span></span>
-        <span>{tagKeys.length} total</span>
-      </div>
 
       {tagKeys.length === 0 ? (
         <p className="ledger-empty">No tags found.</p>

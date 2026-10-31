@@ -10,7 +10,7 @@ import SectionContainer from '@/components/SectionContainer'
 import Footer from '@/components/Footer'
 import siteMetadata from '@/data/siteMetadata'
 import { ThemeProviders } from './theme-providers'
-import { Metadata } from 'next'
+import { Metadata, Viewport } from 'next'
 
 const space_grotesk = Space_Grotesk({
   subsets: ['latin'],
@@ -74,6 +74,13 @@ export const metadata: Metadata = {
   },
 }
 
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  viewportFit: 'cover',
+  themeColor: '#000000',
+}
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   const basePath = process.env.BASE_PATH || ''
 
@@ -97,7 +104,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <link rel="icon" type="image/svg+xml" href={`${basePath}/static/favicons/favicon.svg?v=3`} />
       <link rel="manifest" href={`${basePath}/static/favicons/site.webmanifest?v=3`} />
       <meta name="msapplication-TileColor" content="#000000" />
-      <meta name="theme-color" content="#000" />
       <meta name="color-scheme" content="dark" />
       <link rel="alternate" type="application/rss+xml" href={`${basePath}/feed.xml`} />
       <body className="bg-page pl-[calc(100vw-100%)] antialiased">

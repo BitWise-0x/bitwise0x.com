@@ -122,6 +122,10 @@
     & :where(code):not(pre code) {
       color: var(--color-signal);
       font-family: var(--font-mono);
+      overflow-wrap: break-word;
+    }
+    & a {
+      overflow-wrap: break-word;
     }
     /* a `---` divider used directly under a section heading is a header rule,
        not a thematic break: tighten the gap to its content so it doesn't read

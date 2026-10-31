@@ -275,8 +275,17 @@
     color: var(--fg);
   }
   .ledger-lead h1 i { color: var(--color-signal); font-style: normal; }
-  .ledger-lead .kicker-aside { margin-left: auto; color: var(--muted); letter-spacing: 0.1em; }
-  .ledger-lead p { max-width: 48ch; color: var(--muted); margin: 0.5rem 0 0; font-size: 1.08rem; }
+  .ledger-lead p { color: var(--muted); margin: 0.5rem 0 0; font-size: 1.08rem; }
+  /* subtext row: text left, optional count aligned to the far right edge */
+  .ledger-lead .lead-sub {
+    display: flex; align-items: baseline; justify-content: space-between; gap: 1rem;
+    max-width: none;
+  }
+  .ledger-lead .lead-sub > span:first-child { max-width: 48ch; }
+  .ledger-lead .lead-aside {
+    flex: none; font-family: var(--font-mono); font-size: 0.7rem;
+    letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted);
+  }
 
   /* ledger column header */
   .ledger-head {

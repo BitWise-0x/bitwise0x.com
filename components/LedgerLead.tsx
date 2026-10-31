@@ -13,10 +13,14 @@ export default function LedgerLead({ kicker, title, aside, children }: Props) {
       <p className="kicker">
         <span className="led-pulse" />
         {kicker}
-        {aside && <span className="kicker-aside">{aside}</span>}
       </p>
       <h1>{title}</h1>
-      {children && <p>{children}</p>}
+      {(children || aside) && (
+        <p className="lead-sub">
+          <span>{children}</span>
+          {aside && <span className="lead-aside">{aside}</span>}
+        </p>
+      )}
     </section>
   )
 }

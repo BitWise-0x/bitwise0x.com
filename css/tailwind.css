@@ -261,7 +261,7 @@
   .ledger-lead { padding-bottom: 0.9rem; border-bottom: 1px solid var(--line); margin-bottom: 2.1rem; }
   .ledger-lead .kicker {
     font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.14em;
-    text-transform: uppercase; color: var(--color-signal); margin: 0 0 1.1rem;
+    text-transform: uppercase; color: var(--color-signal); margin: 0 0 0.6rem;
     display: flex; align-items: center; gap: 0.6rem;
   }
   .ledger-lead h1 {

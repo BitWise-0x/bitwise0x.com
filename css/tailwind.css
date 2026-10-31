@@ -258,7 +258,7 @@
 
   /* lead: the separator line lives here so it sits at the exact same
      height on every page (fluid when switching between them) */
-  .ledger-lead { padding-bottom: 1.5rem; border-bottom: 1px solid var(--line); margin-bottom: 1.5rem; }
+  .ledger-lead { padding-bottom: 0.9rem; border-bottom: 1px solid var(--line); margin-bottom: 2.1rem; }
   .ledger-lead .kicker {
     font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.14em;
     text-transform: uppercase; color: var(--color-signal); margin: 0 0 1.1rem;
@@ -496,8 +496,8 @@
   .post-head .kicker span { color: var(--muted); }
   .post-head h1 {
     font-family: var(--font-sans); font-weight: 600;
-    font-size: clamp(1.65rem, 3.2vw, 1.9rem); line-height: 1.12;
-    letter-spacing: -0.02em; margin: 0; color: var(--fg); text-wrap: balance;
+    font-size: 1.55rem; line-height: 1.2;
+    letter-spacing: -0.01em; margin: 0; color: var(--fg); text-wrap: balance;
   }
   .post-foot {
     margin-top: 2.5rem; padding-top: 1.6rem; border-top: 1px solid var(--line);

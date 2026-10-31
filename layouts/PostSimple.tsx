@@ -6,6 +6,7 @@ import Comments from '@/components/Comments'
 import Link from '@/components/Link'
 import siteMetadata from '@/data/siteMetadata'
 import ScrollTopAndComment from '@/components/ScrollTopAndComment'
+import PostTitle from '@/components/PostTitle'
 
 interface LayoutProps {
   content: CoreContent<Blog>
@@ -30,7 +31,7 @@ export default function PostLayout({ content, next, prev, children }: LayoutProp
           </time>
           {readingTime && <span>· {Math.ceil(readingTime.minutes)} min read</span>}
         </p>
-        <h1>{title}</h1>
+        <PostTitle title={title} />
       </header>
 
       <div className="prose dark:prose-invert max-w-none">{children}</div>

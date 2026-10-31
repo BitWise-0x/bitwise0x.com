@@ -8,6 +8,7 @@ import siteMetadata from '@/data/siteMetadata'
 import ScrollTopAndComment from '@/components/ScrollTopAndComment'
 import ShareLinks from '@/components/ShareLinks'
 import RelatedPosts from '@/components/RelatedPosts'
+import PostTitle from '@/components/PostTitle'
 
 const postDateTemplate: Intl.DateTimeFormatOptions = {
   year: 'numeric',
@@ -49,7 +50,7 @@ export default function PostLayout({
           {readingTime && <span>· {Math.ceil(readingTime.minutes)} min read</span>}
           {authorNames && <span>· {authorNames}</span>}
         </p>
-        <h1>{title}</h1>
+        <PostTitle title={title} />
       </header>
 
       <div className="prose dark:prose-invert max-w-none">{children}</div>

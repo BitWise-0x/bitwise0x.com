@@ -13,10 +13,12 @@ interface Props {
 export default function AuthorLayout({ children, content }: Props) {
   const { name, avatar, occupation, company, email, twitter, github } = content
 
+  const handle = (url?: string) => (url ? url.replace(/\/+$/, '').split('/').pop() : undefined)
+
   const links: { label: string; href?: string; Icon: ComponentType<SVGProps<SVGSVGElement>> }[] = [
-    { label: 'Email', href: email ? `mailto:${email}` : undefined, Icon: Mail },
-    { label: 'GitHub', href: github, Icon: Github },
-    { label: 'X', href: twitter, Icon: X },
+    { label: 'Mail', href: email ? `mailto:${email}` : undefined, Icon: Mail },
+    { label: handle(github) ?? 'GitHub', href: github, Icon: Github },
+    { label: handle(twitter) ? `@${handle(twitter)}` : 'X', href: twitter, Icon: X },
   ]
 
   return (

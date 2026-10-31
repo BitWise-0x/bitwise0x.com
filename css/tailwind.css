@@ -672,46 +672,62 @@ input:-webkit-autofill:focus {
   vertical-align: middle;
 }
 
-/* kbar search palette: retheme pliny's modal to the ledger look.
-   scoped to the kbar overlay (the backdrop-blur positioner and #kbar-listbox),
-   overriding the compiled gray/primary utility classes it ships with. */
-.backdrop-blur.backdrop-filter:has(.max-w-xl) {
-  background: color-mix(in oklab, var(--bg) 70%, transparent) !important;
+/* kbar search palette: retheme pliny's compiled modal to the ledger look.
+   selectors target the real classes pliny ships (verified against the
+   rendered DOM): the panel is .bg-gray-50/.dark:bg-gray-900, the active row
+   is .bg-primary-600, headers use .text-primary-600, badges .border-gray-400. */
+
+/* overlay wash */
+.backdrop-blur.backdrop-filter {
+  background: color-mix(in oklab, #000 55%, transparent) !important;
 }
-.backdrop-blur.backdrop-filter .max-w-xl > div {
-  background: var(--surface) !important;
+/* the modal panel: near-black surface + ledger hairline border */
+.rounded-2xl.bg-gray-50,
+.dark .rounded-2xl.bg-gray-50 {
+  background: var(--bg) !important;
   border-color: var(--line) !important;
-  border-radius: 10px !important;
-  box-shadow: 0 20px 60px -20px rgba(0, 0, 0, 0.6);
+  border-radius: 12px !important;
+  box-shadow: 0 24px 64px -24px rgba(0, 0, 0, 0.7);
 }
+/* search input */
 .backdrop-blur.backdrop-filter input {
   color: var(--fg) !important;
-  font-family: var(--font-sans);
+  font-family: var(--font-sans) !important;
 }
 .backdrop-blur.backdrop-filter input::placeholder {
   color: var(--muted) !important;
 }
-#kbar-listbox {
-  --tw-prose-body: var(--fg);
+/* group headers (CONTENT etc.) and any inner top borders -> ledger line + signal label */
+.backdrop-blur.backdrop-filter .border-gray-100,
+.backdrop-blur.backdrop-filter .dark\:border-gray-800 {
+  border-color: var(--line) !important;
 }
-#kbar-listbox > div[class*='uppercase'],
-.backdrop-blur.backdrop-filter [class*='border-t'] {
+.backdrop-blur.backdrop-filter .text-primary-600 {
+  color: var(--color-signal) !important;
+}
+/* result rows: light text, signal-tinted active row (not teal) */
+.backdrop-blur.backdrop-filter .text-gray-100,
+.backdrop-blur.backdrop-filter .text-gray-200,
+.backdrop-blur.backdrop-filter [role='option'] * {
+  color: var(--fg) !important;
+}
+.backdrop-blur.backdrop-filter .bg-primary-600 {
+  background: color-mix(in oklab, var(--color-signal) 22%, var(--surface)) !important;
+}
+/* muted secondary text (dates/paths) and the ESC/kbd badge */
+.backdrop-blur.backdrop-filter .text-gray-400,
+.backdrop-blur.backdrop-filter .text-gray-600 {
+  color: var(--muted) !important;
+}
+.backdrop-blur.backdrop-filter .border-gray-400 {
   border-color: var(--line) !important;
   color: var(--muted) !important;
 }
-#kbar-listbox a,
-#kbar-listbox [class*='text-gray'] {
-  color: var(--fg) !important;
-}
-/* active (highlighted) result row */
-#kbar-listbox [class*='bg-primary-600'] {
-  background: color-mix(in oklab, var(--color-signal) 18%, var(--surface)) !important;
-  color: var(--fg) !important;
-}
-/* the little kbd hint badge */
-.backdrop-blur.backdrop-filter [class*='border-gray-400'] {
-  color: var(--muted) !important;
-  border-color: var(--line) !important;
+/* focus ring on the input -> ocean-blue signal, not saturated blue */
+.backdrop-blur.backdrop-filter input:focus,
+.backdrop-blur.backdrop-filter input:focus-visible {
+  outline-color: var(--color-signal) !important;
+  box-shadow: none !important;
 }
 
 /* keep the alert callout icon, hide the type label text (NOTE/TIP/IMPORTANT/WARNING/CAUTION) */

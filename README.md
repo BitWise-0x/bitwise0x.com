@@ -14,7 +14,7 @@
 </p>
 
 <p align="center">
-  Projects and writing on backend engineering, AI/ML, blockchain, and developer tooling.<br>
+  Projects and writing on backend engineering, distributed systems, AI/ML, and developer tooling.<br>
   Live at <a href="https://bitwise0x.com">bitwise0x.com</a>.
 </p>
 
@@ -59,7 +59,7 @@ Open [http://localhost:3000](http://localhost:3000) to view the site locally.
 <img src="https://img.shields.io/badge/GitHub_Pages-CI%2FCD-181717?style=flat-square&logo=github&logoColor=white" alt="GitHub Pages"/>
 
 - **Contentlayer** — MDX-based content management with type-safe frontmatter
-- **GitHub Pages** — automated deployment via CI/CD workflow on every push to `main`
+- **GitHub Pages** — automated deployment via CI/CD, triggered by a `deploy:` prefix in the commit message
 
 </td>
 </tr>
@@ -75,8 +75,8 @@ Open [http://localhost:3000](http://localhost:3000) to view the site locally.
 # Production build
 yarn build
 
-# Deploy — automated via GitHub Actions on push to main
-# No manual deployment step required
+# Deploy — GitHub Actions builds and publishes to GitHub Pages when a
+# commit pushed to main has a "deploy:" prefix in its message
 ```
 
 <br>

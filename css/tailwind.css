@@ -428,8 +428,8 @@
   }
   .ledger-footer a { color: var(--muted); text-decoration: none; }
   .ledger-footer a:hover { color: var(--color-signal); }
-  .ledger-footer .footer-links { display: flex; gap: 0.9rem 1.2rem; flex-wrap: wrap; align-items: center; }
-  .ledger-footer .footer-links a { display: inline-flex; align-items: center; gap: 0.4rem; }
+  .ledger-footer .footer-links { display: flex; gap: 0.9rem 1.2rem; flex-wrap: nowrap; align-items: center; }
+  .ledger-footer .footer-links a { display: inline-flex; align-items: center; gap: 0.4rem; white-space: nowrap; }
   .ledger-footer .footer-links a .icon { width: 0.95rem; height: 0.95rem; flex: none; fill: currentColor; }
 
   /* records: date / reading-time metadata in .side */

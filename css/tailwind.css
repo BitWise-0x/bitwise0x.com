@@ -161,6 +161,7 @@
   --surface: #fbfcfa;
   --fg: #15181a;
   --muted: #535c5d;
+  --fg-soft: #3f4748; /* row and tag text: brighter than chrome, below body */
   --line: #dde1dc;
   --color-signal: var(--color-primary-600); /* brand sodium amber */
   --color-signal-dim: var(--color-primary-700);
@@ -171,6 +172,7 @@
   --surface: #111513;
   --fg: #e7ece8;
   --muted: #a2aaa6;
+  --fg-soft: #c0c7c3;
   --line: #1f2623;
   --color-signal: var(--color-primary-400);
   --color-signal-dim: var(--color-primary-700);
@@ -377,7 +379,7 @@
   }
   .record .tag a { color: inherit; text-decoration: none; }
   .record .tag a:hover { color: var(--fg); }
-  .record .desc { margin: 0; color: var(--muted); font-size: 0.98rem; max-width: 62ch; }
+  .record .desc { margin: 0; color: var(--fg-soft); font-size: 0.98rem; max-width: 62ch; }
   .record .links { display: flex; gap: 1.2rem; flex-wrap: wrap; margin-top: 0.9rem; }
   .record .links a {
     font-family: var(--font-mono); font-size: 0.74rem; color: var(--fg);
@@ -386,12 +388,12 @@
   .record .links a::after { content: " ↗"; color: var(--color-signal); }
   .record .links a:hover { color: var(--color-signal); }
   .record .links .meta {
-    font-family: var(--font-mono); font-size: 0.7rem; color: var(--muted);
+    font-family: var(--font-mono); font-size: 0.7rem; color: var(--fg-soft);
     letter-spacing: 0.02em;
   }
-  .record .links .meta time { color: var(--muted); font-weight: 400; }
+  .record .links .meta time { color: var(--fg-soft); font-weight: 400; }
   .record .side {
-    font-family: var(--font-mono); font-size: 0.7rem; color: var(--muted);
+    font-family: var(--font-mono); font-size: 0.7rem; color: var(--fg-soft);
     display: flex; gap: 0.5rem; flex-wrap: wrap; align-items: center;
     justify-content: flex-end; text-align: right;
   }
@@ -414,7 +416,7 @@
     display: inline-flex; align-items: center; gap: 0.4rem;
     font-family: var(--font-mono); font-size: 0.64rem; letter-spacing: 0.08em; text-transform: uppercase;
     padding: 0.2rem 0.5rem; border-radius: 3px;
-    border: 1px solid var(--line); color: var(--muted); white-space: nowrap;
+    border: 1px solid var(--line); color: var(--fg-soft); white-space: nowrap;
   }
   .pill.live { color: var(--color-signal); border-color: color-mix(in oklab, var(--color-signal) 40%, var(--line)); }
   .pill.live::before { content: ""; width: 5px; height: 5px; border-radius: 50%; background: var(--color-signal); flex: none; }

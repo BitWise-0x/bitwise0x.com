@@ -11,7 +11,7 @@ const height = 630
 // Ledger palette, kept in step with css/tailwind.css dark theme.
 const BG = '#0c0f0e'
 const FG = '#e7ece8'
-const MUTED = '#8a938f'
+const MUTED = '#a2aaa6'
 const LINE = '#1f2623'
 const SIGNAL = '#efb146'
 

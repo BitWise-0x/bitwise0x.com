@@ -8,7 +8,7 @@
 </h1>
 
 <p align="center">
-  <img src="https://img.shields.io/github/license/BitWise-0x/bitwise0x.com?style=flat-square&color=blue" alt="License"/>
+  <img src="https://img.shields.io/github/license/BitWise-0x/bitwise0x.com?style=flat-square&color=efb146" alt="License"/>
   <img src="https://img.shields.io/github/last-commit/BitWise-0x/bitwise0x.com?style=flat-square&color=green" alt="Last Commit"/>
   <img src="https://img.shields.io/badge/deployed-GitHub_Pages-181717?style=flat-square&logo=github&logoColor=white" alt="Deployed on GitHub Pages"/>
 </p>

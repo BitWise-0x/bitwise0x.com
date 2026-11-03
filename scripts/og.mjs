@@ -13,7 +13,7 @@ const BG = '#0c0f0e'
 const FG = '#e7ece8'
 const MUTED = '#8a938f'
 const LINE = '#1f2623'
-const SIGNAL = '#4ab3e8'
+const SIGNAL = '#efb146'
 
 const fontRegular = readFileSync('./assets/fonts/IBMPlexMono-Regular.ttf')
 const fontSemiBold = readFileSync('./assets/fonts/IBMPlexMono-SemiBold.ttf')

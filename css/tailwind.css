@@ -13,18 +13,18 @@
   --font-mono: var(--font-plex-mono), 'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace;
 
   /* Colors */
-  /* PRIMARY COLORS - BitWise Brand (Ocean blue, cool, blue-leaning) */
-  --color-primary-50: oklch(0.96 0.025 228);
-  --color-primary-100: oklch(0.92 0.05 228);
-  --color-primary-200: oklch(0.86 0.09 226);
-  --color-primary-300: oklch(0.79 0.12 224);
-  --color-primary-400: oklch(0.72 0.14 222); /* ~#4ab3e8 - Brand light (ocean blue) */
-  --color-primary-500: oklch(0.66 0.15 220); /* ~#1c9ad6 - Brand accent (ocean blue) */
-  --color-primary-600: oklch(0.56 0.13 218);
-  --color-primary-700: oklch(0.46 0.11 216);
-  --color-primary-800: oklch(0.38 0.09 214);
-  --color-primary-900: oklch(0.3 0.07 212);
-  --color-primary-950: oklch(0.2 0.05 210);
+  /* PRIMARY COLORS - BitWise Brand (sodium amber, warm indicator-lamp yellow-orange) */
+  --color-primary-50: oklch(0.97 0.03 85);
+  --color-primary-100: oklch(0.94 0.06 84);
+  --color-primary-200: oklch(0.9 0.1 82);
+  --color-primary-300: oklch(0.85 0.13 80);
+  --color-primary-400: oklch(0.8 0.14 78); /* ~#efb146 - Brand accent on dark */
+  --color-primary-500: oklch(0.7 0.15 72); /* ~#d78c00 */
+  --color-primary-600: oklch(0.58 0.12 66); /* ~#a96a19 - Brand accent on light */
+  --color-primary-700: oklch(0.48 0.1 62);
+  --color-primary-800: oklch(0.4 0.08 60);
+  --color-primary-900: oklch(0.32 0.06 58);
+  --color-primary-950: oklch(0.22 0.04 56);
 
   --color-gray-50: oklch(0.985 0.002 247.839);
   --color-gray-100: oklch(0.967 0.003 264.542);
@@ -153,7 +153,7 @@
 
 /* ============================================================
    Ledger theme: ported from the service-ledger design.
-   Dark-first near-black palette, brand ocean blue as the signal.
+   Dark-first near-black palette, brand sodium amber as the signal.
    ============================================================ */
 :root {
   color-scheme: dark; /* site is force-dark; advertise it so the UA and extensions don't re-skin */
@@ -162,9 +162,9 @@
   --fg: #15181a;
   --muted: #606a6b;
   --line: #dde1dc;
-  --color-signal: var(--color-primary-500); /* brand ocean blue */
+  --color-signal: var(--color-primary-600); /* brand sodium amber */
   --color-signal-dim: var(--color-primary-700);
-  --color-amber: oklch(0.62 0.11 75); /* open-source pill */
+  --color-oss: #4a5354; /* open-source pill, neutral so it never competes with the amber signal */
 }
 :is(.dark, .dark *) {
   --bg: #0c0f0e;
@@ -174,7 +174,7 @@
   --line: #1f2623;
   --color-signal: var(--color-primary-400);
   --color-signal-dim: var(--color-primary-700);
-  --color-amber: oklch(0.74 0.12 80);
+  --color-oss: #b9c2bd;
 }
 
 /* LED pulse */
@@ -370,7 +370,7 @@
   }
   .record h3 a { color: var(--fg); text-decoration: none; }
   .record h3 a:hover { color: var(--color-signal); }
-  /* tagline themed in the signal blue, right under the title */
+  /* tagline themed in the signal color, right under the title */
   .record .tag {
     font-family: var(--font-mono); font-size: 0.74rem; color: var(--color-signal);
     letter-spacing: 0.02em; margin: 0;
@@ -418,7 +418,7 @@
   }
   .pill.live { color: var(--color-signal); border-color: color-mix(in oklab, var(--color-signal) 40%, var(--line)); }
   .pill.live::before { content: ""; width: 5px; height: 5px; border-radius: 50%; background: var(--color-signal); flex: none; }
-  .pill.oss { color: var(--color-amber); border-color: color-mix(in oklab, var(--color-amber) 35%, var(--line)); }
+  .pill.oss { color: var(--color-oss); border-color: color-mix(in oklab, var(--color-oss) 35%, var(--line)); }
 
   /* footer */
   .ledger-footer {
@@ -569,7 +569,7 @@ a.text-heading:hover {
   color: var(--color-primary-500);
 }
 
-/* Eyebrow: uppercase kicker under a heading, in the brand blue */
+/* Eyebrow: uppercase kicker under a heading, in the brand amber */
 .eyebrow {
   color: var(--color-primary-500);
   font-size: 0.875rem;
@@ -738,7 +738,7 @@ input:-webkit-autofill:focus {
   border-color: var(--line) !important;
   color: var(--muted) !important;
 }
-/* focus ring on the input -> ocean-blue signal, not saturated blue */
+/* focus ring on the input -> signal color, not the default ring */
 .backdrop-blur.backdrop-filter input:focus,
 .backdrop-blur.backdrop-filter input:focus-visible {
   outline-color: var(--color-signal) !important;

@@ -9,11 +9,11 @@ mermaid.initialize({
   startOnLoad: false,
   theme: 'dark',
   themeVariables: {
-    primaryColor: '#4ab3e8',
+    primaryColor: '#efb146',
     primaryTextColor: '#c0caf5',
     primaryBorderColor: '#565f89',
     lineColor: '#565f89',
-    secondaryColor: '#1c9ad6',
+    secondaryColor: '#d78c00',
     tertiaryColor: '#1a1b26',
     background: '#1a1b26',
     mainBkg: '#1a1b26',

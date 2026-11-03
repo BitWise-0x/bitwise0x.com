@@ -16,6 +16,7 @@ interface PaginationProps {
 interface ListLayoutProps {
   posts: CoreContent<Blog>[]
   title: string
+  showTitle?: boolean
   initialDisplayPosts?: CoreContent<Blog>[]
   pagination?: PaginationProps
 }
@@ -57,6 +58,7 @@ function Pagination({ totalPages, currentPage }: PaginationProps) {
 export default function ListLayoutWithTags({
   posts,
   title,
+  showTitle,
   initialDisplayPosts = [],
   pagination,
 }: ListLayoutProps) {
@@ -64,7 +66,7 @@ export default function ListLayoutWithTags({
 
   return (
     <div>
-      <LedgerLead kicker="Writing" title={title}>
+      <LedgerLead kicker="Writing" title={title} showTitle={showTitle}>
         Tales from the stack
       </LedgerLead>
 

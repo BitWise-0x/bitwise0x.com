@@ -11,9 +11,9 @@ const projectsData: Project[] = [
   {
     title: 'EchoSonic',
     tagline: 'Ai music generation platform',
-    description: `Ai music service that turns a description into a finished track and
-    then lets you continue working on it. Regenerate a single section, add an instrument,
-    change the style, build a band around your own recording, and sing it in your own voice.`,
+    description: `An Ai music service that treats each generated track as a draft rather than a final
+    render. You can rework one section at a time, change the arrangement or style, and have the
+    song sung in your own voice.`,
     imgSrc: '/static/images/blog/echosonic/landing.jpg',
     href: 'https://echosonic.io',
     learnMoreHref: '/blog/introducing-echosonic',
@@ -21,9 +21,9 @@ const projectsData: Project[] = [
   {
     title: 'CarlJung.ai',
     tagline: 'Voice reflection with a Jungian persona',
-    description: `Voice reflection sessions with a Carl Jung persona that hears how you say
-    things, not just what you say. It begins with an archetype test, follows the four stages
-    of individuation, and provides written notes after each session.`,
+    description: `Self-reflection through spoken conversation with a Carl Jung persona. It listens to how
+    you speak as well as what you say, and uses Jung's path of individuation to give each session
+    a direction.`,
     imgSrc: '/static/images/blog/carljung/landing.jpg',
     href: 'https://carljung.ai',
     learnMoreHref: '/blog/introducing-carljung-ai',
@@ -31,9 +31,9 @@ const projectsData: Project[] = [
   {
     title: 'Open WebUI Ultimate Stack',
     tagline: 'Production Open WebUI deployment stack',
-    description: `Production-ready Open WebUI deployment with RAG, private web search,
-    OCR, local TTS, and MCP tool servers. Ships as Docker Compose and Docker Swarm stacks
-    with a curated library of tools, filters, and function pipes auto-deployed on every deploy.`,
+    description: `A production deployment of Open WebUI for Docker Compose and Swarm. It bundles RAG,
+    private web search, OCR, local text-to-speech, and MCP tool servers, and installs a curated
+    library of tools, filters, and pipes on every deploy.`,
     imgSrc: '/static/images/blog/open-webui-ultimate-stack/hero.jpg',
     href: 'https://github.com/BitWise-0x/open-webui-ultimate-stack',
     learnMoreHref: '/blog/open-webui-ultimate-stack',
@@ -41,9 +41,8 @@ const projectsData: Project[] = [
   {
     title: 'Homebridge SmartRent Plugin',
     tagline: 'HomeKit integration for SmartRent',
-    description: `Homebridge plugin enabling full HomeKit integration for SmartRent
-    smart home installations. Control locks, thermostats, and switches natively
-    through Apple Home.`,
+    description: `A Homebridge plugin that brings SmartRent locks, thermostats, and switches into
+    Apple Home, so they work alongside the rest of your HomeKit devices.`,
     imgSrc: '/static/images/blog/homebridge-smartrent-blink/smartrent-devices.png',
     href: 'https://github.com/BitWise-0x/homebridge-smartrent',
     learnMoreHref: '/blog/homebridge-smartrent-blink',
@@ -51,9 +50,9 @@ const projectsData: Project[] = [
   {
     title: 'Homebridge Blink Security',
     tagline: 'HomeKit integration for Blink cameras',
-    description: `Homebridge plugin for Amazon Blink cameras, doorbells, and sirens.
-    Brings live view, motion detection, snapshots, and arm/disarm control into
-    Apple Home via HomeKit with OAuth 2.0, 2FA, and multi-network support.`,
+    description: `A Homebridge plugin for Blink cameras, doorbells, and sirens. It adds live view,
+    motion events, snapshots, and arming to Apple Home, with support for two-factor login and
+    multiple networks.`,
     imgSrc: '/static/images/blog/homebridge-smartrent-blink/homebridge-banner.png',
     href: 'https://github.com/BitWise-0x/homebridge-blink-security',
     learnMoreHref: '/blog/homebridge-smartrent-blink',
@@ -61,9 +60,9 @@ const projectsData: Project[] = [
   {
     title: 'MongoDB Replica Set Manager',
     tagline: 'MongoDB replica sets for Docker Swarm',
-    description: `Production-ready MongoDB replica set controller for Docker Swarm.
-    Automates deployment, scaling, and failover of MongoDB clusters in containerized
-    environments with high availability guarantees.`,
+    description: `A replica set controller for MongoDB on Docker Swarm. It handles the initial
+    deployment, adjusts membership as the service scales, and recovers from node failures
+    without manual intervention.`,
     imgSrc: '/static/images/blog/mongodb-replica-set-manager/server-rack.jpg',
     href: 'https://github.com/BitWise-0x/MongoDB-ReplicaSet-Manager',
     learnMoreHref: '/blog/mongodb-replica-set-manager',

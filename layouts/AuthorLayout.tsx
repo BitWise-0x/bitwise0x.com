@@ -11,7 +11,7 @@ interface Props {
 }
 
 export default function AuthorLayout({ children, content }: Props) {
-  const { name, avatar, occupation, company, email, twitter, github } = content
+  const { name, headline, avatar, occupation, company, email, twitter, github } = content
 
   const handle = (url?: string) => (url ? url.replace(/\/+$/, '').split('/').pop() : undefined)
 
@@ -31,7 +31,7 @@ export default function AuthorLayout({ children, content }: Props) {
       <aside className="author-card">
         {avatar && <Image src={avatar} alt="" width={384} height={384} className="author-avatar" />}
         <div className="author-meta">
-          <h3>{name}</h3>
+          <h3>{headline ?? name}</h3>
           {company && <p className="tag">{company}</p>}
           <ul className="author-links">
             {links

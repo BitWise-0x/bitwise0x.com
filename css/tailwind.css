@@ -375,6 +375,8 @@
     font-family: var(--font-mono); font-size: 0.74rem; color: var(--color-signal);
     letter-spacing: 0.02em; margin: 0;
   }
+  .record .tag a { color: inherit; text-decoration: none; }
+  .record .tag a:hover { color: var(--fg); }
   .record .desc { margin: 0; color: var(--muted); font-size: 0.98rem; max-width: 62ch; }
   .record .links { display: flex; gap: 1.2rem; flex-wrap: wrap; margin-top: 0.9rem; }
   .record .links a {

@@ -1,6 +1,8 @@
 'use client'
 
+import { Fragment } from 'react'
 import { usePathname } from 'next/navigation'
+import { slug } from 'github-slugger'
 import { formatDate } from 'pliny/utils/formatDate'
 import { CoreContent } from 'pliny/utils/contentlayer'
 import type { Blog } from 'contentlayer/generated'
@@ -90,7 +92,16 @@ export default function ListLayoutWithTags({
                 <h3>
                   <Link href={`/${path}`}>{postTitle}</Link>
                 </h3>
-                {tags && tags.length > 0 && <p className="tag">{tags.join(' · ')}</p>}
+                {tags && tags.length > 0 && (
+                  <p className="tag">
+                    {tags.map((tag, i) => (
+                      <Fragment key={tag}>
+                        {i > 0 && ' · '}
+                        <Link href={`/tags/${slug(tag)}`}>{tag}</Link>
+                      </Fragment>
+                    ))}
+                  </p>
+                )}
               </div>
 
               <div className="record-body">

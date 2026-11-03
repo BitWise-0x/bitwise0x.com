@@ -29,7 +29,7 @@ export default function AuthorLayout({ children, content }: Props) {
       </LedgerLead>
 
       <aside className="author-card">
-        {avatar && <Image src={avatar} alt="" width={800} height={639} className="author-avatar" />}
+        {avatar && <Image src={avatar} alt="" width={384} height={384} className="author-avatar" />}
         <div className="author-meta">
           <h3>{name}</h3>
           {company && <p className="tag">{company}</p>}

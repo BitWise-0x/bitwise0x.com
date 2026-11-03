@@ -488,10 +488,11 @@
     margin: 0; padding-top: 0;
     max-width: 100%;
   }
-  /* uncropped, as tall as the text beside it: name line, list margin, three contact rows and their gaps */
+  /* round, as tall as the text beside it: name line, list margin, three contact rows and their gaps */
   .author-card .author-avatar {
-    height: calc(1.1rem * 1.2 + 0.7rem + 3 * var(--author-row) + 2 * 0.6rem);
-    width: auto; border-radius: 8px; flex: none;
+    --avatar-size: calc(1.1rem * 1.2 + 0.7rem + 3 * var(--author-row) + 2 * 0.6rem);
+    width: var(--avatar-size); height: var(--avatar-size);
+    border-radius: 50%; object-fit: cover; flex: none;
   }
   .author-card .author-meta { min-width: 0; }
   .author-card h3 { font-family: var(--font-sans); font-weight: 600; font-size: 1.1rem; line-height: 1.2; letter-spacing: -0.01em; margin: 0; color: var(--fg); }

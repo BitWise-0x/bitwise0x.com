@@ -172,7 +172,7 @@
   --surface: #111513;
   --fg: #e7ece8;
   --muted: #a2aaa6;
-  --fg-soft: #c0c7c3;
+  --fg-soft: #d4dad6;
   --line: #1f2623;
   --color-signal: var(--color-primary-400);
   --color-signal-dim: var(--color-primary-700);
@@ -479,7 +479,7 @@
     display: flex; flex-wrap: wrap; gap: 0.6rem;
     padding: 0;
   }
-  .tag-cloud .pill { text-decoration: none; cursor: pointer; }
+  .tag-cloud .pill { color: var(--fg); text-decoration: none; cursor: pointer; }
   .tag-cloud .pill:hover { color: var(--color-signal); border-color: color-mix(in oklab, var(--color-signal) 40%, var(--line)); }
   .pill .pill-count { color: var(--color-signal); font-weight: 600; }
 

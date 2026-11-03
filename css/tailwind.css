@@ -714,6 +714,11 @@ input:-webkit-autofill:focus {
 .backdrop-blur.backdrop-filter input {
   color: var(--fg) !important;
   font-family: var(--font-sans) !important;
+  /* @tailwindcss/forms gives a bare input a gray border that turns blue on focus; match .ledger-search instead */
+  background: var(--surface) !important;
+  border: 1px solid var(--line) !important;
+  border-radius: 6px !important;
+  padding: 0 0.75rem !important;
 }
 .backdrop-blur.backdrop-filter input::placeholder {
   color: var(--muted) !important;
@@ -744,11 +749,12 @@ input:-webkit-autofill:focus {
   border-color: var(--line) !important;
   color: var(--muted) !important;
 }
-/* focus ring on the input -> signal color, not the default ring */
+/* focus ring on the input -> signal color, not the forms plugin's blue */
 .backdrop-blur.backdrop-filter input:focus,
 .backdrop-blur.backdrop-filter input:focus-visible {
-  outline-color: var(--color-signal) !important;
-  box-shadow: none !important;
+  outline: none !important;
+  border-color: var(--color-signal) !important;
+  box-shadow: 0 0 0 3px color-mix(in oklab, var(--color-signal) 18%, transparent) !important;
 }
 
 /* keep the alert callout icon, hide the type label text (NOTE/TIP/IMPORTANT/WARNING/CAUTION) */

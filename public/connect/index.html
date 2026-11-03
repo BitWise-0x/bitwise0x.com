@@ -24,15 +24,15 @@
   html { -webkit-text-size-adjust:100%; }
   body { margin:0; background:var(--page); color:var(--text); font:16px/1.5 var(--sans); -webkit-font-smoothing:antialiased; padding:0 0 calc(40px + env(safe-area-inset-bottom)); }
   .wrap { max-width:1100px; margin:0 auto; padding-left:max(20px, env(safe-area-inset-left, 0px)); padding-right:max(20px, env(safe-area-inset-right, 0px)); }
-  /* top nav, matching the site's .topnav: mark on its own row, nav row under it, divider */
-  header { display:flex; flex-direction:column; gap:1.1rem; padding:1.75rem 0 1.1rem; border-bottom:1px solid var(--line); margin-bottom:2.25rem; }
-  @media (min-width:768px) { header { padding:2.5rem 0 1.25rem; gap:1.3rem; margin-bottom:3rem; } }
+  /* top nav: 0x mark left, back link right, divider */
+  header { display:flex; align-items:center; gap:1.3rem; padding:1.75rem 0 1.1rem; border-bottom:1px solid var(--line); margin-bottom:2.25rem; }
+  @media (min-width:768px) { header { padding:2.5rem 0 1.25rem; margin-bottom:3rem; } }
   header .mark { display:flex; align-items:center; gap:0.85rem; text-decoration:none; flex:none; width:fit-content; }
   header .mark .glyph { width:50px; height:50px; flex:none; border:2px solid var(--heading); border-radius:11px; display:grid; place-items:center; font:600 1.625rem/1 var(--mono); color:var(--heading); }
   header .mark .mark-text { display:flex; flex-direction:column; line-height:1.05; }
   header .mark b { font-weight:600; letter-spacing:-.015em; font-size:2.05rem; color:var(--heading); }
   header .mark .tag { font:400 0.84rem/1.05 var(--mono); letter-spacing:.14em; text-transform:uppercase; color:var(--muted); margin:0.3rem 0 0; }
-  header nav { display:flex; align-items:center; }
+  header nav { display:flex; align-items:center; margin-left:auto; }
   header nav a { font:400 0.82rem/1 var(--mono); letter-spacing:.02em; color:var(--muted); text-decoration:none; min-height:36px; display:inline-flex; align-items:center; transition:color .15s ease; }
   header nav a:hover { color:var(--heading); }
   /* lead, matching the site's .ledger-lead.no-title: kicker, then a larger muted subtext, divider */

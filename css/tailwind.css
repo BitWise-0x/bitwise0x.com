@@ -160,7 +160,7 @@
   --bg: #f4f5f3;
   --surface: #fbfcfa;
   --fg: #15181a;
-  --muted: #606a6b;
+  --muted: #535c5d;
   --line: #dde1dc;
   --color-signal: var(--color-primary-600); /* brand sodium amber */
   --color-signal-dim: var(--color-primary-700);
@@ -170,7 +170,7 @@
   --bg: #0c0f0e;
   --surface: #111513;
   --fg: #e7ece8;
-  --muted: #8a938f;
+  --muted: #a2aaa6;
   --line: #1f2623;
   --color-signal: var(--color-primary-400);
   --color-signal-dim: var(--color-primary-700);

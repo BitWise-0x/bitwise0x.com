@@ -5,9 +5,19 @@ interface Project {
   href?: string
   imgSrc?: string
   learnMoreHref?: string
+  comingSoon?: boolean
 }
 
 const projectsData: Project[] = [
+  {
+    title: 'FleetBit',
+    tagline: 'Fleet orchestration platform',
+    description: `A hosted platform for orchestrating your fleets. Dispatch orders, follow drivers
+    and vehicles on a live map, plan routes, and keep maintenance and billing in the same console.`,
+    imgSrc: '/static/images/blog/fleetbit/live-map.jpg',
+    href: 'https://fleetbit.co',
+    comingSoon: true,
+  },
   {
     title: 'EchoSonic',
     tagline: 'Ai music generation platform',

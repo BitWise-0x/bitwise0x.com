@@ -14,6 +14,7 @@ const getHost = (url: string) => {
 const hostLabels: Record<string, string> = {
   'echosonic.io': 'EchoSonic.io',
   'carljung.ai': 'CarlJung.ai',
+  'fleetbit.co': 'FleetBit.co',
   'github.com': 'GitHub.com',
 }
 
@@ -28,7 +29,15 @@ export default function ProjectsList({ title = 'Projects' }: { title?: string })
 
       <ul className="records records-topline">
         {projectsData.map((project) => {
-          const { title: name, tagline, description, imgSrc, href, learnMoreHref } = project
+          const {
+            title: name,
+            tagline,
+            description,
+            imgSrc,
+            href,
+            learnMoreHref,
+            comingSoon,
+          } = project
 
           return (
             <li key={name} className={imgSrc ? 'record no-side has-thumb' : 'record no-side'}>
@@ -61,6 +70,7 @@ export default function ProjectsList({ title = 'Projects' }: { title?: string })
                         Read
                       </Link>
                     )}
+                    {comingSoon && <span className="meta">Article coming soon</span>}
                     {href && (
                       <Link
                         href={href}

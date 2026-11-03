@@ -21,7 +21,7 @@ The quality of AI-generated music has improved remarkably over the past two year
 
 I built [EchoSonic](https://echosonic.io) to address that limitation. It begins the same way as other prompt-to-song services. You describe what you want, for example "a slow-burning trip-hop track, brushed drums, a voice that sounds like it is remembering something", and roughly a minute later you have a full track. However, that track is treated as a draft rather than the finished product. You can regenerate only the section you dislike, add an instrument, change the style, or have the song sung in your own voice.
 
-In this post, I cover what the service offers in the order you would encounter it:
+In this post, I cover the four parts of the service:
 
 1. Generating a song from a description
 2. Editing the draft
@@ -32,7 +32,7 @@ In this post, I cover what the service offers in the order you would encounter i
 
 ---
 
-You write what you want in plain language. If you have lyrics you can provide them, and if you do not, EchoSonic can write them for you. The result is a mixed recording with an intro, a body and an ending rather than a loop.
+You write what you want in plain language. If you have lyrics you can provide them, and if you do not, EchoSonic can write them for you. The result is a mixed recording with an intro, a body and an ending rather than a loop. You can also ask for two takes at once and keep the one you prefer.
 
 <Image
   src="/static/images/blog/echosonic/modular-synth.jpg"
@@ -51,12 +51,12 @@ Every finished track is added to your library and opens on its own page, where i
 
 <ZoomableImage
   src="/static/images/blog/echosonic/reshape.jpg"
-  alt="EchoSonic edit surface and version history"
+  alt="EchoSonic describe, hear and reshape steps"
   width={1600}
   height={1000}
 />
 
-- **Re-roll** generates the same song again with the same prompt and lyrics. This is useful when the idea was right but the performance was not.
+- **Re-roll** generates the same song again with the same prompt and lyrics, and you choose how far the new take may drift from the original. This is useful when the idea was right but the performance was not.
 - **Repaint** regenerates one section and leaves the rest alone. You select the passage you dislike and only that passage changes.
 - **Cover** keeps the structure of the song and renders it again in a new style.
 - **Morph** moves the song part of the way toward a new idea, and you decide how far.
@@ -99,9 +99,9 @@ Cover and Morph sound similar, so it is worth making a distinction. Cover determ
 
 ---
 
-A prompt is not the only starting point. If you already have a recording, for example an old demo or a voice memo, you can upload it and cover it. The recording provides the structure and the prompt determines the style.
+A prompt is not the only starting point. If you already have a track, for example an old demo or a rough mix, you can upload it and cover it. The recording provides the structure and the prompt determines the style.
 
-The reverse is also possible. You sing or play a part, choose the instruments you want, and EchoSonic writes a band that follows your take, which remains in the mix.
+The reverse is also possible, and it is the better fit for a voice memo or a hummed idea. You sing or play a part, choose the instruments you want, and EchoSonic writes a band that follows your take, which remains in the mix.
 
 ## Your Voice
 
@@ -112,34 +112,34 @@ The other half of EchoSonic is voice. You record yourself reading for about 90 s
 <ZoomableImage
   src="/static/images/blog/echosonic/voicelab.jpg"
   alt="EchoSonic Voice Lab"
-  width={1600}
-  height={1000}
+  width={2048}
+  height={416}
 />
 
 It can be used in two ways:
 
-1. **Narration.** Any text can be read back in your own voice, from a short paragraph to an entire chapter. You control the pace and how expressive the read is. A cloned voice carries across more than a dozen languages, so a voice recorded in English can read Spanish or Japanese and still sound like you.
+1. **Narration.** Any text can be read back in your own voice, from a short paragraph to an entire chapter. You control the pace of the read and can add effects such as reverb or a radio filter afterwards. The same recording can also be reused to make your voice in another language, so a voice recorded in English can read Spanish or Japanese and still sound like you.
 2. **Singing.** The same voice can be attached to a song, and the vocal is returned in it. Songs can be sung in eleven languages.
 
 <Mermaid chart={`
 flowchart TD
-    REC["One recording\nabout 90 seconds"] --> REF["Your cloned voice"]
+    REC["One recording\nabout 90 seconds"] --> VOICE["Your cloned voice"]
 
-    REF --> TTS["Narration\nany text, read in your voice"]
-    REF --> SING["Singing\nyour voice on a song"]
+    VOICE --> NARR["Narration\nany text, read in your voice"]
+    VOICE --> SING["Singing\nyour voice on a song"]
 
-    TTS --> LANG["more than a dozen\nlanguages"]
+    NARR --> LANG["up to 23\nlanguages"]
     SING --> SONG["eleven\nlanguages"]
 
     style REC fill:#0d1b2a,stroke:#3a86ff,color:#fff
-    style REF fill:#7b2cbf,stroke:#9d4edd,color:#fff
-    style TTS fill:#2d6a4f,stroke:#40916c,color:#fff
+    style VOICE fill:#7b2cbf,stroke:#9d4edd,color:#fff
+    style NARR fill:#2d6a4f,stroke:#40916c,color:#fff
     style SING fill:#2d6a4f,stroke:#40916c,color:#fff
     style LANG fill:#14213d,stroke:#565f89,color:#fff
     style SONG fill:#b5651d,stroke:#d4a574,color:#fff
 `} />
 
-There is no training step and no second recording for singing. The clip you recorded to narrate a chapter is the same one that places your voice on a chorus.
+There is nothing else to record for singing. The clip you recorded to narrate a chapter is the same one that places your voice on a chorus.
 
 > [!TIP]
 > The resemblance of a clone depends largely on the quality of the recording. A quiet room and one continuous, varied read matter more than any setting.

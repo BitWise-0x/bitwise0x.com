@@ -39,7 +39,7 @@
   html { -webkit-text-size-adjust:100%; }
   body { margin:0; background:var(--page); color:var(--text); font:16px/1.5 var(--sans); -webkit-font-smoothing:antialiased; padding:0 0 calc(40px + env(safe-area-inset-bottom)); }
   .wrap { max-width:1100px; margin:0 auto; padding-left:max(20px, env(safe-area-inset-left, 0px)); padding-right:max(20px, env(safe-area-inset-right, 0px)); }
-  /* top nav: 0x mark left, back link right, divider */
+  /* top nav: 0x mark, divider */
   header { display:flex; align-items:center; gap:1.3rem; padding:1.75rem 0 1.1rem; border-bottom:1px solid var(--line); margin-bottom:2.25rem; }
   @media (min-width:768px) { header { padding:2.5rem 0 1.25rem; margin-bottom:3rem; } }
   header .mark { display:flex; align-items:center; gap:0.85rem; text-decoration:none; flex:none; width:fit-content; }
@@ -47,9 +47,6 @@
   header .mark .mark-text { display:flex; flex-direction:column; line-height:1.05; }
   header .mark b { font-weight:600; letter-spacing:-.015em; font-size:2.05rem; color:var(--heading); }
   header .mark .tag { font:400 0.84rem/1.05 var(--mono); letter-spacing:.14em; text-transform:uppercase; color:var(--muted); margin:0.3rem 0 0; }
-  header nav { display:flex; align-items:center; margin-left:auto; }
-  header nav a { font:400 0.82rem/1 var(--mono); letter-spacing:.02em; color:var(--muted); text-decoration:none; min-height:36px; display:inline-flex; align-items:center; transition:color .15s ease; }
-  header nav a:hover { color:var(--heading); }
   /* lead, matching the site's .ledger-lead.no-title: kicker, then a larger muted subtext, divider */
   .lead { padding-bottom:0.9rem; border-bottom:1px solid var(--line); }
   .from { color:var(--primary); font:400 0.72rem/1.5 var(--mono); letter-spacing:.14em; text-transform:uppercase; margin:0 0 0.6rem; padding:0; display:flex; align-items:center; gap:0.6rem; }
@@ -111,7 +108,7 @@
   .sha { font:500 12px/1.6 var(--mono); overflow-wrap:anywhere; }
   footer a { color:var(--primary); text-decoration:none; font-weight:500; transition:color .15s ease; } footer a:hover { color:var(--primary-hover); }
   footer details .sha { text-align:center; }
-  @media (prefers-reduced-motion: reduce) { .btn, summary, header nav a { transition:none; } }
+  @media (prefers-reduced-motion: reduce) { .btn, summary { transition:none; } }
 </style>
 </head>
 <body>
@@ -124,7 +121,6 @@
       <span class="tag">Intelligent Backends</span>
     </span>
   </a>
-  <nav><a href="https://bitwise0x.com">&larr; bitwise0x.com</a></nav>
 </header>
 
 <section class="lead">
@@ -147,7 +143,7 @@
       <summary>One-click alternative</summary>
       <div class="inner">
         <a class="btn ghost" href="https://bitwise0x.com/connect/BitWise-RustDesk-Windows.cmd" download>Download the setup script</a>
-        <p>Does every step. Windows warns once: <b>More info</b>, <b>Run anyway</b>.</p>
+        <p>Does every step and opens RustDesk. Windows warns once: <b>More info</b>, <b>Run anyway</b>.</p>
       </div>
     </details>
   </section>
@@ -176,8 +172,10 @@
     <details class="alt">
       <summary>One-click alternative</summary>
       <div class="inner">
-        <a class="btn ghost" href="https://bitwise0x.com/connect/BitWise-RustDesk-macOS.command" download>Download the setup script</a>
-        <p>Does every step. macOS blocks it once: <b>Privacy &amp; Security</b>, <b>Open Anyway</b>.</p>
+        <a class="btn ghost" href="https://bitwise0x.com/connect/BitWise-RustDesk-macOS.zip" download>Download the setup script</a>
+        <p>Does every step and opens RustDesk. Open the zip, double-click the script. macOS blocks it once: <b>System Settings</b> › <b>Privacy &amp; Security</b>, <b>Open Anyway</b>.</p>
+        <p>No warning: paste this into <b>Terminal</b> instead.</p>
+        <span class="code"><code>bash &lt;(curl -fsSL https://bitwise0x.com/connect/BitWise-RustDesk-macOS.command)</code><button type="button" class="btn ghost" data-copy>Copy</button></span>
       </div>
     </details>
   </section>
@@ -229,14 +227,14 @@
   (function () {
     var cfg = "0nI9s2dyV3Q3kld0hzQTp0VvNFSLR0K4lVOrYVWrsya2klMtB3S1MlWORjNVRkI6ISeltmIsISbvNmL4BTZzl2d0lmYus2clRGdzVncv8iOzBHd0hmI6ISawFmIsISbvNmL4BTZzl2d0lmYus2clRGdzVnciojI0N3boJye";
     Array.prototype.forEach.call(document.querySelectorAll("[data-copy]"), function (btn) {
-      var label = btn.textContent;
+      var label = btn.textContent, text = btn.parentNode.querySelector("code").textContent;
       btn.addEventListener("click", function () {
         var done = function () { btn.textContent = "Copied"; setTimeout(function () { btn.textContent = label; }, 1800); };
         var fallback = function () {
-          var ta = document.createElement("textarea"); ta.value = cfg; ta.setAttribute("readonly", ""); ta.style.position = "fixed"; ta.style.opacity = "0";
+          var ta = document.createElement("textarea"); ta.value = text; ta.setAttribute("readonly", ""); ta.style.position = "fixed"; ta.style.opacity = "0";
           document.body.appendChild(ta); ta.select(); try { document.execCommand("copy"); done(); } catch (e) {} document.body.removeChild(ta);
         };
-        if (navigator.clipboard && navigator.clipboard.writeText) { navigator.clipboard.writeText(cfg).then(done, fallback); } else { fallback(); }
+        if (navigator.clipboard && navigator.clipboard.writeText) { navigator.clipboard.writeText(text).then(done, fallback); } else { fallback(); }
       });
     });
     var picks = document.querySelectorAll(".pick");

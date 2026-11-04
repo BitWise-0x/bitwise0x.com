@@ -2,13 +2,20 @@
 @echo off
 set "BW_SELF=%~f0"
 powershell -NoProfile -ExecutionPolicy Bypass -Command "Invoke-Expression ([IO.File]::ReadAllText($env:BW_SELF))"
-pause
+if errorlevel 1 pause
 exit /b
 #>
 # Connects this PC to the BitWise RustDesk server, ready to view or control a BitWise desktop.
 # Not installed: runs the official RustDesk 1.5.0 portable from %LOCALAPPDATA%, no admin rights.
 # Already installed: applies the same settings through RustDesk itself (one admin prompt).
+# Ends by opening RustDesk and closing this window; it stays open only to show a problem.
 $ErrorActionPreference = 'Stop'
+trap {
+    Write-Host ''
+    Write-Host "Setup did not finish: $_" -ForegroundColor Red
+    Write-Host 'Send a screenshot of this window to BitWise.'
+    exit 1
+}
 [Net.ServicePointManager]::SecurityProtocol = [Net.ServicePointManager]::SecurityProtocol -bor [Net.SecurityProtocolType]::Tls12
 
 $Version = '1.5.0'
@@ -29,6 +36,8 @@ $DisplayOptions = [ordered]@{
     'image_quality' = 'best'
 }
 $Installed = Join-Path $env:ProgramFiles 'RustDesk\rustdesk.exe'
+$Prefs     = Join-Path $env:APPDATA 'RustDesk\config\RustDesk2.toml'
+$Defaults  = Join-Path $env:APPDATA 'RustDesk\config\RustDesk_default.toml'
 
 # RustDesk keeps options under [options]: replace the given keys, keep everything else
 function Set-RustDeskOptions([string]$File, $Opts) {
@@ -52,12 +61,33 @@ function Set-RustDeskOptions([string]$File, $Opts) {
     }
     # no BOM: RustDesk's TOML parser rejects one and would silently fall back to defaults
     [IO.File]::WriteAllLines($File, [string[]]$lines, (New-Object Text.UTF8Encoding $false))
+    $saved = @(Get-Content $File)
+    foreach ($line in $ours) { if ($saved -notcontains $line) { throw "could not save '$line' in $File" } }
+}
+
+# the WebSocket handshake RustDesk makes; failing it means this network cannot reach the server
+function Test-BitWiseServer {
+    $ws = New-Object Net.WebSockets.ClientWebSocket
+    try {
+        $connect = $ws.ConnectAsync([Uri]'wss://rustdesk.bitwise0x.com/ws/id', [Threading.CancellationToken]::None)
+        return ($connect.Wait(8000) -and $ws.State -eq 'Open')
+    } catch {
+        return $false
+    } finally {
+        $ws.Dispose()
+    }
+}
+
+$Warning = $null
+if (-not (Test-BitWiseServer)) {
+    $Warning = 'Could not reach the BitWise server from this network. It accepts connections from the United States only, and some company or school networks block it. Tell BitWise before the demo.'
 }
 
 if (Test-Path $Installed) {
     Write-Host 'RustDesk is installed here; applying the BitWise settings (Windows will ask for admin rights)...'
     $cmd = "& '$Installed' --config $Config; & '$Installed' --option allow-websocket Y"
     Start-Process powershell -Verb RunAs -Wait -ArgumentList '-NoProfile', '-Command', $cmd
+    Set-RustDeskOptions $Defaults $DisplayOptions
     Start-Process $Installed
 } else {
     $dir = Join-Path $env:LOCALAPPDATA 'BitWise\RustDesk'
@@ -72,11 +102,18 @@ if (Test-Path $Installed) {
         Remove-Item $exe -Force
         throw 'The download failed its SHA-256 check. Nothing was changed.'
     }
+    # downloaded files carry the internet mark, which would add a security prompt on every start
+    Unblock-File $exe
     # a running RustDesk would write its old settings back over ours
     Get-Process rustdesk -ErrorAction SilentlyContinue | Stop-Process -Force -ErrorAction SilentlyContinue
-    Set-RustDeskOptions (Join-Path $env:APPDATA 'RustDesk\config\RustDesk2.toml') $Options
+    Set-RustDeskOptions $Prefs $Options
+    Set-RustDeskOptions $Defaults $DisplayOptions
     Start-Process $exe
 }
-Set-RustDeskOptions (Join-Path $env:APPDATA 'RustDesk\config\RustDesk_default.toml') $DisplayOptions
 Write-Host ''
-Write-Host 'Done. In RustDesk, enter the ID and one-time password you were given.'
+Write-Host 'Done. RustDesk is open: enter the ID BitWise gives you and click Connect.'
+if ($Warning) {
+    Write-Host ''
+    Write-Host $Warning -ForegroundColor Yellow
+    exit 2
+}

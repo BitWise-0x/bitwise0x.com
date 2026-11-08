@@ -61,8 +61,8 @@ const projectsData: Project[] = [
     title: 'Homebridge Blink Security',
     tagline: 'HomeKit integration for Blink cameras',
     description: `A Homebridge plugin for Blink cameras, doorbells, and sirens. It adds live view,
-    motion events, snapshots, and arming to Apple Home, with support for two-factor login and
-    multiple networks.`,
+    motion events, snapshots, and arming to Apple Home, and can deliver doorbell presses within a
+    second or two through Blink's push notifications, even without a Blink subscription.`,
     imgSrc: '/static/images/blog/homebridge-smartrent-blink/homebridge-banner.png',
     href: 'https://github.com/BitWise-0x/homebridge-blink-security',
     learnMoreHref: '/blog/homebridge-smartrent-blink',

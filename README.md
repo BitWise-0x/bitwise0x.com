@@ -79,10 +79,6 @@ yarn build
 # commit pushed to main has a "deploy:" prefix in its message
 ```
 
-Every build hashes the files under `public/static` (`scripts/asset-manifest.mjs`), and images, project loops, Open Graph, Twitter and JSON-LD image URLs carry the hash as `?v=<first 8 hex of the sha256>` (`lib/asset.ts`). Link previews (Slack, iMessage, X, LinkedIn) and the Cloudflare edge cache key on the URL, so a replaced file is picked up on the next deploy with no rename or purge. A last postbuild step (`scripts/version-assets.mjs`) adds the hash to any `/static/` URL still bare in the exported HTML, XML and web manifest, which covers the Open Graph cards generated after the build, the favicons, the RSS feed and `/connect`.
-
-Project card loops live in `public/static/videos/projects/` as `<name>.av1.mp4`, `<name>.h264.mp4` and the poster `<name>.jpg`; `videoSrc` in `data/projectsData.ts` and `video` in a post's frontmatter name them without the extension, and the project cards and the blog list play them.
-
 <br>
 
 ## License

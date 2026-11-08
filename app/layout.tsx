@@ -9,6 +9,7 @@ import Header from '@/components/Header'
 import SectionContainer from '@/components/SectionContainer'
 import Footer from '@/components/Footer'
 import siteMetadata from '@/data/siteMetadata'
+import { versioned } from 'lib/asset'
 import { ThemeProviders } from './theme-providers'
 import { Metadata, Viewport } from 'next'
 
@@ -40,7 +41,7 @@ export const metadata: Metadata = {
     siteName: siteMetadata.title,
     images: [
       {
-        url: siteMetadata.socialBanner,
+        url: versioned(siteMetadata.socialBanner),
         width: 1200,
         height: 630,
         alt: 'BitWise | Intelligent Backends',
@@ -69,7 +70,7 @@ export const metadata: Metadata = {
   twitter: {
     title: siteMetadata.title,
     card: 'summary_large_image',
-    images: [siteMetadata.socialBanner],
+    images: [versioned(siteMetadata.socialBanner)],
     creator: '@BitWise_0x',
   },
 }
@@ -93,16 +94,20 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <link
         rel="apple-touch-icon"
         sizes="180x180"
-        href={`${basePath}/static/favicons/apple-touch-icon.png?v=4`}
+        href={`${basePath}${versioned('/static/favicons/apple-touch-icon.png')}`}
       />
       <link
         rel="icon"
         type="image/png"
         sizes="96x96"
-        href={`${basePath}/static/favicons/favicon-96x96.png?v=4`}
+        href={`${basePath}${versioned('/static/favicons/favicon-96x96.png')}`}
       />
-      <link rel="icon" type="image/svg+xml" href={`${basePath}/static/favicons/favicon.svg?v=4`} />
-      <link rel="manifest" href={`${basePath}/static/favicons/site.webmanifest?v=4`} />
+      <link
+        rel="icon"
+        type="image/svg+xml"
+        href={`${basePath}${versioned('/static/favicons/favicon.svg')}`}
+      />
+      <link rel="manifest" href={`${basePath}${versioned('/static/favicons/site.webmanifest')}`} />
       <meta name="msapplication-TileColor" content="#0c0f0e" />
       <meta name="color-scheme" content="dark" />
       <link rel="alternate" type="application/rss+xml" href={`${basePath}/feed.xml`} />

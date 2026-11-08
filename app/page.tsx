@@ -1,5 +1,6 @@
 import siteMetadata from '@/data/siteMetadata'
 import ProjectsList from '@/components/ProjectsList'
+import { versioned } from 'lib/asset'
 
 export default async function Page() {
   const jsonLd = {
@@ -21,7 +22,7 @@ export default async function Page() {
         '@type': 'Organization',
         name: 'BitWise',
         url: siteMetadata.siteUrl,
-        logo: `${siteMetadata.siteUrl}/static/images/logo.png`,
+        logo: `${siteMetadata.siteUrl}${versioned('/static/images/logo.png')}`,
         sameAs: [siteMetadata.github, siteMetadata.x].filter(Boolean),
       },
     ],

@@ -127,6 +127,10 @@
     & a {
       overflow-wrap: break-word;
     }
+    & video {
+      width: 100%;
+      height: auto;
+    }
     /* a `---` divider used directly under a section heading is a header rule,
        not a thematic break: tighten the gap to its content so it doesn't read
        as double-spaced. standalone dividers keep the default 3em rhythm. */

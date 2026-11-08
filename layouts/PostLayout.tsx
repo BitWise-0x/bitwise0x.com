@@ -9,6 +9,7 @@ import ScrollTopAndComment from '@/components/ScrollTopAndComment'
 import ShareLinks from '@/components/ShareLinks'
 import RelatedPosts from '@/components/RelatedPosts'
 import PostTitle from '@/components/PostTitle'
+import PostUpdated from '@/components/PostUpdated'
 
 const postDateTemplate: Intl.DateTimeFormatOptions = {
   year: 'numeric',
@@ -33,7 +34,7 @@ export default function PostLayout({
   relatedPosts,
   children,
 }: LayoutProps) {
-  const { path, slug, date, title, tags, readingTime } = content
+  const { path, slug, date, lastmod, title, tags, readingTime } = content
   const basePath = path.split('/')[0]
   const authorNames = authorDetails.map((a) => a.name).join(', ')
 
@@ -47,6 +48,7 @@ export default function PostLayout({
           <time dateTime={date} suppressHydrationWarning>
             {new Date(date).toLocaleDateString(siteMetadata.locale, postDateTemplate)}
           </time>
+          <PostUpdated date={date} lastmod={lastmod} />
           {readingTime && <span>· {Math.ceil(readingTime.minutes)} min read</span>}
           {authorNames && <span>· {authorNames}</span>}
         </p>

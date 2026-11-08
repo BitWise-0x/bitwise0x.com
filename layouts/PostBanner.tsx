@@ -8,6 +8,7 @@ import { formatDate } from 'pliny/utils/formatDate'
 import siteMetadata from '@/data/siteMetadata'
 import ScrollTopAndComment from '@/components/ScrollTopAndComment'
 import PostTitle from '@/components/PostTitle'
+import PostUpdated from '@/components/PostUpdated'
 
 interface LayoutProps {
   content: CoreContent<Blog>
@@ -17,7 +18,7 @@ interface LayoutProps {
 }
 
 export default function PostMinimal({ content, next, prev, children }: LayoutProps) {
-  const { path, slug, date, title, images, readingTime } = content
+  const { path, slug, date, lastmod, title, images, readingTime } = content
   const basePath = path.split('/')[0]
   const displayImage = images && images.length > 0 ? images[0] : '/static/images/social-banner.png'
 
@@ -35,6 +36,7 @@ export default function PostMinimal({ content, next, prev, children }: LayoutPro
           <time dateTime={date} suppressHydrationWarning>
             {formatDate(date, siteMetadata.locale)}
           </time>
+          <PostUpdated date={date} lastmod={lastmod} />
           {readingTime && <span>· {Math.ceil(readingTime.minutes)} min read</span>}
         </p>
         <PostTitle title={title} />

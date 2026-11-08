@@ -531,6 +531,7 @@
     display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;
   }
   .post-head .kicker span { color: var(--muted); }
+  .post-head .kicker .post-updated { white-space: nowrap; }
   .post-head h1 {
     font-family: var(--font-sans); font-weight: 600;
     font-size: 1.55rem; line-height: 1.2;

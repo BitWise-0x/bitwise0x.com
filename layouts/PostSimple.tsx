@@ -7,6 +7,7 @@ import Link from '@/components/Link'
 import siteMetadata from '@/data/siteMetadata'
 import ScrollTopAndComment from '@/components/ScrollTopAndComment'
 import PostTitle from '@/components/PostTitle'
+import PostUpdated from '@/components/PostUpdated'
 
 interface LayoutProps {
   content: CoreContent<Blog>
@@ -16,7 +17,7 @@ interface LayoutProps {
 }
 
 export default function PostLayout({ content, next, prev, children }: LayoutProps) {
-  const { path, slug, date, title, readingTime } = content
+  const { path, slug, date, lastmod, title, readingTime } = content
   const basePath = path.split('/')[0]
 
   return (
@@ -29,6 +30,7 @@ export default function PostLayout({ content, next, prev, children }: LayoutProp
           <time dateTime={date} suppressHydrationWarning>
             {formatDate(date, siteMetadata.locale)}
           </time>
+          <PostUpdated date={date} lastmod={lastmod} />
           {readingTime && <span>· {Math.ceil(readingTime.minutes)} min read</span>}
         </p>
         <PostTitle title={title} />

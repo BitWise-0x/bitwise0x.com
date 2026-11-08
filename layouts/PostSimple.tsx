@@ -31,7 +31,7 @@ export default function PostLayout({ content, next, prev, children }: LayoutProp
             {formatDate(date, siteMetadata.locale)}
           </time>
           <PostUpdated date={date} lastmod={lastmod} />
-          {readingTime && <span>· {Math.ceil(readingTime.minutes)} min read</span>}
+          {readingTime && <span className="sep">{Math.ceil(readingTime.minutes)} min read</span>}
         </p>
         <PostTitle title={title} />
       </header>

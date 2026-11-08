@@ -37,7 +37,7 @@ export default function PostMinimal({ content, next, prev, children }: LayoutPro
             {formatDate(date, siteMetadata.locale)}
           </time>
           <PostUpdated date={date} lastmod={lastmod} />
-          {readingTime && <span>· {Math.ceil(readingTime.minutes)} min read</span>}
+          {readingTime && <span className="sep">{Math.ceil(readingTime.minutes)} min read</span>}
         </p>
         <PostTitle title={title} />
       </header>

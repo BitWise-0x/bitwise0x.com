@@ -49,8 +49,8 @@ export default function PostLayout({
             {new Date(date).toLocaleDateString(siteMetadata.locale, postDateTemplate)}
           </time>
           <PostUpdated date={date} lastmod={lastmod} />
-          {readingTime && <span>· {Math.ceil(readingTime.minutes)} min read</span>}
-          {authorNames && <span>· {authorNames}</span>}
+          {readingTime && <span className="sep">{Math.ceil(readingTime.minutes)} min read</span>}
+          {authorNames && <span className="sep">{authorNames}</span>}
         </p>
         <PostTitle title={title} />
       </header>

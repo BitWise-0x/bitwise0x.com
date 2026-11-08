@@ -6,8 +6,8 @@ import siteMetadata from '@/data/siteMetadata'
 export default function PostUpdated({ date, lastmod }: { date: string; lastmod?: string }) {
   if (!lastmod || lastmod.slice(0, 10) <= date.slice(0, 10)) return null
   return (
-    <span className="post-updated">
-      · Updated{' '}
+    <span className="sep post-updated">
+      Updated{' '}
       <time dateTime={lastmod} suppressHydrationWarning>
         {formatDate(lastmod, siteMetadata.locale)}
       </time>

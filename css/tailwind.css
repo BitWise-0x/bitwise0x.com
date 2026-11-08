@@ -528,10 +528,15 @@
   .post-head .kicker {
     font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.08em;
     text-transform: uppercase; color: var(--color-signal); margin: 0 0 1rem;
-    display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;
+    display: flex; align-items: center; column-gap: 1.1rem; row-gap: 0.35rem; flex-wrap: wrap;
+    overflow: hidden;
   }
+  .post-head .kicker .led-pulse { margin-right: -0.6rem; }
   .post-head .kicker span { color: var(--muted); }
-  .post-head .kicker .post-updated { white-space: nowrap; }
+  /* the dot sits in the gap before each item; an item that wraps to a new line starts at the
+     row's left edge, so its dot falls outside the row and is clipped */
+  .post-head .kicker .sep { position: relative; white-space: nowrap; }
+  .post-head .kicker .sep::before { content: '·'; position: absolute; left: -0.8rem; }
   .post-head h1 {
     font-family: var(--font-sans); font-weight: 600;
     font-size: 1.55rem; line-height: 1.2;

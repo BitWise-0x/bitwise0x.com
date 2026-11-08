@@ -2,6 +2,7 @@ import projectsData from '@/data/projectsData'
 import Link from '@/components/Link'
 import Image from '@/components/Image'
 import LedgerLead from '@/components/LedgerLead'
+import ProjectThumbVideo from '@/components/ProjectThumbVideo'
 
 const getHost = (url: string) => {
   try {
@@ -34,6 +35,7 @@ export default function ProjectsList({ title = 'Projects' }: { title?: string })
             tagline,
             description,
             imgSrc,
+            videoSrc,
             href,
             learnMoreHref,
             comingSoon,
@@ -48,7 +50,11 @@ export default function ProjectsList({ title = 'Projects' }: { title?: string })
                   tabIndex={-1}
                   className="record-thumb"
                 >
-                  <Image src={imgSrc} alt="" width={340} height={191} />
+                  {videoSrc ? (
+                    <ProjectThumbVideo src={videoSrc} />
+                  ) : (
+                    <Image src={imgSrc} alt="" width={340} height={191} />
+                  )}
                 </Link>
               )}
 

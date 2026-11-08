@@ -4,6 +4,8 @@ interface Project {
   description: string
   href?: string
   imgSrc?: string
+  // basename of <name>.av1.mp4, <name>.h264.mp4 and the poster <name>.jpg (the loop's first frame)
+  videoSrc?: string
   learnMoreHref?: string
   comingSoon?: boolean
 }
@@ -15,6 +17,7 @@ const projectsData: Project[] = [
     description: `A hosted platform for orchestrating your fleets. Dispatch orders, follow drivers
     and vehicles on a live map, plan routes, and keep maintenance and billing in the same console.`,
     imgSrc: '/static/images/blog/fleetbit/landing.jpg',
+    videoSrc: '/static/videos/projects/fleetbit',
     href: 'https://fleetbit.co',
     comingSoon: true,
   },
@@ -25,6 +28,7 @@ const projectsData: Project[] = [
     render. You can rework one section at a time, change the arrangement or style, and have the
     song sung in your own voice.`,
     imgSrc: '/static/images/blog/echosonic/landing.jpg',
+    videoSrc: '/static/videos/projects/echosonic',
     href: 'https://echosonic.io',
     learnMoreHref: '/blog/introducing-echosonic',
   },
@@ -35,6 +39,7 @@ const projectsData: Project[] = [
     you speak as well as what you say, and uses Jung's path of individuation to give each session
     a direction.`,
     imgSrc: '/static/images/blog/carljung/landing.jpg',
+    videoSrc: '/static/videos/projects/carljung',
     href: 'https://carljung.ai',
     learnMoreHref: '/blog/introducing-carljung-ai',
   },

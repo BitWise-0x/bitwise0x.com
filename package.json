@@ -85,5 +85,9 @@
       "prettier --write"
     ]
   },
-  "packageManager": "yarn@3.6.1"
+  "packageManager": "yarn@3.6.1",
+  "resolutions": {
+    "@contentlayer2/core@0.5.8": "patch:@contentlayer2/core@npm%3A0.5.8#./.yarn/patches/@contentlayer2-core-npm-0.5.8-d7a35ef366.patch",
+    "@contentlayer2/utils@0.5.8": "patch:@contentlayer2/utils@npm%3A0.5.8#./.yarn/patches/@contentlayer2-utils-npm-0.5.8-f14c371a28.patch"
+  }
 }

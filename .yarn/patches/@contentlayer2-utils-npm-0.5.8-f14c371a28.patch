@@ -1,0 +1,9 @@
+diff --git a/src/node/fs-watcher.ts b/src/node/fs-watcher.ts
+index 1096c565bcd9cb98ee75bbfceda020635575bb8b..a42e0bf34d112f1b3de8a5199cf93519bc5a0910 100644
+--- a/src/node/fs-watcher.ts
++++ b/src/node/fs-watcher.ts
+@@ -1,3 +1,4 @@
++// @ts-nocheck: upstream 0.5.8 ships this source as its typings and it does not type-check against current deps
+ import type fs from 'node:fs'
+ 
+ import * as T from '@effect-ts/core/Effect'

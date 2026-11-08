@@ -59,8 +59,8 @@ const projectsData: Project[] = [
     tagline: 'HomeKit integration for SmartRent',
     description: `A Homebridge plugin that brings SmartRent locks, thermostats, and switches into
     Apple Home, so they work alongside the rest of your HomeKit devices.`,
-    imgSrc: '/static/videos/projects/homebridge.jpg',
-    videoSrc: '/static/videos/projects/homebridge',
+    imgSrc: '/static/videos/projects/homebridge-smartrent.jpg',
+    videoSrc: '/static/videos/projects/homebridge-smartrent',
     href: 'https://github.com/BitWise-0x/homebridge-smartrent',
     learnMoreHref: '/blog/homebridge-smartrent-blink',
   },
@@ -70,8 +70,8 @@ const projectsData: Project[] = [
     description: `A Homebridge plugin for Blink cameras, doorbells, and sirens. It adds live view,
     motion events, snapshots, and arming to Apple Home, and can deliver doorbell presses within a
     second or two through Blink's push notifications, even without a Blink subscription.`,
-    imgSrc: '/static/videos/projects/homebridge.jpg',
-    videoSrc: '/static/videos/projects/homebridge',
+    imgSrc: '/static/videos/projects/homebridge-blink.jpg',
+    videoSrc: '/static/videos/projects/homebridge-blink',
     href: 'https://github.com/BitWise-0x/homebridge-blink-security',
     learnMoreHref: '/blog/homebridge-smartrent-blink',
   },

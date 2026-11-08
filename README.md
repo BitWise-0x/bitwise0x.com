@@ -81,7 +81,7 @@ yarn build
 
 A replaced image or project loop gets a new file name, `<name>-<first 8 hex of its sha256>.<ext>`, and every reference moves to it in the same commit. Link previews (Slack, iMessage, X, LinkedIn) and the Cloudflare edge cache images by URL, so content changed at the same URL keeps showing the old version.
 
-Project card loops live in `public/static/videos/projects/` as `<name>.av1.mp4`, `<name>.h264.mp4` and the poster `<name>.jpg`; `videoSrc` in `data/projectsData.ts` names them without the extension.
+Project card loops live in `public/static/videos/projects/` as `<name>.av1.mp4`, `<name>.h264.mp4` and the poster `<name>.jpg`; `videoSrc` in `data/projectsData.ts` and `video` in a post's frontmatter name them without the extension, and the project cards and the blog list play them.
 
 <br>
 

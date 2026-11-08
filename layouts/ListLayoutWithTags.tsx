@@ -8,6 +8,7 @@ import { CoreContent } from 'pliny/utils/contentlayer'
 import type { Blog } from 'contentlayer/generated'
 import Link from '@/components/Link'
 import Image from '@/components/Image'
+import ProjectThumbVideo from '@/components/ProjectThumbVideo'
 import LedgerLead from '@/components/LedgerLead'
 import siteMetadata from '@/data/siteMetadata'
 
@@ -74,7 +75,7 @@ export default function ListLayoutWithTags({
 
       <ul className="records records-topline">
         {displayPosts.map((post) => {
-          const { path, date, title: postTitle, summary, tags, heroImage, readingTime } = post
+          const { path, date, title: postTitle, summary, tags, heroImage, video, readingTime } = post
           const showThumbnail = heroImage && !heroImage.includes('social-banner')
 
           return (
@@ -84,7 +85,11 @@ export default function ListLayoutWithTags({
             >
               {showThumbnail && (
                 <Link href={`/${path}`} aria-hidden="true" tabIndex={-1} className="record-thumb">
-                  <Image src={heroImage} alt="" width={340} height={191} />
+                  {video ? (
+                    <ProjectThumbVideo src={video} />
+                  ) : (
+                    <Image src={heroImage} alt="" width={340} height={191} />
+                  )}
                 </Link>
               )}
 

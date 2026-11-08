@@ -11,6 +11,8 @@ authors: ['default']
 canonicalUrl: 'https://bitwise0x.com/blog/generating-structured-output-from-llms'
 ---
 
+<LoopVideo src="/static/videos/projects/structured-output" />
+
 If you have spent any time building applications on top of LLMs, you have probably hit the same wall I did: the model gives you beautiful prose when what you actually need is a JSON object that will not crash your downstream parser. I spent weeks wrestling with retry logic and ad-hoc validation before deciding to properly survey the approaches that existed for coercing structured output from language models.
 
 The ability to consistently generate well-typed output is a key requirement for building operational systems, arguably as important as the text generation capability itself. This article is that survey: an honest assessment of three approaches to generating structured output from LLMs, their trade-offs, and where each one falls short.
@@ -19,8 +21,6 @@ The ability to consistently generate well-typed output is a key requirement for 
 > This article was originally written in late 2025. Since then, OpenAI has released native structured output support via `response_format`, and Instructor has become the dominant approach in the Python ecosystem. The conceptual framework and approach comparison remain relevant, but some of the specific library APIs shown may have evolved.
 
 ## What is Structured Output
-
-<LoopVideo src="/static/videos/projects/structured-output" />
 
 Structured output refers to data or information generated in accordance with a predefined schema or format. Frequently employed formats encompass JSON, XML, or language-specific constructs like Python dictionaries. These structured outputs may also encompass additional typing information such as [JSON Schema](https://json-schema.org/understanding-json-schema), Pydantic models, or Typescript objects.
 

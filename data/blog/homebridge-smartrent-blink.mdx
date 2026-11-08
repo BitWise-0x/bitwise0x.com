@@ -91,8 +91,10 @@ graph TB
         oauth["OAuth 2.0 + PKCE\nToken Store + Refresh"]
         poller["Status Poller\nmotion + camera state"]
         camutils["@homebridge/camera-utils\nHAP camera session mgmt"]
-        ffmpeg["ffmpeg\nIMMI → SRTP transcode"]
-        snap["Snapshot Cache\nperiodic fetch + fallback"]
+        ffmpeg["ffmpeg\nIMMI → SRTP (H.264 copy)"]
+        snap["Snapshot Cache\nrate-limited fetch + fallback"]
+        push["Push Listener\nFCM web-push receiver"]
+        pushauth["Push Session\nOAuth (Android client)"]
 
         subgraph acc2["Per-Camera Accessories"]
             cam["CameraController\n(live view)"]
@@ -101,12 +103,14 @@ graph TB
             temp["TemperatureSensor"]
             switches["Privacy / Motion / NightVision\nClip / Siren switches"]
             secsys["SecuritySystem\n(per sync module)"]
+            doorbell["Doorbell\n(press events)"]
         end
     end
 
     subgraph blink["Blink Cloud"]
         blinkrest["Blink REST API"]
         immi["IMMI Stream\n(live view)"]
+        fcm["Firebase Cloud Messaging\n(Blink app project)"]
     end
 
     platform --> oauth
@@ -119,6 +123,12 @@ graph TB
     poller --> blinkrest
     ffmpeg --> immi
     snap --> blinkrest
+    platform --> push
+    push --> pushauth
+    pushauth --> blinkrest
+    fcm --> push
+    push --> doorbell
+    poller --> doorbell
 
     style plugin fill:#0d1b2a,stroke:#3a86ff,color:#fff
     style blink fill:#12212e,stroke:#06d6a0,color:#fff
@@ -128,6 +138,8 @@ graph TB
     style camutils fill:#343a40,stroke:#6c757d,color:#fff
     style ffmpeg fill:#343a40,stroke:#6c757d,color:#fff
     style snap fill:#343a40,stroke:#6c757d,color:#fff
+    style push fill:#343a40,stroke:#6c757d,color:#fff
+    style pushauth fill:#343a40,stroke:#6c757d,color:#fff
     style acc2 fill:#1b4332,stroke:#40916c,color:#fff
     style cam fill:#2d6a4f,stroke:#40916c,color:#fff
     style msensor fill:#2d6a4f,stroke:#40916c,color:#fff
@@ -135,8 +147,10 @@ graph TB
     style temp fill:#2d6a4f,stroke:#40916c,color:#fff
     style switches fill:#2d6a4f,stroke:#40916c,color:#fff
     style secsys fill:#2d6a4f,stroke:#40916c,color:#fff
+    style doorbell fill:#2d6a4f,stroke:#40916c,color:#fff
     style blinkrest fill:#12212e,stroke:#06d6a0,color:#fff
     style immi fill:#12212e,stroke:#06d6a0,color:#fff
+    style fcm fill:#12212e,stroke:#06d6a0,color:#fff
 
 `} />
 
@@ -155,7 +169,7 @@ A single Blink camera accessory in HomeKit is not a simple service. It is a comp
 - **`Switch` (night vision)**: toggles IR night vision
 - **`Switch` (clip recording)**: momentary switch that triggers a clip recording in the Blink cloud
 
-Each Blink sync module surfaces as a separate **`SecuritySystem`** accessory, allowing the user to arm and disarm the entire Blink network for that module directly from Apple Home. The Video Doorbell model adds a **`Doorbell`** service, mapping doorbell press events to HomeKit's doorbell notification system. The Siren model maps to a single `Switch`.
+Each Blink sync module surfaces as a separate **`SecuritySystem`** accessory, allowing the user to arm and disarm the entire Blink network for that module directly from Apple Home. The Video Doorbell model adds a **`Doorbell`** service, mapping doorbell presses to HomeKit's doorbell notification, from cloud polling or, with push notifications on, from Blink's push channel within a second or two. The Siren model maps to a single `Switch`.
 
 <ZoomableImage
   src="/static/images/blog/homebridge-smartrent-blink/homekit-camera-view.png"
@@ -169,6 +183,8 @@ Each Blink sync module surfaces as a separate **`SecuritySystem`** accessory, al
 ---
 
 Blink does not push motion events to third-party clients. The plugin polls the Blink API on a configurable interval (`camera-motion-polling-seconds`, default 15) and compares the most recent motion event timestamp against the last known timestamp to determine whether new motion has occurred.
+
+Accounts without a Blink subscription have an empty cloud clip list, so polling would never see motion. For them the plugin can read the Sync Module's local USB storage manifest instead (`local-storage-motion`, which engages automatically when the cloud list is empty).
 
 The naive implementation of immediately flipping `MotionDetected` true on a new event and false on the next poll that shows no new event produces rapid toggling when the API is polled frequently. A debounce window addresses this: once motion is detected, it stays reported as active for a minimum hold period before being cleared.
 
@@ -211,22 +227,16 @@ Doorbell presses are the exception. Since version 2.1, the plugin can receive th
 
 This is the hardest part of any Homebridge camera plugin, and Blink makes it harder than most. HomeKit streams video using SRTP, a Real-time Transport Protocol variant with mandatory encryption. Blink cameras stream using IMMI, a proprietary Blink protocol. There is no direct bridge between the two.
 
-The solution is [ffmpeg](https://ffmpeg.org). [`@homebridge/camera-utils`](https://github.com/homebridge/camera-utils) handles the HomeKit side of the camera session: HAP negotiation, SRTP key exchange, and session lifecycle. When HomeKit requests a live stream, `camera-utils` calls the plugin's `handleStreamRequest` implementation, which spawns an ffmpeg process to pull the IMMI stream and re-emit it as SRTP to the address and port HomeKit specified.
+The solution is [ffmpeg](https://ffmpeg.org). [`@homebridge/camera-utils`](https://github.com/homebridge/camera-utils) handles the HomeKit side of the camera session: HAP negotiation, SRTP key exchange, and session lifecycle. When HomeKit requests a live stream, `camera-utils` calls the plugin's `handleStreamRequest` implementation. The plugin opens the IMMI stream through a small local tunnel and pipes it into ffmpeg, which wraps the camera's H.264 as SRTP for the address and port HomeKit specified. The video is copied, not re-encoded, so a Raspberry Pi can carry it easily.
 
 ```typescript
-// Simplified ffmpeg invocation for IMMI → SRTP transcoding.
-// The IMMI URL and SRTP parameters come from the Blink session and HAP negotiation respectively.
-private buildFfmpegArgs(immiUrl: string, session: StreamingSession): string[] {
+// Simplified ffmpeg invocation for an IMMI stream piped in from the local tunnel.
+// The SRTP parameters come from HAP negotiation.
+private buildFfmpegArgs(session: StreamingSession): string[] {
   return [
-    '-re',
-    '-i', immiUrl,                        // IMMI stream from Blink
-    '-c:v', 'libx264',
-    '-preset', 'ultrafast',
-    '-tune', 'zerolatency',
-    '-profile:v', 'baseline',
-    '-level', '3.1',
-    '-b:v', `${session.videoBitrate}k`,
-    '-bufsize', `${session.videoBitrate * 2}k`,
+    '-f', 'mpegts',
+    '-i', 'pipe:0',                       // IMMI stream from the local tunnel
+    '-vcodec', 'copy',
     '-payload_type', '99',
     '-ssrc', session.videoSSRC.toString(),
     '-f', 'rtp',
@@ -239,8 +249,10 @@ private buildFfmpegArgs(immiUrl: string, session: StreamingSession): string[] {
 
 A keepalive mechanism holds the IMMI session open for the duration of the HomeKit viewing session. Blink will terminate an idle IMMI session after a short timeout, so the plugin sends periodic keepalive signals while `camera-utils` reports the session as active.
 
+Blink cameras send sparse keyframes, so after any packet loss the Home app can stall until the next one arrives. For those cases the plugin has an opt-in `liveview-transcode` option that re-encodes the stream with libx264 and a keyframe every two seconds, at the resolution and bitrate HomeKit negotiated. XT cameras stream RTSP instead of IMMI and are always re-encoded.
+
 > [!WARNING]
-> ffmpeg must be available on the host system. The [`ffmpeg-for-homebridge`](https://github.com/homebridge/ffmpeg-for-homebridge) package provides a bundled binary that works across common architectures, but on Raspberry Pi hardware the per-stream transcoding load is non-trivial. If your host cannot sustain it, set `enable-liveview` to `false` in the config; snapshots will still function.
+> ffmpeg must be available on the host system. The [`ffmpeg-for-homebridge`](https://github.com/homebridge/ffmpeg-for-homebridge) package provides a bundled binary that works across common architectures, but with `liveview-transcode` on, or for XT cameras, the per-stream encoding load on Raspberry Pi hardware is non-trivial. If your host cannot sustain it, leave `liveview-transcode` off or set `enable-liveview` to `false` in the config; snapshots will still function.
 
 ### OAuth 2.0 and 2FA
 
@@ -248,7 +260,9 @@ A keepalive mechanism holds the IMMI session open for the duration of the HomeKi
 
 Blink uses OAuth 2.0 with PKCE for authentication. The plugin stores the access token and refresh token in Homebridge's persistent storage and handles token refresh automatically before expiry. This avoids re-authenticating on every Homebridge restart, which matters on low-power hardware where cold authentication adds noticeable latency.
 
-Two-factor authentication on Blink works differently from SmartRent's TOTP approach. Blink sends a one-time PIN to the account's registered email or phone on first login from a new client. The plugin handles this through the `pin` config field: when present, the PIN is submitted as part of the authentication flow and then the field is cleared from the stored config. Subsequent restarts use the saved OAuth tokens directly, without triggering 2FA again.
+Two-factor authentication on Blink works differently from SmartRent's TOTP approach. Blink sends a one-time PIN to the account's registered email or phone on first login from a new client. The plugin handles this through the `pin` config field: when present, the PIN is submitted as part of the authentication flow, and the field can be removed once the log confirms the session. Subsequent restarts use the saved OAuth tokens directly, without triggering 2FA again.
+
+Push notifications use a second, separate sign-in. Blink only delivers pushes to its Android app, so the plugin signs in once as that app through Blink's own hosted page with PKCE. The user pastes the address the sign-in lands on into the plugin settings, and the plugin trades the code for tokens as soon as the setting is saved. The plugin never sees the password for this session, and turning the option off signs the push client out of the account.
 
 ### Snapshot Strategy
 
@@ -256,7 +270,7 @@ Two-factor authentication on Blink works differently from SmartRent's TOTP appro
 
 HomeKit requests snapshots on a best-effort basis: for notifications, for the Home app tile view, and when live view is not active. Blink's snapshot endpoint is reliable but not instant, and the plugin does not want every HomeKit snapshot request to wait on a fresh API call.
 
-The solution is a periodic background fetch: every `camera-thumbnail-refresh-seconds` (default 3600), the plugin requests a fresh thumbnail from Blink and stores it in memory. When HomeKit asks for a snapshot, the cached image is returned immediately. If live view is unavailable and the cache is cold (first startup, or a camera that went offline), the plugin attempts a fresh fetch with backoff before returning whatever it has.
+The solution is a cached thumbnail with a rate limit: while the Home app is requesting snapshots, the plugin asks a camera for a fresh thumbnail at most once per `camera-thumbnail-refresh-seconds` (default 3600), for cameras with motion detection enabled, and keeps it in memory. When HomeKit asks for a snapshot, the cached image is returned immediately. If live view is unavailable and the cache is cold (first startup, or a camera that went offline), the plugin attempts a fresh fetch with backoff before returning whatever it has.
 
 ### Stale Accessory Cleanup
 
@@ -264,7 +278,7 @@ The solution is a periodic background fetch: every `camera-thumbnail-refresh-sec
 
 Blink accounts change over time as cameras get sold, sync modules get removed, and networks get reorganized. Homebridge caches accessory registrations across restarts, which means a camera removed from the Blink account can persist as a ghost accessory in Apple Home indefinitely.
 
-On each startup, the plugin compares its registered `PlatformAccessory` instances against the current device list from the Blink API. Any cached accessory whose device ID no longer appears in the API response is deregistered, removing it cleanly from the Homebridge cache and causing it to disappear from Apple Home on the next Home app refresh.
+The plugin rediscovers devices while it runs, not only at startup, and removes a cached accessory only when Blink confirms the device is gone, because removing it also discards its room, name, scenes and automations in HomeKit. A camera deleted in the Blink app leaves Apple Home about five minutes later. If the last camera or doorbell on the account is removed, Blink's empty list looks the same as a failed response, so the accessory is kept and the log names it.
 
 Blink represents one end of the integration spectrum: a polling-based REST API with only an unofficial push channel for doorbell presses, proprietary streaming, and demanding HomeKit camera requirements. SmartRent represents the other end entirely.
 
@@ -444,8 +458,9 @@ The plugin exposes configuration through `config.schema.json`, which the Homebri
 | `enableAutoLock`          | `false`  | Re-lock after configurable delay           |
 | `autoLockDelayInMinutes`  | `5`      | Auto-lock delay (1–1440 min)               |
 | `lowBatteryThreshold`     | `20`     | Low battery alert level (5–50%)            |
-| `lockPollingInterval`     | `10`     | Lock state poll interval in seconds        |
 | `excludeDevices`          | `[]`     | Device IDs to omit from HomeKit            |
+| `temperatureUnit`         | `fahrenheit` | Thermostat display unit (`fahrenheit` or `celsius`) |
+| `verboseLogging`          | `false`  | Detailed WebSocket, API and device logging |
 
 SmartRent represents the other end of the integration spectrum: a real-time push channel, a rich multi-device model, and relatively straightforward characteristic mapping once the WebSocket protocol is understood.
 
@@ -469,7 +484,7 @@ HomeKit silently ignores characteristic updates that fall outside the declared r
 
 ### 2. Polling Interval Is a Product Decision
 
-There is no universal right answer for how frequently to poll a third-party API. Too aggressive and you risk rate limiting, particularly with Blink, where multiple cameras polling independently compound quickly. Too conservative and motion events or state changes feel stale in Apple Home. Both plugins surface their polling intervals as configuration rather than hardcoding them, which puts the trade-off in the hands of the user who knows their hardware constraints and tolerance for latency.
+There is no universal right answer for how frequently to poll a third-party API. Too aggressive and you risk rate limiting, particularly with Blink, where multiple cameras polling independently compound quickly. Too conservative and motion events or state changes feel stale in Apple Home. The Blink plugin surfaces its polling intervals as configuration rather than hardcoding them (SmartRent state arrives over the WebSocket, so there is nothing to tune), which puts the trade-off in the hands of the user who knows their hardware constraints and tolerance for latency.
 
 ### 3. Authentication Persistence Matters More Than Expected
 

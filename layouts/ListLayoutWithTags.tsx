@@ -75,7 +75,16 @@ export default function ListLayoutWithTags({
 
       <ul className="records records-topline">
         {displayPosts.map((post) => {
-          const { path, date, title: postTitle, summary, tags, heroImage, video, readingTime } = post
+          const {
+            path,
+            date,
+            title: postTitle,
+            summary,
+            tags,
+            heroImage,
+            video,
+            readingTime,
+          } = post
           const showThumbnail = heroImage && !heroImage.includes('social-banner')
 
           return (

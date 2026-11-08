@@ -27,8 +27,8 @@ const projectsData: Project[] = [
     description: `An Ai music service that treats each generated track as a draft rather than a final
     render. You can rework one section at a time, change the arrangement or style, and have the
     song sung in your own voice.`,
-    imgSrc: '/static/images/blog/echosonic/landing.jpg',
-    videoSrc: '/static/videos/projects/echosonic',
+    imgSrc: '/static/images/blog/echosonic/landing-5b7104d8.jpg',
+    videoSrc: '/static/videos/projects/echosonic-7dda32a8',
     href: 'https://echosonic.io',
     learnMoreHref: '/blog/introducing-echosonic',
   },
@@ -38,8 +38,8 @@ const projectsData: Project[] = [
     description: `Self-reflection through spoken conversation with a Carl Jung persona. It listens to how
     you speak as well as what you say, and uses Jung's path of individuation to give each session
     a direction.`,
-    imgSrc: '/static/images/blog/carljung/landing.jpg',
-    videoSrc: '/static/videos/projects/carljung',
+    imgSrc: '/static/images/blog/carljung/landing-821cd48b.jpg',
+    videoSrc: '/static/videos/projects/carljung-42fac55b',
     href: 'https://carljung.ai',
     learnMoreHref: '/blog/introducing-carljung-ai',
   },

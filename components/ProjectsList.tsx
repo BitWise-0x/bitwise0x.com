@@ -24,7 +24,7 @@ export default function ProjectsList({ title = 'Projects' }: { title?: string })
   return (
     <div>
       <LedgerLead kicker="Work" title={title}>
-        SaaS and open source
+        SaaS &amp; Open Source
       </LedgerLead>
 
       <ul className="records records-topline">

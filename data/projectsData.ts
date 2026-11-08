@@ -74,7 +74,7 @@ const projectsData: Project[] = [
   },
   {
     title: 'MongoDB Replica Set Manager',
-    tagline: 'MongoDB replica sets for Docker Swarm',
+    tagline: 'Fully automated MongoDB replica sets for Docker Swarm',
     description: `A replica set controller for MongoDB on Docker Swarm. It handles the initial
     deployment, adjusts membership as the service scales, and recovers from node failures
     without manual intervention.`,

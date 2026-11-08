@@ -17,7 +17,7 @@ const projectsData: Project[] = [
     description: `A hosted platform for orchestrating your fleets. Dispatch orders, follow drivers
     and vehicles on a live map, plan routes, and keep maintenance and billing in the same console.`,
     imgSrc: '/static/images/blog/fleetbit/landing.jpg',
-    videoSrc: '/static/videos/projects/fleetbit',
+    videoSrc: '/static/videos/projects/fleetbit-c3f2b00f',
     href: 'https://fleetbit.co',
     comingSoon: true,
   },

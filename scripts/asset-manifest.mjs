@@ -3,7 +3,7 @@ import { readdir, readFile, writeFile } from 'node:fs/promises'
 import path from 'node:path'
 
 // Maps every file under public/static to the first 8 hex of its sha256. lib/asset.ts appends it
-// to asset URLs, so a changed file gets a new URL and no cache (Cloudflare, link previews) keeps
+// to asset URLs, so a changed file gets a new URL and no cache or link preview keeps
 // serving the old one. public/static/og is generated after the build and is not covered.
 const publicDir = path.join(process.cwd(), 'public')
 const outFile = path.join(process.cwd(), 'app', 'asset-manifest.json')

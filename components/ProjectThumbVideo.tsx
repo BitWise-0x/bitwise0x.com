@@ -39,9 +39,10 @@ export default function ProjectThumbVideo({ src }: { src: string }) {
       preload="none"
       aria-hidden="true"
     >
+      {/* level 4.0 (08M): the largest loops are 1920x1080; a lower declared level can stall hardware decoders */}
       <source
         src={`${basePath}${versioned(`${src}.av1.mp4`)}`}
-        type='video/mp4; codecs="av01.0.04M.08"'
+        type='video/mp4; codecs="av01.0.08M.08"'
       />
       <source src={`${basePath}${versioned(`${src}.h264.mp4`)}`} type="video/mp4" />
     </video>

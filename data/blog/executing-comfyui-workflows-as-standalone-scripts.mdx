@@ -29,6 +29,13 @@ Refer to the [ComfyUI Github page](https://github.com/comfyanonymous/ComfyUI) fo
 
 As part of this post, I will also be referencing the [SDXL Turbo workflow](https://comfyanonymous.github.io/ComfyUI_examples/sdturbo/) which you can find over here. If you wish to follow along, you can download the model from the official [SDXL Turbo Repository](https://huggingface.co/stabilityai/sdxl-turbo/blob/main/sd_xl_turbo_1.0_fp16.safetensors) and place it in the `models/checkpoints` directory.
 
+<ZoomableImage
+  src="/static/images/blog/executing-comfyui-workflows/sdxl_workflow.png"
+  alt="ComfyUI SDXL Turbo Workflow"
+  width={1856}
+  height={929}
+/>
+
 > [!IMPORTANT]
 > This solution works by importing ComfyUI's internal modules directly (`nodes`, `comfy_execution`, `execution`). These are not pip-installable packages. You need to run the script from within the ComfyUI directory or add it to your Python path.
 

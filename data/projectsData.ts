@@ -50,6 +50,7 @@ const projectsData: Project[] = [
     private web search, OCR, local text-to-speech, and MCP tool servers, and installs a curated
     library of tools, filters, and pipes on every deploy.`,
     imgSrc: '/static/images/blog/open-webui-ultimate-stack/hero.jpg',
+    videoSrc: '/static/videos/projects/openwebui',
     href: 'https://github.com/BitWise-0x/open-webui-ultimate-stack',
     learnMoreHref: '/blog/open-webui-ultimate-stack',
   },
@@ -81,6 +82,7 @@ const projectsData: Project[] = [
     deployment, adjusts membership as the service scales, and recovers from node failures
     without manual intervention.`,
     imgSrc: '/static/images/blog/mongodb-replica-set-manager/server-rack.jpg',
+    videoSrc: '/static/videos/projects/mongodb',
     href: 'https://github.com/BitWise-0x/MongoDB-ReplicaSet-Manager',
     learnMoreHref: '/blog/mongodb-replica-set-manager',
   },

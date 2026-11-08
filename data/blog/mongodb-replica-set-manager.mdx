@@ -16,15 +16,11 @@ tags:
 draft: false
 summary: 'How I automated MongoDB replica sets on Docker Swarm, from the initial deployment to scaling and failover, without the manual steps a replica set usually needs.'
 images: ['/static/images/blog/mongodb-replica-set-manager/server-rack.jpg']
+video: '/static/videos/projects/mongodb'
 authors: ['default']
 ---
 
-<Image
-  src="/static/images/blog/mongodb-replica-set-manager/server-rack.jpg"
-  alt="Server rack with cables and LED indicators"
-  width={800}
-  height={450}
-/>
+<LoopVideo src="/static/videos/projects/mongodb" />
 
 Running a stateful database with high availability guarantees inside an ephemeral container orchestrator presents a fundamental tension. Docker Swarm is designed around the assumption that containers are disposable: they can be recreated, rescheduled, and assigned new IP addresses at any time. MongoDB replica sets, by contrast, depend on stable network identities and coordinated configuration across members. Bridging these two paradigms in a way that is both automated and production-safe is a non-trivial problem.
 

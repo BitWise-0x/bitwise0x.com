@@ -6,6 +6,7 @@ tags: ['ai', 'llm', 'generative-ai', 'python', 'data-science', 'prompt-engineeri
 draft: false
 summary: 'Getting an LLM to return valid, well-typed data matters as much as the text itself. I compare three approaches, fine-tuning, domain-specific languages, and schema engineering, and where each one falls short.'
 images: ['/static/images/blog/generating-structured-output/structured-blocks.png']
+video: '/static/videos/projects/structured-output'
 authors: ['default']
 canonicalUrl: 'https://bitwise0x.com/blog/generating-structured-output-from-llms'
 ---
@@ -19,12 +20,7 @@ The ability to consistently generate well-typed output is a key requirement for 
 
 ## What is Structured Output
 
-<ZoomableImage
-  src="/static/images/blog/generating-structured-output/structured-blocks.png"
-  alt="Structured output blocks diagram"
-  width={800}
-  height={450}
-/>
+<LoopVideo src="/static/videos/projects/structured-output" />
 
 Structured output refers to data or information generated in accordance with a predefined schema or format. Frequently employed formats encompass JSON, XML, or language-specific constructs like Python dictionaries. These structured outputs may also encompass additional typing information such as [JSON Schema](https://json-schema.org/understanding-json-schema), Pydantic models, or Typescript objects.
 

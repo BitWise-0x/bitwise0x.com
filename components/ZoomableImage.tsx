@@ -4,6 +4,7 @@ import { useState, useCallback, useRef, Fragment } from 'react'
 import NextImage, { ImageProps } from 'next/image'
 import { Dialog, DialogPanel, Transition, TransitionChild } from '@headlessui/react'
 import { useImageZoom } from './useImageZoom'
+import { versioned } from 'lib/asset'
 
 const basePath = process.env.BASE_PATH
 
@@ -20,7 +21,7 @@ export default function ZoomableImage({ src, alt, className, ...rest }: ImagePro
     handleWheel,
   } = useImageZoom()
 
-  const fullSrc = `${basePath || ''}${src}`
+  const fullSrc = `${basePath || ''}${typeof src === 'string' ? versioned(src) : src}`
 
   const open = useCallback(() => setIsOpen(true), [])
 

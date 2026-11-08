@@ -10,6 +10,7 @@ import PostSimple from '@/layouts/PostSimple'
 import PostLayout from '@/layouts/PostLayout'
 import PostBanner from '@/layouts/PostBanner'
 import { Metadata } from 'next'
+import { versioned } from 'lib/asset'
 import siteMetadata from '@/data/siteMetadata'
 import { notFound } from 'next/navigation'
 
@@ -43,7 +44,7 @@ export async function generateMetadata(props: {
   const heroImage = post.heroImage || siteMetadata.socialBanner
   const ogImages = [
     {
-      url: heroImage.includes('http') ? heroImage : siteMetadata.siteUrl + heroImage,
+      url: heroImage.includes('http') ? heroImage : siteMetadata.siteUrl + versioned(heroImage),
       width: 1200,
       height: 630,
     },
@@ -103,6 +104,8 @@ export default async function Page(props: { params: Promise<{ slug: string[] }> 
     .filter((a): a is NonNullable<typeof a> => a !== null)
   const mainContent = coreContent(post)
   const jsonLd = post.structuredData
+  const hero = post.heroImage
+  if (hero && !hero.includes('http')) jsonLd['image'] = siteMetadata.siteUrl + versioned(hero)
   jsonLd['author'] = authorDetails.map((author) => ({
     '@type': 'Person',
     name: author.name,

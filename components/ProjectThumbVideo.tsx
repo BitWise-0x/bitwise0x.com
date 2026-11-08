@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useRef } from 'react'
+import { versioned } from 'lib/asset'
 
 const basePath = process.env.BASE_PATH || ''
 
@@ -31,15 +32,18 @@ export default function ProjectThumbVideo({ src }: { src: string }) {
   return (
     <video
       ref={ref}
-      poster={`${basePath}${src}.jpg`}
+      poster={`${basePath}${versioned(`${src}.jpg`)}`}
       muted
       loop
       playsInline
       preload="none"
       aria-hidden="true"
     >
-      <source src={`${basePath}${src}.av1.mp4`} type='video/mp4; codecs="av01.0.04M.08"' />
-      <source src={`${basePath}${src}.h264.mp4`} type="video/mp4" />
+      <source
+        src={`${basePath}${versioned(`${src}.av1.mp4`)}`}
+        type='video/mp4; codecs="av01.0.04M.08"'
+      />
+      <source src={`${basePath}${versioned(`${src}.h264.mp4`)}`} type="video/mp4" />
     </video>
   )
 }

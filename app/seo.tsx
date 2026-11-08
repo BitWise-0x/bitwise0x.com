@@ -1,5 +1,6 @@
 import { Metadata } from 'next'
 import siteMetadata from '@/data/siteMetadata'
+import { versioned } from 'lib/asset'
 
 interface PageSEOProps {
   title: string
@@ -25,14 +26,14 @@ export function genPageMetadata({
       description: description || siteMetadata.description,
       url: pageUrl,
       siteName: siteMetadata.title,
-      images: image ? [image] : [siteMetadata.socialBanner],
+      images: [versioned(image || siteMetadata.socialBanner)],
       locale: 'en_US',
       type: 'website',
     },
     twitter: {
       title: `${title} | ${siteMetadata.title}`,
       card: 'summary_large_image',
-      images: image ? [image] : [siteMetadata.socialBanner],
+      images: [versioned(image || siteMetadata.socialBanner)],
       creator: '@BitWise_0x',
     },
     ...(path &&

@@ -1,7 +1,7 @@
 ---
 title: 'Bridging into Apple HomeKit with Homebridge Plugins'
 date: '2026-03-06'
-lastmod: '2026-03-06'
+lastmod: '2026-11-07'
 tags: ['homebridge', 'homekit', 'smartrent', 'blink', 'typescript', 'iot', 'smart-home', 'projects']
 draft: false
 summary: 'Two Homebridge plugins that bring SmartRent devices and Blink cameras into Apple Home, and what each integration needed before HomeKit treated it like a native accessory.'
@@ -76,7 +76,7 @@ The platform plugin lifecycle is straightforward in concept: on startup, call th
   height={450}
 />
 
-Amazon Blink cameras are battery-powered, intermittently connected devices that communicate through a sync module, a small hub that bridges them to the Blink cloud. The API is REST-based and polling-driven, with no push channel. Live streaming uses a proprietary IMMI protocol rather than RTSP. HomeKit's camera model is demanding: it expects SRTP video streams, snapshots on demand, and accurate motion events. Blink exposes none of this natively.
+Amazon Blink cameras are battery-powered, intermittently connected devices that communicate through a sync module, a small hub that bridges them to the Blink cloud. The API is REST-based and polling-driven; the only push channel belongs to Blink's own mobile app. Live streaming uses a proprietary IMMI protocol rather than RTSP. HomeKit's camera model is demanding: it expects SRTP video streams, snapshots on demand, and accurate motion events. Blink exposes none of this natively.
 
 Bridging all of it into HomeKit required integrating ffmpeg for live view transcoding, building a polling loop for motion detection that avoids hammering the API, and implementing a caching strategy for snapshots that keeps them available even when the live stream is not.
 
@@ -168,7 +168,7 @@ Each Blink sync module surfaces as a separate **`SecuritySystem`** accessory, al
 
 ---
 
-Blink does not push motion events. The plugin polls the Blink API on a configurable interval (`camera-motion-polling-seconds`, default 15) and compares the most recent motion event timestamp against the last known timestamp to determine whether new motion has occurred.
+Blink does not push motion events to third-party clients. The plugin polls the Blink API on a configurable interval (`camera-motion-polling-seconds`, default 15) and compares the most recent motion event timestamp against the last known timestamp to determine whether new motion has occurred.
 
 The naive implementation of immediately flipping `MotionDetected` true on a new event and false on the next poll that shows no new event produces rapid toggling when the API is polled frequently. A debounce window addresses this: once motion is detected, it stays reported as active for a minimum hold period before being cleared.
 
@@ -202,6 +202,8 @@ private async pollMotion(): Promise<void> {
 ```
 
 The polling interval is a configuration decision with real trade-offs. At 15 seconds, motion events are surfaced quickly enough to be useful for automations. Going shorter risks hitting Blink's API rate limits across accounts with many cameras. Going longer makes motion-triggered automations feel unresponsive.
+
+Doorbell presses are the exception. Since version 2.1, the plugin can receive the same push notifications the Blink app gets. It signs in a second Blink session as the Android app, registers a Firebase Cloud Messaging token for it, and asks Blink to deliver that session's notifications to the plugin. A press then reaches HomeKit within a second or two, even on accounts without a Blink subscription, where polling never sees it at all. The protocol is unofficial, so it stays opt-in and polling remains the fallback.
 
 ### Live View: IMMI Streaming via ffmpeg
 
@@ -264,7 +266,7 @@ Blink accounts change over time as cameras get sold, sync modules get removed, a
 
 On each startup, the plugin compares its registered `PlatformAccessory` instances against the current device list from the Blink API. Any cached accessory whose device ID no longer appears in the API response is deregistered, removing it cleanly from the Homebridge cache and causing it to disappear from Apple Home on the next Home app refresh.
 
-Blink represents one end of the integration spectrum: a polling-based REST API with no push channel, proprietary streaming, and demanding HomeKit camera requirements. SmartRent represents the other end entirely.
+Blink represents one end of the integration spectrum: a polling-based REST API with only an unofficial push channel for doorbell presses, proprietary streaming, and demanding HomeKit camera requirements. SmartRent represents the other end entirely.
 
 ## The SmartRent Plugin
 

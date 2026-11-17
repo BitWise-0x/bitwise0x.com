@@ -138,13 +138,13 @@ graph TB
     A --> A1
     B --> B1
     C --> C1
-
-    style problem fill:#0d1b2a,stroke:#3a86ff,color:#fff
-    style approaches fill:#14213d,stroke:#565f89,color:#fff
-    style tools fill:#1a1b26,stroke:#efb146,color:#fff
-    style A fill:#2d6a4f,stroke:#40916c,color:#fff
-    style B fill:#7b2cbf,stroke:#9d4edd,color:#fff
-    style C fill:#b5651d,stroke:#d4a574,color:#fff
+    classDef default fill:#efb146,stroke:#a96a19,stroke-width:2px,color:#0c0f0e
+    classDef quiet fill:#1b221f,stroke:#2e3733,stroke-width:2px,color:#e7ece8
+    linkStyle default stroke:#efb146,stroke-width:2px
+    class A1,B1,C1 quiet
+    style problem fill:transparent,stroke:#a96a19,stroke-width:1px,stroke-dasharray:5 4,color:#efb146
+    style approaches fill:transparent,stroke:#a96a19,stroke-width:1px,stroke-dasharray:5 4,color:#efb146
+    style tools fill:transparent,stroke:#a96a19,stroke-width:1px,stroke-dasharray:5 4,color:#efb146
 
 `} />
 

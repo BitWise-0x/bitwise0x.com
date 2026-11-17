@@ -88,19 +88,13 @@ graph TB
     owui --> integrations
     searxng --> redis
     tools -.->|"API push\non deploy"| owui
-
-    style core fill:#0d1b2a,stroke:#3a86ff,color:#fff
-    style search fill:#1b263b,stroke:#3a86ff,color:#fff
-    style integrations fill:#1b263b,stroke:#3a86ff,color:#fff
-    style User fill:#14213d,stroke:#565f89,color:#fff
-    style owui fill:#7b2cbf,stroke:#9d4edd,color:#fff
-    style db fill:#2d6a4f,stroke:#40916c,color:#fff
-    style redis fill:#2d6a4f,stroke:#40916c,color:#fff
-    style searxng fill:#2d6a4f,stroke:#40916c,color:#fff
-    style tika fill:#2d6a4f,stroke:#40916c,color:#fff
-    style edgetts fill:#343a40,stroke:#6c757d,color:#fff
-    style mcpo fill:#343a40,stroke:#6c757d,color:#fff
-    style tools fill:#b5651d,stroke:#d4a574,color:#fff
+    classDef default fill:#efb146,stroke:#a96a19,stroke-width:2px,color:#0c0f0e
+    classDef quiet fill:#1b221f,stroke:#2e3733,stroke-width:2px,color:#e7ece8
+    linkStyle default stroke:#efb146,stroke-width:2px
+    class User,db,redis,tools quiet
+    style core fill:transparent,stroke:#a96a19,stroke-width:1px,stroke-dasharray:5 4,color:#efb146
+    style search fill:transparent,stroke:#a96a19,stroke-width:1px,stroke-dasharray:5 4,color:#efb146
+    style integrations fill:transparent,stroke:#a96a19,stroke-width:1px,stroke-dasharray:5 4,color:#efb146
 
 `} />
 

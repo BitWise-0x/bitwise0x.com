@@ -10,19 +10,28 @@ mermaid.initialize({
   theme: 'dark',
   themeVariables: {
     primaryColor: '#efb146',
-    primaryTextColor: '#c0caf5',
-    primaryBorderColor: '#565f89',
-    lineColor: '#565f89',
-    secondaryColor: '#d78c00',
-    tertiaryColor: '#1a1b26',
-    background: '#1a1b26',
-    mainBkg: '#1a1b26',
-    nodeBorder: '#565f89',
-    clusterBkg: '#16161e',
-    clusterBorder: '#565f89',
-    titleColor: '#c0caf5',
-    edgeLabelBackground: '#1a1b26',
-    nodeTextColor: '#c0caf5',
+    primaryTextColor: '#0c0f0e',
+    primaryBorderColor: '#a96a19',
+    lineColor: '#efb146',
+    secondaryColor: '#1b221f',
+    tertiaryColor: '#111513',
+    background: '#0c0f0e',
+    mainBkg: '#efb146',
+    nodeBorder: '#a96a19',
+    nodeTextColor: '#0c0f0e',
+    clusterBkg: 'transparent',
+    clusterBorder: '#a96a19',
+    titleColor: '#efb146',
+    edgeLabelBackground: '#111513',
+    actorBkg: '#efb146',
+    actorBorder: '#a96a19',
+    actorTextColor: '#0c0f0e',
+    actorLineColor: '#a96a19',
+    signalColor: '#efb146',
+    signalTextColor: '#e7ece8',
+    noteBkgColor: '#1b221f',
+    noteBorderColor: '#2e3733',
+    noteTextColor: '#e7ece8',
   },
   flowchart: { curve: 'basis', padding: 25, htmlLabels: false },
   fontFamily: 'ui-monospace, monospace',
@@ -137,7 +146,7 @@ export default function Mermaid({ chart }: { chart: string }) {
                 <DialogPanel className="w-full max-w-5xl">
                   <div
                     ref={containerRef}
-                    className="origin-center rounded-lg bg-[#1a1b26] p-4 transition-transform duration-100 ease-out [&_svg]:h-auto [&_svg]:w-full [&_svg]:max-w-none!"
+                    className="origin-center rounded-lg bg-[#0c0f0e] p-4 transition-transform duration-100 ease-out [&_svg]:h-auto [&_svg]:w-full [&_svg]:max-w-none!"
                     style={{ touchAction: 'none' }}
                     onTouchStart={handleTouchStart}
                     onTouchMove={handleTouchMove}

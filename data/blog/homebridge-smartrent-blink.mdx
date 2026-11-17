@@ -46,16 +46,13 @@ graph TB
     home <-- "HomeKit / HAP\n(encrypted)" --> hb
     sr <-- "axios + ws" --> srapi
     blink <-- "axios + ffmpeg" --> blinkapi
-
-    style apple fill:#1a1a2e,stroke:#4361ee,color:#fff
-    style bridge fill:#0d1b2a,stroke:#3a86ff,color:#fff
-    style cloud fill:#12212e,stroke:#06d6a0,color:#fff
-    style home fill:#4361ee,stroke:#7400b8,color:#fff
-    style hb fill:#7b2cbf,stroke:#9d4edd,color:#fff
-    style sr fill:#2d6a4f,stroke:#40916c,color:#fff
-    style blink fill:#2d6a4f,stroke:#40916c,color:#fff
-    style srapi fill:#1b4332,stroke:#40916c,color:#fff
-    style blinkapi fill:#1b4332,stroke:#40916c,color:#fff
+    classDef default fill:#efb146,stroke:#a96a19,stroke-width:2px,color:#0c0f0e
+    classDef quiet fill:#1b221f,stroke:#2e3733,stroke-width:2px,color:#e7ece8
+    linkStyle default stroke:#efb146,stroke-width:2px
+    class home,srapi,blinkapi quiet
+    style apple fill:transparent,stroke:#a96a19,stroke-width:1px,stroke-dasharray:5 4,color:#efb146
+    style bridge fill:transparent,stroke:#a96a19,stroke-width:1px,stroke-dasharray:5 4,color:#efb146
+    style cloud fill:transparent,stroke:#a96a19,stroke-width:1px,stroke-dasharray:5 4,color:#efb146
 
 `} />
 
@@ -125,28 +122,13 @@ graph TB
     fcm --> push
     push --> doorbell
     poller --> doorbell
-
-    style plugin fill:#0d1b2a,stroke:#3a86ff,color:#fff
-    style blink fill:#12212e,stroke:#06d6a0,color:#fff
-    style platform fill:#7b2cbf,stroke:#9d4edd,color:#fff
-    style oauth fill:#343a40,stroke:#6c757d,color:#fff
-    style poller fill:#343a40,stroke:#6c757d,color:#fff
-    style camutils fill:#343a40,stroke:#6c757d,color:#fff
-    style ffmpeg fill:#343a40,stroke:#6c757d,color:#fff
-    style snap fill:#343a40,stroke:#6c757d,color:#fff
-    style push fill:#343a40,stroke:#6c757d,color:#fff
-    style pushauth fill:#343a40,stroke:#6c757d,color:#fff
-    style acc2 fill:#1b4332,stroke:#40916c,color:#fff
-    style cam fill:#2d6a4f,stroke:#40916c,color:#fff
-    style msensor fill:#2d6a4f,stroke:#40916c,color:#fff
-    style batt fill:#2d6a4f,stroke:#40916c,color:#fff
-    style temp fill:#2d6a4f,stroke:#40916c,color:#fff
-    style switches fill:#2d6a4f,stroke:#40916c,color:#fff
-    style secsys fill:#2d6a4f,stroke:#40916c,color:#fff
-    style doorbell fill:#2d6a4f,stroke:#40916c,color:#fff
-    style blinkrest fill:#12212e,stroke:#06d6a0,color:#fff
-    style immi fill:#12212e,stroke:#06d6a0,color:#fff
-    style fcm fill:#12212e,stroke:#06d6a0,color:#fff
+    classDef default fill:#efb146,stroke:#a96a19,stroke-width:2px,color:#0c0f0e
+    classDef quiet fill:#1b221f,stroke:#2e3733,stroke-width:2px,color:#e7ece8
+    linkStyle default stroke:#efb146,stroke-width:2px
+    class camutils,ffmpeg,blinkrest,immi,fcm quiet
+    style plugin fill:transparent,stroke:#a96a19,stroke-width:1px,stroke-dasharray:5 4,color:#efb146
+    style acc2 fill:transparent,stroke:#a96a19,stroke-width:1px,stroke-dasharray:5 4,color:#efb146
+    style blink fill:transparent,stroke:#a96a19,stroke-width:1px,stroke-dasharray:5 4,color:#efb146
 
 `} />
 
@@ -324,22 +306,13 @@ graph TB
     ws --> socket
     accessories --> acc
     ws --> accessories
-
-    style plugin fill:#0d1b2a,stroke:#3a86ff,color:#fff
-    style smartrent fill:#12212e,stroke:#06d6a0,color:#fff
-    style platform fill:#7b2cbf,stroke:#9d4edd,color:#fff
-    style auth fill:#343a40,stroke:#6c757d,color:#fff
-    style ws fill:#343a40,stroke:#6c757d,color:#fff
-    style accessories fill:#343a40,stroke:#6c757d,color:#fff
-    style acc fill:#1b4332,stroke:#40916c,color:#fff
-    style lock fill:#2d6a4f,stroke:#40916c,color:#fff
-    style therm fill:#2d6a4f,stroke:#40916c,color:#fff
-    style leak fill:#2d6a4f,stroke:#40916c,color:#fff
-    style motion fill:#2d6a4f,stroke:#40916c,color:#fff
-    style sw fill:#2d6a4f,stroke:#40916c,color:#fff
-    style dimmer fill:#2d6a4f,stroke:#40916c,color:#fff
-    style rest fill:#12212e,stroke:#06d6a0,color:#fff
-    style socket fill:#12212e,stroke:#06d6a0,color:#fff
+    classDef default fill:#efb146,stroke:#a96a19,stroke-width:2px,color:#0c0f0e
+    classDef quiet fill:#1b221f,stroke:#2e3733,stroke-width:2px,color:#e7ece8
+    linkStyle default stroke:#efb146,stroke-width:2px
+    class rest,socket quiet
+    style plugin fill:transparent,stroke:#a96a19,stroke-width:1px,stroke-dasharray:5 4,color:#efb146
+    style acc fill:transparent,stroke:#a96a19,stroke-width:1px,stroke-dasharray:5 4,color:#efb146
+    style smartrent fill:transparent,stroke:#a96a19,stroke-width:1px,stroke-dasharray:5 4,color:#efb146
 
 `} />
 

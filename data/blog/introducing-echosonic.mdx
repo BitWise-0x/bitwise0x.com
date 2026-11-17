@@ -66,18 +66,12 @@ flowchart TD
 
     EDITS --> HIST["Version history"]
     HIST --> PROMOTE["Make current\nany version you prefer"]
+    classDef default fill:#efb146,stroke:#a96a19,stroke-width:2px,color:#0c0f0e
+    classDef quiet fill:#1b221f,stroke:#2e3733,stroke-width:2px,color:#e7ece8
+    linkStyle default stroke:#efb146,stroke-width:2px
+    class PROMPT,AUDIO,HIST quiet
+    style EDITS fill:transparent,stroke:#a96a19,stroke-width:1px,stroke-dasharray:5 4,color:#efb146
 
-    style PROMPT fill:#14213d,stroke:#565f89,color:#fff
-    style AUDIO fill:#14213d,stroke:#565f89,color:#fff
-    style GEN fill:#0d1b2a,stroke:#3a86ff,color:#fff
-    style EDITS fill:#14213d,stroke:#565f89,color:#fff
-    style REPAINT fill:#14213d,stroke:#565f89,color:#fff
-    style COVER fill:#14213d,stroke:#565f89,color:#fff
-    style MORPH fill:#b5651d,stroke:#d4a574,color:#fff
-    style LAYER fill:#2d6a4f,stroke:#40916c,color:#fff
-    style REROLL fill:#14213d,stroke:#565f89,color:#fff
-    style HIST fill:#7b2cbf,stroke:#9d4edd,color:#fff
-    style PROMOTE fill:#7b2cbf,stroke:#9d4edd,color:#fff
 `} />
 
 Each of these saves a new version rather than replacing the song. The original remains untouched, the history can be played through, and whichever version you prefer can be made the current one. This is what makes editing practical, since you can experiment without the risk of losing a take you already had.
@@ -119,13 +113,11 @@ flowchart TD
 
     NARR --> LANG["up to 23\nlanguages"]
     SING --> SONG["eleven\nlanguages"]
+    classDef default fill:#efb146,stroke:#a96a19,stroke-width:2px,color:#0c0f0e
+    classDef quiet fill:#1b221f,stroke:#2e3733,stroke-width:2px,color:#e7ece8
+    linkStyle default stroke:#efb146,stroke-width:2px
+    class REC,LANG,SONG quiet
 
-    style REC fill:#0d1b2a,stroke:#3a86ff,color:#fff
-    style VOICE fill:#7b2cbf,stroke:#9d4edd,color:#fff
-    style NARR fill:#2d6a4f,stroke:#40916c,color:#fff
-    style SING fill:#2d6a4f,stroke:#40916c,color:#fff
-    style LANG fill:#14213d,stroke:#565f89,color:#fff
-    style SONG fill:#b5651d,stroke:#d4a574,color:#fff
 `} />
 
 There is nothing else to record for singing. The clip you recorded to narrate a chapter is the same one that places your voice on a chorus.

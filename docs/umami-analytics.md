@@ -42,6 +42,12 @@ flowchart LR
   worker -->|"GET /script.js"| umami
   worker -->|"POST /api/send"| umami
   umami -. dashboard .-> dash["umami.is dashboard"]
+    classDef default fill:#efb146,stroke:#a96a19,stroke-width:2px,color:#0c0f0e
+    classDef quiet fill:#1b221f,stroke:#2e3733,stroke-width:2px,color:#e7ece8
+    linkStyle default stroke:#efb146,stroke-width:2px
+    class page,umami,dash quiet
+    style browser fill:transparent,stroke:#a96a19,stroke-width:1px,stroke-dasharray:5 4,color:#a96a19
+    style cf fill:transparent,stroke:#a96a19,stroke-width:1px,stroke-dasharray:5 4,color:#a96a19
 ```
 
 Three pieces:
@@ -56,6 +62,7 @@ Three pieces:
 ## Request flow
 
 ```mermaid
+%%{init: {'theme':'base','themeVariables':{'actorBkg':'#efb146','actorBorder':'#a96a19','actorTextColor':'#0c0f0e','actorLineColor':'#a96a19','signalColor':'#a96a19','signalTextColor':'#a96a19','noteBkgColor':'#1b221f','noteBorderColor':'#2e3733','noteTextColor':'#e7ece8','activationBkgColor':'#efb146','activationBorderColor':'#a96a19','labelBoxBkgColor':'#1b221f','labelBoxBorderColor':'#2e3733','labelTextColor':'#e7ece8','loopTextColor':'#a96a19'}}}%%
 sequenceDiagram
   participant B as Browser
   participant W as Worker (/i/*)
@@ -238,6 +245,12 @@ flowchart TD
     edit["edit workers/proxy"] --> wrangler["npx wrangler deploy"]
     wrangler --> live2["Worker live on /i/*"]
   end
+    classDef default fill:#efb146,stroke:#a96a19,stroke-width:2px,color:#0c0f0e
+    classDef quiet fill:#1b221f,stroke:#2e3733,stroke-width:2px,color:#e7ece8
+    linkStyle default stroke:#efb146,stroke-width:2px
+    class live1,live2 quiet
+    style site fill:transparent,stroke:#a96a19,stroke-width:1px,stroke-dasharray:5 4,color:#a96a19
+    style wk fill:transparent,stroke:#a96a19,stroke-width:1px,stroke-dasharray:5 4,color:#a96a19
 ```
 
 **The GitHub Pages CI does not deploy the Worker.** It only builds and publishes

@@ -11,15 +11,11 @@ export default async function Page() {
         name: siteMetadata.title,
         url: siteMetadata.siteUrl,
         description: siteMetadata.description,
-        publisher: {
-          '@type': 'Person',
-          name: siteMetadata.author,
-          url: siteMetadata.siteUrl,
-          sameAs: [siteMetadata.github, siteMetadata.x].filter(Boolean),
-        },
+        publisher: { '@id': `${siteMetadata.siteUrl}/#organization` },
       },
       {
         '@type': 'Organization',
+        '@id': `${siteMetadata.siteUrl}/#organization`,
         name: 'BitWise',
         url: siteMetadata.siteUrl,
         logo: `${siteMetadata.siteUrl}${versioned('/static/images/logo.png')}`,

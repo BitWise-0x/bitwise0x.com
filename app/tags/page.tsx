@@ -7,7 +7,7 @@ import LedgerLead from '@/components/LedgerLead'
 export const metadata = genPageMetadata({
   title: 'Tags',
   description:
-    'Browse all topics on BitWise — backend engineering, distributed systems, AI/ML, blockchain, and infrastructure.',
+    'Browse all topics on BitWise: backend engineering, distributed systems, AI/ML, blockchain, and infrastructure.',
   path: 'tags',
   image: '/static/og/tags.png',
 })

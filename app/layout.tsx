@@ -6,7 +6,6 @@ import { Space_Grotesk, IBM_Plex_Mono } from 'next/font/google'
 import { Analytics, AnalyticsConfig } from 'pliny/analytics'
 import { SearchProvider, SearchConfig } from 'pliny/search'
 import Header from '@/components/Header'
-import SectionContainer from '@/components/SectionContainer'
 import Footer from '@/components/Footer'
 import siteMetadata from '@/data/siteMetadata'
 import { versioned } from 'lib/asset'
@@ -52,9 +51,6 @@ export const metadata: Metadata = {
   },
   alternates: {
     canonical: siteMetadata.siteUrl,
-    types: {
-      'application/rss+xml': `${siteMetadata.siteUrl}/feed.xml`,
-    },
   },
   robots: {
     index: true,
@@ -70,7 +66,8 @@ export const metadata: Metadata = {
   twitter: {
     title: siteMetadata.title,
     card: 'summary_large_image',
-    images: [versioned(siteMetadata.socialBanner)],
+    images: [{ url: versioned(siteMetadata.socialBanner), alt: 'BitWise | Intelligent Backends' }],
+    site: '@BitWise_0x',
     creator: '@BitWise_0x',
   },
 }
@@ -88,7 +85,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html
       lang={siteMetadata.language}
-      className={`${space_grotesk.variable} ${ibm_plex_mono.variable} scroll-smooth`}
+      className={`${space_grotesk.variable} ${ibm_plex_mono.variable} motion-safe:scroll-smooth`}
       suppressHydrationWarning
     >
       <link
@@ -110,14 +107,19 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <link rel="manifest" href={`${basePath}${versioned('/static/favicons/site.webmanifest')}`} />
       <meta name="msapplication-TileColor" content="#0c0f0e" />
       <meta name="color-scheme" content="dark" />
-      <link rel="alternate" type="application/rss+xml" href={`${basePath}/feed.xml`} />
-      <body className="bg-page pl-[calc(100vw-100%)] antialiased">
+      <link
+        rel="alternate"
+        type="application/rss+xml"
+        title={siteMetadata.title}
+        href={`${basePath}/feed.xml`}
+      />
+      <body className="bg-page antialiased">
         <ThemeProviders>
           <Analytics analyticsConfig={siteMetadata.analytics as AnalyticsConfig} />
           <SearchProvider searchConfig={siteMetadata.search as SearchConfig}>
-            <div className="ledger-shell min-h-screen">
+            <div className="ledger-shell min-h-dvh">
               <Header />
-              <main className="min-w-0 py-9 md:py-12">{children}</main>
+              <main className="min-w-0 flex-1 py-9 md:py-12">{children}</main>
               <Footer />
             </div>
           </SearchProvider>

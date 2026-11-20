@@ -42,7 +42,7 @@ export default function ProjectsList({ title = 'Projects' }: { title?: string })
           } = project
 
           return (
-            <li key={name} className={imgSrc ? 'record no-side has-thumb' : 'record no-side'}>
+            <li key={name} className={imgSrc ? 'record has-thumb' : 'record'}>
               {imgSrc && (
                 <Link
                   href={learnMoreHref || href || '#'}

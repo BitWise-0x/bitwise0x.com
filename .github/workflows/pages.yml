@@ -64,3 +64,26 @@ jobs:
     steps:
       - id: deployment
         uses: actions/deploy-pages@v5
+      # tells Bing and the other IndexNow engines about pages changed in the last three days;
+      # the key is public by design (served at /<key>.txt), and a failed ping never fails the deploy
+      - name: Notify IndexNow
+        continue-on-error: true
+        env:
+          INDEXNOW_KEY: 4dd89e475d9c242c34377aada8223998
+        run: |
+          curl -fsS -A "" https://bitwise0x.com/sitemap.xml -o sitemap.xml
+          python3 - > payload.json <<'PY'
+          import json, os, datetime, xml.etree.ElementTree as ET
+          ns = {'s': 'http://www.sitemaps.org/schemas/sitemap/0.9'}
+          since = (datetime.date.today() - datetime.timedelta(days=3)).isoformat()
+          urls = ['https://bitwise0x.com/', 'https://bitwise0x.com/blog']
+          for u in ET.parse('sitemap.xml').getroot().findall('s:url', ns):
+              loc, mod = u.findtext('s:loc', '', ns), u.findtext('s:lastmod', '', ns)
+              if mod[:10] >= since and loc not in urls:
+                  urls.append(loc)
+          key = os.environ['INDEXNOW_KEY']
+          print(json.dumps({'host': 'bitwise0x.com', 'key': key,
+                            'keyLocation': f'https://bitwise0x.com/{key}.txt', 'urlList': urls}))
+          PY
+          curl -fsS -X POST https://api.indexnow.org/indexnow \
+            -H 'Content-Type: application/json; charset=utf-8' --data @payload.json

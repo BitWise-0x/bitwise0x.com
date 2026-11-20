@@ -55,7 +55,7 @@ export default function PostLayout({
         <PostTitle title={title} />
       </header>
 
-      <div className="prose dark:prose-invert max-w-none">{children}</div>
+      <div className="prose dark:prose-invert max-w-(--measure)">{children}</div>
 
       <ShareLinks path={path} title={title} />
 

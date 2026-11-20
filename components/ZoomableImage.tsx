@@ -54,7 +54,7 @@ export default function ZoomableImage({ src, alt, className, ...rest }: ImagePro
       >
         <NextImage src={fullSrc} alt={alt || ''} className={className} {...rest} />
         <span
-          className="pointer-events-none absolute top-2 right-2 rounded-full bg-black/50 p-1.5 text-white opacity-0 backdrop-blur-sm transition-opacity group-hover:opacity-100 group-focus-visible:opacity-100"
+          className="pointer-events-none absolute top-2 right-2 rounded-full bg-black/50 p-1.5 text-white opacity-0 backdrop-blur-sm transition-opacity group-hover:opacity-100 group-focus-visible:opacity-100 [@media(hover:none)]:opacity-100"
           aria-hidden="true"
         >
           <svg
@@ -114,7 +114,7 @@ export default function ZoomableImage({ src, alt, className, ...rest }: ImagePro
                     <img
                       src={typeof fullSrc === 'string' ? fullSrc : ''}
                       alt={alt?.toString() || ''}
-                      className="h-auto max-w-full rounded-lg"
+                      className="mx-auto h-auto max-h-[calc(100dvh-6rem)] w-auto max-w-full rounded-lg object-contain"
                       draggable={false}
                     />
                   </div>
@@ -128,7 +128,7 @@ export default function ZoomableImage({ src, alt, className, ...rest }: ImagePro
 
           <button
             onClick={close}
-            className="fixed top-4 right-4 z-100 rounded-full bg-black/50 p-2 text-white backdrop-blur-sm transition-colors hover:bg-black/70"
+            className="fixed top-[max(1rem,env(safe-area-inset-top))] right-[max(1rem,env(safe-area-inset-right))] z-100 rounded-full bg-black/50 p-2 text-white backdrop-blur-sm transition-colors hover:bg-black/70"
             aria-label="Close zoom"
           >
             <svg

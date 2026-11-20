@@ -8,8 +8,7 @@ import type { Metadata } from 'next'
 
 export const metadata: Metadata = genPageMetadata({
   title: 'About',
-  description:
-    'About BitWise — the engineer behind the projects and backend systems explored here.',
+  description: 'About BitWise, the engineer behind the projects and backend systems explored here.',
   path: 'about',
 })
 

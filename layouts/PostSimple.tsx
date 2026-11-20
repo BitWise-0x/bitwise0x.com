@@ -36,7 +36,7 @@ export default function PostLayout({ content, next, prev, children }: LayoutProp
         <PostTitle title={title} />
       </header>
 
-      <div className="prose dark:prose-invert max-w-none">{children}</div>
+      <div className="prose dark:prose-invert max-w-(--measure)">{children}</div>
 
       <footer className="post-foot">
         <div className="ledger-pager">

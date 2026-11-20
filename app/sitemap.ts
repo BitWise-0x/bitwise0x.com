@@ -1,4 +1,5 @@
 import { MetadataRoute } from 'next'
+import { slug } from 'github-slugger'
 import { allBlogs } from 'contentlayer/generated'
 import siteMetadata from '@/data/siteMetadata'
 import tagData from 'app/tag-data.json'
@@ -24,10 +25,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
     lastModified: latestDate,
   }))
 
-  const tagRoutes = Object.keys(tagData as Record<string, number>).map((tag) => ({
-    url: `${siteUrl}/tags/${tag}`,
-    lastModified: latestDate,
-  }))
+  // a tag page changes when one of its posts does
+  const tagRoutes = Object.keys(tagData as Record<string, number>).map((tag) => {
+    const dates = publishedPosts
+      .filter((post) => post.tags?.some((t) => slug(t) === tag))
+      .map((post) => post.lastmod || post.date)
+      .sort()
+    return { url: `${siteUrl}/tags/${tag}`, lastModified: dates.at(-1) ?? latestDate }
+  })
 
   return [...routes, ...blogRoutes, ...tagRoutes]
 }

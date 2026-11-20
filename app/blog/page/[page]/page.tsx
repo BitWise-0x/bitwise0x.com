@@ -11,7 +11,11 @@ export async function generateMetadata(props: {
   params: Promise<{ page: string }>
 }): Promise<Metadata> {
   const { page } = await props.params
-  return genPageMetadata({ title: 'Blog', path: `blog/page/${page}` })
+  // page 1 is the blog index itself
+  return genPageMetadata({
+    title: page === '1' ? 'Blog' : `Blog, page ${page}`,
+    path: page === '1' ? 'blog' : `blog/page/${page}`,
+  })
 }
 
 export const generateStaticParams = async () => {

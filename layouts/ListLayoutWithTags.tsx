@@ -88,10 +88,7 @@ export default function ListLayoutWithTags({
           const showThumbnail = heroImage && !heroImage.includes('social-banner')
 
           return (
-            <li
-              key={path}
-              className={showThumbnail ? 'record no-side has-thumb' : 'record no-side'}
-            >
+            <li key={path} className={showThumbnail ? 'record has-thumb' : 'record'}>
               {showThumbnail && (
                 <Link href={`/${path}`} aria-hidden="true" tabIndex={-1} className="record-thumb">
                   {video ? (

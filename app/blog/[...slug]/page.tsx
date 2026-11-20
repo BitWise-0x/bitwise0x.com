@@ -42,20 +42,21 @@ export async function generateMetadata(props: {
   const modifiedAt = new Date(post.lastmod || post.date).toISOString()
   const authors = authorDetails.map((author) => author.name)
   const heroImage = post.heroImage || siteMetadata.socialBanner
+  // no width/height: heroes come in their own sizes, and a wrong declared size gets cropped
   const ogImages = [
     {
       url: heroImage.includes('http') ? heroImage : siteMetadata.siteUrl + versioned(heroImage),
-      width: 1200,
-      height: 630,
+      alt: post.title,
     },
   ]
+  const description = post.description || post.summary
 
   return {
     title: post.title,
-    description: post.summary,
+    description,
     openGraph: {
       title: post.title,
-      description: post.summary,
+      description,
       siteName: siteMetadata.title,
       locale: 'en_US',
       type: 'article',
@@ -72,14 +73,18 @@ export async function generateMetadata(props: {
     twitter: {
       card: 'summary_large_image',
       title: post.title,
-      description: post.summary,
-      images: ogImages.map((img) => img.url),
+      description,
+      images: ogImages,
+      site: '@BitWise_0x',
+      creator: '@BitWise_0x',
     },
   }
 }
 
 export const generateStaticParams = async () => {
-  return allBlogs.map((p) => ({ slug: p.slug.split('/').map((name) => decodeURI(name)) }))
+  return allBlogs
+    .filter((p) => !p.draft)
+    .map((p) => ({ slug: p.slug.split('/').map((name) => decodeURI(name)) }))
 }
 
 export default async function Page(props: { params: Promise<{ slug: string[] }> }) {
@@ -109,8 +114,19 @@ export default async function Page(props: { params: Promise<{ slug: string[] }> 
   jsonLd['author'] = authorDetails.map((author) => ({
     '@type': 'Person',
     name: author.name,
+    url: `${siteMetadata.siteUrl}/about`,
     sameAs: [author.github, author.twitter].filter(Boolean),
   }))
+  jsonLd['publisher'] = {
+    '@type': 'Organization',
+    '@id': `${siteMetadata.siteUrl}/#organization`,
+    name: 'BitWise',
+    logo: {
+      '@type': 'ImageObject',
+      url: siteMetadata.siteUrl + versioned('/static/images/logo.png'),
+    },
+  }
+  jsonLd['mainEntityOfPage'] = { '@type': 'WebPage', '@id': jsonLd['url'] }
 
   const Layout = layouts[post.layout || defaultLayout]
 

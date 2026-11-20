@@ -201,11 +201,13 @@ async function render(node, outPath) {
   writeFileSync(outPath, png)
 }
 
-async function generateOgImages() {
-  // The default social banner feeds siteMetadata.socialBanner, so it must be
-  // regenerated here rather than left as a hand-made static that drifts.
-  await render(bannerTemplate(), path.join(outputFolder, 'static', 'images', 'social-banner.png'))
+// The default social banner feeds siteMetadata.socialBanner. It is rendered into public/ before
+// the asset manifest is hashed, so its ?v= always matches the file that ships.
+export async function banner() {
+  await render(bannerTemplate(), path.join('public', 'static', 'images', 'social-banner.png'))
+}
 
+async function generateOgImages() {
   for (const tag of Object.keys(tagData)) {
     await render(titleTemplate(tag), path.join(outputFolder, 'static', 'og', 'tags', `${tag}.png`))
   }
@@ -218,3 +220,5 @@ const og = async () => {
   console.log('OG images generated...')
 }
 export default og
+
+if (process.argv.includes('--banner')) await banner()

@@ -97,7 +97,7 @@ export default function Mermaid({ chart }: { chart: string }) {
           dangerouslySetInnerHTML={{ __html: svg }}
         />
         <span
-          className="pointer-events-none absolute top-2 right-2 rounded-full bg-black/50 p-1.5 text-white opacity-0 backdrop-blur-sm transition-opacity group-focus-within:opacity-100 group-hover:opacity-100"
+          className="pointer-events-none absolute top-2 right-2 rounded-full bg-black/50 p-1.5 text-white opacity-0 backdrop-blur-sm transition-opacity group-focus-within:opacity-100 group-hover:opacity-100 [@media(hover:none)]:opacity-100"
           aria-hidden="true"
         >
           <svg
@@ -146,7 +146,7 @@ export default function Mermaid({ chart }: { chart: string }) {
                 <DialogPanel className="w-full max-w-5xl">
                   <div
                     ref={containerRef}
-                    className="origin-center rounded-lg bg-[#0c0f0e] p-4 transition-transform duration-100 ease-out [&_svg]:h-auto [&_svg]:w-full [&_svg]:max-w-none!"
+                    className="origin-center rounded-lg bg-[#0c0f0e] p-4 transition-transform duration-100 ease-out [&_svg]:h-auto [&_svg]:max-h-[85dvh] [&_svg]:w-full [&_svg]:max-w-none!"
                     style={{ touchAction: 'none' }}
                     onTouchStart={handleTouchStart}
                     onTouchMove={handleTouchMove}
@@ -161,7 +161,7 @@ export default function Mermaid({ chart }: { chart: string }) {
 
           <button
             onClick={close}
-            className="fixed top-4 right-4 z-100 rounded-full bg-black/50 p-2 text-white backdrop-blur-sm transition-colors hover:bg-black/70"
+            className="fixed top-[max(1rem,env(safe-area-inset-top))] right-[max(1rem,env(safe-area-inset-right))] z-100 rounded-full bg-black/50 p-2 text-white backdrop-blur-sm transition-colors hover:bg-black/70"
             aria-label="Close zoom"
           >
             <svg

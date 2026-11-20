@@ -47,7 +47,7 @@ export default function ShareLinks({ path, title }: ShareLinksProps) {
   }
 
   return (
-    <div className="prose-summary flex flex-wrap items-center gap-x-3 gap-y-1 pt-6 pb-6 text-sm">
+    <div className="share-links prose-summary flex flex-wrap items-center gap-x-3 gap-y-1 pt-6 pb-6 text-sm">
       <button
         onClick={handleShareToX}
         data-umami-event="share-x"

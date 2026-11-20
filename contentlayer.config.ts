@@ -118,6 +118,8 @@ export const Blog = defineDocumentType(() => ({
     lastmod: { type: 'date' },
     draft: { type: 'boolean' },
     summary: { type: 'string' },
+    // meta description when the summary runs past what search results show (~155 characters)
+    description: { type: 'string' },
     images: { type: 'json' },
     // basename of a project loop in /static/videos/projects; the blog list plays it in place of the hero image
     video: { type: 'string' },
@@ -150,7 +152,7 @@ export const Blog = defineDocumentType(() => ({
           headline: doc.title,
           datePublished: doc.date,
           dateModified: doc.lastmod || doc.date,
-          description: doc.summary,
+          description: doc.description || doc.summary,
           image,
           url: `${siteMetadata.siteUrl}/${doc._raw.flattenedPath}`,
           ...(doc.tags && doc.tags.length > 0 && { keywords: doc.tags }),

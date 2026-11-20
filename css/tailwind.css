@@ -38,19 +38,6 @@
   --color-gray-800: oklch(0.278 0.033 256.848);
   --color-gray-900: oklch(0.21 0.034 264.665);
   --color-gray-950: oklch(0.129 0.042 264.695);
-
-  /* Line heights */
-  --line-height-11: 2.75rem;
-  --line-height-12: 3rem;
-  --line-height-13: 3.25rem;
-  --line-height-14: 3.5rem;
-
-  /* Z-index values */
-  --z-60: 60;
-  --z-70: 70;
-  --z-80: 80;
-  --z-90: 90;
-  --z-100: 100;
 }
 
 /*
@@ -130,27 +117,14 @@
     & video {
       width: 100%;
       height: auto;
+      /* holds a 16:9 box until the poster loads, then follows the video's own ratio */
+      aspect-ratio: auto 16 / 9;
     }
     /* a `---` divider used directly under a section heading is a header rule,
        not a thematic break: tighten the gap to its content so it doesn't read
        as double-spaced. standalone dividers keep the default 3em rhythm. */
     & :where(h1, h2, h3, h4) + hr {
       margin-bottom: 1.5em;
-    }
-  }
-
-  .prose-invert {
-    & a {
-      color: var(--color-primary-500);
-      &:hover {
-        color: var(--color-primary-600);
-      }
-      & code {
-        color: var(--color-primary-400);
-      }
-    }
-    & :where(h1, h2, h3, h4, h5, h6) {
-      color: var(--color-gray-100);
     }
   }
 }
@@ -170,6 +144,36 @@
   --color-signal: var(--color-primary-600); /* brand sodium amber */
   --color-signal-dim: var(--color-primary-700);
   --color-oss: #4a5354; /* open-source pill, neutral so it never competes with the amber signal */
+  /* mono UI sizes: phone-first, stepped down where the reading distance is longer */
+  --text-ui: 0.9rem; /* nav, pager, author links, empty states */
+  --text-label: 0.875rem; /* row tags, links, dates */
+  --text-micro: 0.78rem; /* pills, kickers, column heads, footer */
+  /* headings: fluid between phone and desktop, rem + vw so browser zoom still scales them */
+  --step-title: clamp(1.7rem, 1.45rem + 1vw, 2.1rem); /* page and post titles */
+  --step-item: clamp(1.35rem, 1.25rem + 0.45vw, 1.55rem); /* list item titles */
+  --step-lead: clamp(1.2rem, 1.1rem + 0.45vw, 1.4rem);
+  --measure: 72ch; /* post body line length */
+  --tap: 2.75rem; /* minimum touch target */
+  /* sticky header height, so in-page jumps land below it */
+  --nav-h: 9rem;
+}
+@media (width >= 48rem) {
+  :root {
+    --text-ui: 0.82rem;
+    --text-label: 0.74rem;
+    --text-micro: 0.7rem;
+    --nav-h: 10rem;
+  }
+}
+/* short screens (landscape phones): the header scrolls away instead of covering the page */
+@media (height < 30rem) {
+  :root {
+    --nav-h: 0rem;
+  }
+}
+html {
+  scroll-padding-top: calc(var(--nav-h) + 1rem);
+  scrollbar-gutter: stable;
 }
 :is(.dark, .dark *) {
   --bg: #0c0f0e;
@@ -216,7 +220,7 @@
   /* top navigation bar, frozen on scroll */
   .topnav {
     position: sticky;
-    top: env(safe-area-inset-top, 0px);
+    top: 0;
     z-index: 40;
     background: color-mix(in oklab, var(--bg) 88%, transparent);
     backdrop-filter: blur(10px);
@@ -224,12 +228,16 @@
     display: flex;
     flex-direction: column;
     gap: 1.1rem;
-    padding: 1.75rem 0 1.1rem;
+    /* the top inset is padding, so the blurred bar also covers the status bar area */
+    padding: calc(1.75rem + env(safe-area-inset-top, 0px)) 0 1.1rem;
   }
-  @media (min-width: 768px) {
-    .topnav { padding: 2.5rem 0 1.25rem; gap: 1.3rem; }
+  @media (width >= 48rem) {
+    .topnav { padding: calc(2.5rem + env(safe-area-inset-top, 0px)) 0 1.25rem; gap: 1.3rem; }
   }
-  .topnav .mark { display: flex; align-items: center; gap: 0.7rem; text-decoration: none; flex: none; }
+  @media (height < 30rem) {
+    .topnav { position: static; }
+  }
+  .topnav .mark { display: flex; align-items: center; text-decoration: none; flex: none; }
   /* nav links + search share one row, search pushed to the far right */
   .topnav .topnav-row {
     display: flex; align-items: center; gap: 0.4rem 1.4rem; flex-wrap: wrap;
@@ -245,7 +253,7 @@
   .topnav .mark .mark-text { display: flex; flex-direction: column; line-height: 1.05; min-width: 0; }
   .topnav .mark b { font-weight: 600; letter-spacing: -0.015em; font-size: 2.05rem; color: var(--fg); }
   .topnav .mark .mark-tagline {
-    font-family: var(--font-mono); font-size: 0.84rem; letter-spacing: 0.14em;
+    font-family: var(--font-mono); font-size: var(--text-ui); letter-spacing: 0.14em;
     text-transform: uppercase; color: var(--muted); margin-top: 0.3rem;
   }
   .topnav nav {
@@ -253,7 +261,7 @@
     gap: 0.4rem 1.4rem;
   }
   .topnav nav a {
-    font-family: var(--font-mono); font-size: 0.82rem; letter-spacing: 0.02em;
+    font-family: var(--font-mono); font-size: var(--text-ui); letter-spacing: 0.02em;
     color: var(--muted); text-decoration: none; padding: 0.2rem 0;
     border-bottom: 1.5px solid transparent;
   }
@@ -270,13 +278,13 @@
      height on every page (fluid when switching between them) */
   .ledger-lead { padding-bottom: 0.9rem; border-bottom: 1px solid var(--line); margin-bottom: 2.1rem; }
   .ledger-lead .kicker {
-    font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.14em;
+    font-family: var(--font-mono); font-size: var(--text-micro); letter-spacing: 0.14em;
     text-transform: uppercase; color: var(--color-signal); margin: 0 0 0.6rem;
     display: flex; align-items: center; gap: 0.6rem;
   }
   .ledger-lead h1 {
     font-family: var(--font-sans); font-weight: 600;
-    font-size: clamp(1.7rem, 4vw, 2.1rem); line-height: 1.1;
+    font-size: var(--step-title); line-height: 1.1;
     letter-spacing: -0.03em; margin: 0; text-wrap: balance; max-width: 20ch;
     color: var(--fg);
   }
@@ -289,16 +297,16 @@
   }
   .ledger-lead .lead-sub > span:first-child { max-width: 48ch; }
   /* no visible title: the subtext carries the page */
-  .ledger-lead.no-title .lead-sub { margin-top: 0; font-size: clamp(1.2rem, 2.6vw, 1.4rem); line-height: 1.35; }
+  .ledger-lead.no-title .lead-sub { margin-top: 0; font-size: var(--step-lead); line-height: 1.35; }
   .ledger-lead .lead-aside {
-    flex: none; font-family: var(--font-mono); font-size: 0.7rem;
+    flex: none; font-family: var(--font-mono); font-size: var(--text-micro);
     letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted);
   }
 
   /* ledger column header */
   .ledger-head {
     display: flex; justify-content: space-between; align-items: baseline;
-    font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.1em;
+    font-family: var(--font-mono); font-size: var(--text-micro); letter-spacing: 0.1em;
     text-transform: uppercase; color: var(--muted);
     padding: 0 0 0.9rem;
   }
@@ -306,64 +314,30 @@
   /* records */
   .records { list-style: none; margin: 0; padding: 0; }
 
-  /* MOBILE: head (title + tagline) on top, then thumbnail, then body.
-     the date/side (blog) sits top-right next to the head. */
+  /* phones: title and tagline, then thumbnail, then body */
   .record {
     display: grid;
-    grid-template-columns: 1fr auto;
-    grid-template-areas:
-      "head side"
-      "body body";
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas: "head" "body";
     column-gap: 1rem;
     row-gap: 0.9rem;
     padding: 2.2rem 0;
     border-top: 1px solid var(--line);
     align-items: start;
   }
-  .record.has-thumb {
-    grid-template-areas:
-      "head  side"
-      "thumb thumb"
-      "body  body";
-  }
-  /* no date/side column: head spans full width, then thumb, then body */
-  .record.no-side {
-    grid-template-columns: 1fr;
-    grid-template-areas: "head" "body";
-  }
-  .record.no-side.has-thumb {
-    grid-template-areas: "head" "thumb" "body";
-  }
+  .record.has-thumb { grid-template-areas: "head" "thumb" "body"; }
   .record .record-head { grid-area: head; margin: 0; }
   .record .record-body { grid-area: body; margin: 0; }
-  .record .side { grid-area: side; }
   .record .record-thumb { grid-area: thumb; }
   /* the lead already draws the separator, so the first record drops its own */
   .records-topline { margin-top: 0; }
   .records-topline .record:first-child { border-top: none; padding-top: 0; }
 
-  /* DESKTOP: thumbnail left, text column right (head + body stacked),
-     blog date in its own side column. thumbnail matches text height. */
-  @media (min-width: 768px) {
-    .record {
-      grid-template-columns: 1fr 150px;
-      grid-template-areas:
-        "head side"
-        "body side";
-    }
+  /* wider screens: thumbnail left, title and body stacked to its right; the thumbnail
+     column gives way before the text column gets cramped */
+  @media (width >= 48rem) {
     .record.has-thumb {
-      grid-template-columns: 320px 1fr 150px;
-      grid-template-areas:
-        "thumb head side"
-        "thumb body side";
-    }
-    /* projects (no .side content) collapse the side column */
-    .record.no-side {
-      grid-template-columns: 1fr;
-      grid-template-areas: "head" "body";
-    }
-    .record.no-side.has-thumb {
-      grid-template-columns: 340px 1fr;
+      grid-template-columns: minmax(0, clamp(14rem, 34%, 340px)) minmax(0, 1fr);
       grid-template-areas:
         "thumb head"
         "thumb body";
@@ -371,43 +345,31 @@
   }
 
   .record h3 {
-    font-family: var(--font-sans); font-weight: 600; font-size: 1.55rem;
+    font-family: var(--font-sans); font-weight: 600; font-size: var(--step-item);
     letter-spacing: -0.01em; margin: 0 0 0.3rem;
   }
   .record h3 a { color: var(--fg); text-decoration: none; }
   .record h3 a:hover { color: var(--color-signal); }
   /* tagline themed in the signal color, right under the title */
   .record .tag {
-    font-family: var(--font-mono); font-size: 0.74rem; color: var(--color-signal);
+    font-family: var(--font-mono); font-size: var(--text-label); color: var(--color-signal);
     letter-spacing: 0.02em; margin: 0;
   }
   .record .tag a { color: inherit; text-decoration: none; }
   .record .tag a:hover { color: var(--fg); }
-  .record .desc { margin: 0; color: var(--fg-soft); font-size: 0.98rem; max-width: 62ch; }
-  .record .links { display: flex; gap: 1.2rem; flex-wrap: wrap; margin-top: 0.9rem; }
+  .record .desc { margin: 0; color: var(--fg-soft); font-size: 1rem; max-width: 62ch; }
+  .record .links { display: flex; gap: 0 1.2rem; flex-wrap: wrap; align-items: center; margin-top: 0.9rem; }
   .record .links a {
-    font-family: var(--font-mono); font-size: 0.74rem; color: var(--fg);
+    font-family: var(--font-mono); font-size: var(--text-label); color: var(--fg);
     text-decoration: none; letter-spacing: 0.02em;
   }
   .record .links a::after { content: " ↗"; color: var(--color-signal); }
   .record .links a:hover { color: var(--color-signal); }
   .record .links .meta {
-    font-family: var(--font-mono); font-size: 0.7rem; color: var(--fg-soft);
+    font-family: var(--font-mono); font-size: var(--text-label); color: var(--fg-soft);
     letter-spacing: 0.02em;
   }
   .record .links .meta time { color: var(--fg-soft); font-weight: 400; }
-  .record .side {
-    font-family: var(--font-mono); font-size: 0.7rem; color: var(--fg-soft);
-    display: flex; gap: 0.5rem; flex-wrap: wrap; align-items: center;
-    justify-content: flex-end; text-align: right;
-  }
-  @media (min-width: 768px) {
-    .record .side {
-      flex-direction: column; align-items: flex-end; gap: 0.3rem;
-      padding-top: 0.35rem;
-    }
-  }
-  .record .side time { color: var(--fg); font-weight: 500; }
 
   /* thumbnail: natural 16:9, top-aligned, never cropped to fit text height */
   .record .record-thumb {
@@ -419,7 +381,7 @@
 
   .pill {
     display: inline-flex; align-items: center; gap: 0.4rem;
-    font-family: var(--font-mono); font-size: 0.64rem; letter-spacing: 0.08em; text-transform: uppercase;
+    font-family: var(--font-mono); font-size: var(--text-micro); letter-spacing: 0.08em; text-transform: uppercase;
     padding: 0.2rem 0.5rem; border-radius: 3px;
     border: 1px solid var(--line); color: var(--fg-soft); white-space: nowrap;
   }
@@ -432,11 +394,12 @@
     border-top: 1px solid var(--line);
     padding: 1.6rem 0;
     display: flex; justify-content: space-between; align-items: center; gap: 1rem;
-    font-family: var(--font-mono); font-size: 0.7rem; color: var(--muted); letter-spacing: 0.04em;
+    font-family: var(--font-mono); font-size: var(--text-micro); color: var(--muted); letter-spacing: 0.04em;
     white-space: nowrap;
+    padding-bottom: calc(1.6rem + env(safe-area-inset-bottom, 0px));
   }
-  /* smallest phones: icons only so the row still fits on one line */
-  @media (max-width: 359px) {
+  /* narrow phones: icons only so the row still fits on one line */
+  @media (width < 24rem) {
     .ledger-footer .footer-links a > span { display: none; }
   }
   .ledger-footer a { color: var(--muted); text-decoration: none; }
@@ -445,26 +408,8 @@
   .ledger-footer .footer-links a { display: inline-flex; align-items: center; gap: 0.4rem; white-space: nowrap; }
   .ledger-footer .footer-links a .icon { width: 0.95rem; height: 0.95rem; flex: none; fill: currentColor; }
 
-  /* records: date / reading-time metadata in .side */
-  .record .side time { color: var(--fg); font-weight: 500; }
-
-  /* search box on tag pages */
-  .ledger-search { padding: 1.4rem 0 0; }
-  .ledger-search input {
-    width: 100%; max-width: 32rem;
-    background: var(--surface); color: var(--fg);
-    border: 1px solid var(--line); border-radius: 6px;
-    padding: 0.55rem 0.9rem;
-    font-family: var(--font-mono); font-size: 0.82rem; letter-spacing: 0.01em;
-  }
-  .ledger-search input::placeholder { color: var(--muted); }
-  .ledger-search input:focus {
-    outline: none; border-color: var(--color-signal);
-    box-shadow: 0 0 0 3px color-mix(in oklab, var(--color-signal) 18%, transparent);
-  }
-
   .ledger-empty {
-    font-family: var(--font-mono); font-size: 0.82rem; color: var(--muted);
+    font-family: var(--font-mono); font-size: var(--text-ui); color: var(--muted);
     padding: 1.5rem 0; border-top: 1px solid var(--line);
   }
 
@@ -472,7 +417,7 @@
   .ledger-pager {
     display: flex; justify-content: space-between; align-items: center; gap: 1rem; flex-wrap: wrap;
     margin-top: 2rem; padding-top: 1.4rem; border-top: 1px solid var(--line);
-    font-family: var(--font-mono); font-size: 0.78rem; letter-spacing: 0.02em;
+    font-family: var(--font-mono); font-size: var(--text-ui); letter-spacing: 0.02em;
   }
   .ledger-pager a { color: var(--fg); text-decoration: none; }
   .ledger-pager a:hover { color: var(--color-signal); }
@@ -506,7 +451,7 @@
   .author-body { padding-top: 2.4rem; }
   .author-links {
     list-style: none; margin: 0.7rem 0 0; padding: 0;
-    font-family: var(--font-mono); font-size: 0.78rem;
+    font-family: var(--font-mono); font-size: var(--text-ui);
     display: flex; flex-direction: column; gap: 0.6rem;
   }
   .author-links li { display: flex; }
@@ -526,7 +471,7 @@
   .post-banner img { width: 100%; height: 100%; object-fit: cover; }
   .post-head { padding-bottom: 2rem; border-bottom: 1px solid var(--line); margin-bottom: 2.2rem; }
   .post-head .kicker {
-    font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.08em;
+    font-family: var(--font-mono); font-size: var(--text-micro); letter-spacing: 0.08em;
     text-transform: uppercase; color: var(--color-signal); margin: 0 0 1rem;
     display: flex; align-items: center; column-gap: 1.1rem; row-gap: 0.35rem; flex-wrap: wrap;
     overflow: hidden;
@@ -539,8 +484,8 @@
   .post-head .kicker .sep::before { content: '·'; position: absolute; left: -0.8rem; }
   .post-head h1 {
     font-family: var(--font-sans); font-weight: 600;
-    font-size: 1.55rem; line-height: 1.2;
-    letter-spacing: -0.01em; margin: 0; color: var(--fg); text-wrap: balance;
+    font-size: var(--step-title); line-height: 1.15;
+    letter-spacing: -0.02em; margin: 0; color: var(--fg); text-wrap: balance;
   }
   .post-foot {
     margin-top: 2.5rem; padding-top: 1.6rem; border-top: 1px solid var(--line);
@@ -549,7 +494,7 @@
   .post-foot .ledger-head { padding: 0 0 0.6rem; }
   .post-tags .flex { gap: 0.5rem; }
   .post-nav { display: grid; gap: 1.2rem; }
-  @media (min-width: 640px) { .post-nav { grid-template-columns: 1fr 1fr; } }
+  @media (width >= 40rem) { .post-nav { grid-template-columns: 1fr 1fr; } }
   .post-nav a { font-family: var(--font-sans); color: var(--color-signal); text-decoration: none; font-weight: 500; }
   .post-nav a:hover { text-decoration: underline; }
   .post-comments { margin-top: 2.5rem; padding-top: 1.6rem; border-top: 1px solid var(--line); }
@@ -558,19 +503,30 @@
   .related-posts ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.5rem; }
   .related-posts a { color: var(--color-signal); text-decoration: none; font-weight: 500; }
   .related-posts a:hover { text-decoration: underline; }
+
+  /* touch screens: every standalone control gets a full-size target; inline tag links in
+     running text get a taller hit area through padding, which leaves the line box alone */
+  @media (pointer: coarse) {
+    .topnav nav a,
+    .topnav-search .search-btn,
+    .record .links a,
+    .ledger-pager a,
+    .tag-cloud .pill,
+    .post-tags .pill,
+    .author-links a,
+    .ledger-footer .footer-links a,
+    .post-nav a,
+    .related-posts a,
+    .share-links button {
+      display: inline-flex; align-items: center; min-height: var(--tap);
+    }
+    .topnav-search .search-btn { min-width: var(--tap); }
+    .record .links { margin-top: 0.3rem; }
+    .record .tag a { padding-block: 0.7rem; }
+  }
 }
 
 /* Semantic text colors */
-.text-heading {
-  color: var(--fg);
-}
-a.text-heading:hover {
-  color: var(--color-signal);
-}
-:is(.dark, .dark *) a.text-heading:hover {
-  color: var(--color-signal);
-}
-
 .text-muted {
   color: var(--muted);
 }
@@ -580,22 +536,10 @@ a.text-heading:hover {
 }
 
 .text-link {
-  color: var(--color-primary-500);
+  color: var(--color-signal);
 }
 .text-link:hover {
-  color: var(--color-primary-600);
-}
-:is(.dark, .dark *) .text-link:hover {
-  color: var(--color-primary-500);
-}
-
-/* Eyebrow: uppercase kicker under a heading, in the brand amber */
-.eyebrow {
-  color: var(--color-primary-500);
-  font-size: 0.875rem;
-  line-height: 1.5rem;
-  font-weight: 500;
-  text-transform: uppercase;
+  color: var(--fg);
 }
 
 /* Semantic backgrounds */
@@ -603,47 +547,14 @@ a.text-heading:hover {
   background-color: var(--bg);
 }
 
-.bg-surface {
-  background-color: var(--surface);
-}
-
-.bg-dropdown {
-  background-color: var(--color-white, #fff);
-}
-:is(.dark, .dark *) .bg-dropdown {
-  background-color: var(--color-gray-800);
-}
-
 /* Semantic buttons */
 .btn-icon {
-  background-color: var(--color-gray-200);
-  color: var(--color-gray-500);
+  background-color: var(--surface);
+  color: var(--muted);
+  border: 1px solid var(--line);
 }
 .btn-icon:hover {
-  background-color: var(--color-gray-300);
-}
-:is(.dark, .dark *) .btn-icon {
-  background-color: var(--color-gray-700);
-  color: var(--color-gray-400);
-}
-:is(.dark, .dark *) .btn-icon:hover {
-  background-color: var(--color-gray-600);
-}
-
-/* Semantic borders & dividers */
-.divide-theme > :not(:last-child) {
-  border-color: var(--line);
-}
-
-.border-theme {
-  border-color: var(--line);
-}
-
-/* Centralized page title sizing */
-.page-title {
-  @apply text-3xl leading-9 font-extrabold tracking-tight sm:text-4xl sm:leading-10 md:text-4xl md:leading-12;
-  color: var(--fg);
-  white-space: pre-line;
+  color: var(--color-signal);
 }
 
 .task-list-item::before {
@@ -656,10 +567,7 @@ a.text-heading:hover {
 
 .footnotes {
   @apply mt-12 border-t pt-8;
-  border-color: var(--color-gray-200);
-}
-:is(.dark, .dark *) .footnotes {
-  border-color: var(--color-gray-700);
+  border-color: var(--line);
 }
 
 .data-footnote-backref {
@@ -668,15 +576,6 @@ a.text-heading:hover {
 
 .csl-entry {
   @apply my-5;
-}
-
-.no-scrollbar::-webkit-scrollbar {
-  display: none;
-}
-
-.no-scrollbar {
-  -ms-overflow-style: none; /* IE and Edge */
-  scrollbar-width: none; /* Firefox */
 }
 
 /* https://stackoverflow.com/questions/61083813/how-to-avoid-internal-autofill-selected-style-to-be-applied */
@@ -698,7 +597,8 @@ input:-webkit-autofill:focus {
 }
 
 .content-header:hover .content-header-link,
-.content-header-link:hover {
+.content-header-link:hover,
+.content-header-link:focus-visible {
   opacity: 1;
 }
 
@@ -728,7 +628,7 @@ input:-webkit-autofill:focus {
 .backdrop-blur.backdrop-filter input {
   color: var(--fg) !important;
   font-family: var(--font-sans) !important;
-  /* @tailwindcss/forms gives a bare input a gray border that turns blue on focus; match .ledger-search instead */
+  /* @tailwindcss/forms gives a bare input a gray border that turns blue on focus; match the ledger surface and hairline instead */
   background: var(--surface) !important;
   border: 1px solid var(--line) !important;
   border-radius: 6px !important;

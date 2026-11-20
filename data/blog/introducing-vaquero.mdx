@@ -1,7 +1,7 @@
 ---
-title: 'Vaquero: Find and round up every photo, by face'
+title: "Vaquero: Find and round up every\u00a0photo\u00a0&\u00a0video, by face"
 date: '2026-11-19'
-lastmod: '2026-11-19'
+lastmod: '2026-11-20'
 tags: ['ai', 'projects', 'machine-learning', 'computer-vision', 'python', 'macos', 'privacy']
 draft: false
 summary: 'Finding every photo of one person across years of backups usually means scrolling by hand or uploading the whole collection to a cloud service. Vaquero is a free Mac app that learns a face from a few photos, finds that person in a folder of photos and videos, and copies or moves the matches, without anything leaving the machine.'
@@ -91,7 +91,7 @@ Videos are handled in the same way. Vaquero samples ten evenly spaced frames by 
   src="/static/images/blog/vaquero/scanning.webp"
   alt="A scan in progress"
   width={960}
-  height={959}
+  height={938}
 />
 
 Both models run on the Neural Engine and the GPU through Core ML, and reading, decoding and recognition overlap. On an M1 Max a folder of 12-megapixel JPEGs goes by at about 20 photos a second. HEIC photos take a little longer to decode.
@@ -120,7 +120,7 @@ Every copy and move is written to a journal and can be undone. Cancelling a run 
   src="/static/images/blog/vaquero/first-launch.webp"
   alt="The face model downloading on first launch"
   width={960}
-  height={959}
+  height={938}
 />
 
 The app is signed and notarized, so it opens like any other Mac app and checks for updates itself. On first launch it downloads the face model from InsightFace's own release, verifies it against a pinned checksum and keeps it in Application Support. After that, the network is only used for update checks.

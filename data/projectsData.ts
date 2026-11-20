@@ -15,7 +15,7 @@ interface Project {
 const projectsData: Project[] = [
   {
     title: 'Vaquero',
-    tagline: 'Find and round up every photo, by face',
+    tagline: 'Find and round up every\u00a0photo\u00a0&\u00a0video, by face',
     description: `A free Mac app that learns a face from a few photos and finds every photo and video of
     that person in a folder. You check the matches, then copy or move them. It runs on an
     open-source face model, entirely on your Mac.`,

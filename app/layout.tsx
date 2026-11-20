@@ -12,6 +12,11 @@ import { versioned } from 'lib/asset'
 import { ThemeProviders } from './theme-providers'
 import { Metadata, Viewport } from 'next'
 
+// page zoom stays off: zoom keys, Ctrl/Cmd with the wheel or trackpad pinch, Safari's gesture pinch
+const NO_ZOOM = `addEventListener("keydown", (e) => { if ((e.ctrlKey || e.metaKey) && ["+", "=", "-", "_"].includes(e.key)) e.preventDefault(); });
+addEventListener("wheel", (e) => { if (e.ctrlKey || e.metaKey) e.preventDefault(); }, { passive: false });
+addEventListener("gesturestart", (e) => e.preventDefault());`
+
 const space_grotesk = Space_Grotesk({
   subsets: ['latin'],
   weight: ['400', '500', '600', '700'],
@@ -75,6 +80,8 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
   viewportFit: 'cover',
   themeColor: '#0c0f0e',
 }
@@ -85,7 +92,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html
       lang={siteMetadata.language}
-      className={`${space_grotesk.variable} ${ibm_plex_mono.variable} motion-safe:scroll-smooth`}
+      className={`${space_grotesk.variable} ${ibm_plex_mono.variable} scroll-smooth`}
       suppressHydrationWarning
     >
       <link
@@ -113,6 +120,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         title={siteMetadata.title}
         href={`${basePath}/feed.xml`}
       />
+      <script dangerouslySetInnerHTML={{ __html: NO_ZOOM }} />
       <body className="bg-page antialiased">
         <ThemeProviders>
           <Analytics analyticsConfig={siteMetadata.analytics as AnalyticsConfig} />

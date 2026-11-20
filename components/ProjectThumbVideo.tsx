@@ -5,13 +5,13 @@ import { versioned } from 'lib/asset'
 
 const basePath = process.env.BASE_PATH || ''
 
-// Plays only while on screen; with reduced motion it never loads and the poster stays.
+// Plays only while on screen.
 export default function ProjectThumbVideo({ src }: { src: string }) {
   const ref = useRef<HTMLVideoElement>(null)
 
   useEffect(() => {
     const video = ref.current
-    if (!video || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+    if (!video) return
 
     const observer = new IntersectionObserver(
       ([entry]) => {

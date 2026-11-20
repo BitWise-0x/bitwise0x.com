@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
 <title>Connect to BitWise</title>
 <meta name="description" content="Set up the RustDesk viewer once, then enter the ID BitWise gives you during the demo.">
 <meta name="robots" content="noindex">
@@ -36,7 +36,7 @@
     --sans:"Space Grotesk", ui-sans-serif, system-ui, sans-serif; --mono:"IBM Plex Mono", "JetBrains Mono", "SF Mono", Menlo, Consolas, monospace;
   }
   * { box-sizing:border-box; }
-  html { -webkit-text-size-adjust:100%; }
+  html { font-size:16px; -webkit-text-size-adjust:100%; text-size-adjust:100%; forced-color-adjust:none; touch-action:pan-x pan-y; }
   body { margin:0; background:var(--page); color:var(--text); font:16px/1.5 var(--sans); -webkit-font-smoothing:antialiased; padding:0 0 calc(40px + env(safe-area-inset-bottom)); }
   .wrap { max-width:1100px; margin:0 auto; padding-left:max(20px, env(safe-area-inset-left, 0px)); padding-right:max(20px, env(safe-area-inset-right, 0px)); }
   /* top nav: 0x mark, divider */
@@ -52,7 +52,6 @@
   .from { color:var(--primary); font:400 0.72rem/1.5 var(--mono); letter-spacing:.14em; text-transform:uppercase; margin:0 0 0.6rem; padding:0; display:flex; align-items:center; gap:0.6rem; }
   .led-pulse { width:6px; height:6px; border-radius:50%; background:var(--primary); flex:none; animation:led-pulse 2.4s infinite; }
   @keyframes led-pulse { 0%,100% { opacity:1; } 50% { opacity:.25; } }
-  @media (prefers-reduced-motion:reduce) { .led-pulse { animation:none; } }
   .sr-only { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }
   .lead-sub { margin:0; max-width:48ch; color:var(--muted); font-size:clamp(1.2rem, 2.6vw, 1.4rem); line-height:1.35; }
   .grid { display:grid; gap:56px 48px; grid-template-columns:1fr; padding-top:2.1rem; }
@@ -108,8 +107,12 @@
   .sha { font:500 12px/1.6 var(--mono); overflow-wrap:anywhere; }
   footer a { color:var(--primary); text-decoration:none; font-weight:500; transition:color .15s ease; } footer a:hover { color:var(--primary-hover); }
   footer details .sha { text-align:center; }
-  @media (prefers-reduced-motion: reduce) { .btn, summary { transition:none; } }
 </style>
+<script>
+addEventListener("keydown", (e) => { if ((e.ctrlKey || e.metaKey) && ["+", "=", "-", "_"].includes(e.key)) e.preventDefault(); });
+addEventListener("wheel", (e) => { if (e.ctrlKey || e.metaKey) e.preventDefault(); }, { passive: false });
+addEventListener("gesturestart", (e) => e.preventDefault());
+</script>
 </head>
 <body>
 <div class="wrap">

@@ -171,7 +171,13 @@
     --nav-h: 0rem;
   }
 }
+/* fixed root size and no zoom: browser font size, text inflation, forced colours and pinch never change the layout */
 html {
+  font-size: 16px;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  forced-color-adjust: none;
+  touch-action: pan-x pan-y;
   scroll-padding-top: calc(var(--nav-h) + 1rem);
   scrollbar-gutter: stable;
 }
@@ -201,9 +207,6 @@ html {
   animation: led-pulse 2.4s infinite;
   vertical-align: middle;
   flex-shrink: 0;
-}
-@media (prefers-reduced-motion: reduce) {
-  .led-pulse { animation: none; }
 }
 
 @layer components {

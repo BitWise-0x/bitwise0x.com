@@ -1,0 +1,146 @@
+---
+title: 'Vaquero: Find and round up every photo, by face'
+date: '2026-11-19'
+lastmod: '2026-11-19'
+tags: ['ai', 'projects', 'machine-learning', 'computer-vision', 'python', 'macos', 'privacy']
+draft: false
+summary: 'Finding every photo of one person across years of backups usually means scrolling by hand or uploading the whole collection to a cloud service. Vaquero is a free Mac app that learns a face from a few photos, finds that person in a folder of photos and videos, and copies or moves the matches, without anything leaving the machine.'
+images: ['/static/images/blog/vaquero/hero.png']
+video: '/static/videos/projects/vaquero-hero'
+authors: ['default']
+canonicalUrl: 'https://bitwise0x.com/blog/introducing-vaquero'
+---
+
+<LoopVideo src="/static/videos/projects/vaquero-hero" />
+
+Over the years my photos have ended up in more places than I can keep track of. There are old phone backups, a few external drives, a share on the NAS and the exports of several group chats. Most of the time that is fine, since nobody needs all of them at once. The trouble starts when you need the photos of one person, for example for a birthday album or a slideshow for a family event. At that point the choice is either to scroll through tens of thousands of files by hand, or to upload the whole collection to a service that does face recognition in the cloud.
+
+I did not like either option, so I built [Vaquero](https://vaquero.bitwise0x.com). You give it a few photos of someone and a folder to search, and it finds every photo and video of that person in it. You then check what it found and decide whether to copy or move the matches somewhere else. It runs on an open-source face model, entirely on your Mac, and no photo or face leaves it.
+
+<ZoomableImage
+  src="/static/images/blog/vaquero/scan-and-copy.webp"
+  alt="Vaquero scanning a folder, listing the matches, then copying them"
+  width={960}
+  height={1050}
+/>
+
+In this post, I walk through the four steps of a typical run:
+
+1. Teaching it a face
+2. Scanning a folder
+3. Checking the matches
+4. Copying or moving them
+
+## How It Works
+
+---
+
+The whole run fits in one picture. There is no account to create and no training step. You pick the reference photos, a folder and a destination, and nothing is copied or moved until you have looked at the results.
+
+<Mermaid chart={`
+flowchart LR
+    pick["Pick a few photos\nof the person"] --> learn["Vaquero learns\ntheir face"]
+    learn --> scan["It checks every photo\nand video in a folder"]
+    scan --> review["You check\nthe matches"]
+    review --> done["Copy, move or organize\nthem as you see fit"]
+    classDef default fill:#efb146,stroke:#a96a19,stroke-width:2px,color:#0c0f0e
+    classDef quiet fill:#1b221f,stroke:#2e3733,stroke-width:2px,color:#e7ece8
+    linkStyle default stroke:#efb146,stroke-width:2px
+
+`} />
+
+## Teaching It a Face
+
+---
+
+Three to five clear photos of the person are enough, ideally from different angles and different years. One or two photos also work, but with less protection against a bad one.
+
+The reference photos do not have to be portraits. This matters in practice, because most of the photos I have of the people I care about have other people in them. Vaquero finds every face in every reference photo and picks the person who appears across the most of them, even when somebody else's face is bigger. In each photo it then keeps the face closest to that person. As a last check, each photo is compared with the average of the others. A photo of someone else falls far from that average, so it is dropped and named in the log.
+
+There is one case it cannot settle by itself. If every reference photo shows the same couple, the two people are equally likely, and the log warns about it. A single photo of the person alone is enough to resolve it.
+
+> [!TIP]
+> The quality of the references matters more than their number. A handful of sharp, well-lit faces from different years will do better than twenty blurry ones.
+
+## Scanning a Folder
+
+---
+
+Once the references are in place, you pick the folder to scan and a destination, and click **Scan**. Subfolders are optional, and hidden folders and the destination itself are always skipped.
+
+Each photo goes through two models from InsightFace's open-source `buffalo_l` pack. The first, SCRFD, finds every face in the image along with five landmarks (the eyes, the nose and the corners of the mouth). Each face is then aligned on those landmarks and passed to ArcFace, which turns it into an embedding, a list of numbers that describes a face. The score of a file is how closely its best face resembles the reference face.
+
+<Mermaid chart={`
+flowchart LR
+    photo["A photo\nor video"] --> faces{"Any faces?"}
+    faces --> noface["No faces:\nstays where it is"]
+    faces --> same{"Is one of them\nthe person?"}
+    same --> someone["Someone else:\nstays where it is"]
+    same --> match["It's them:\nlisted as a match"]
+    classDef default fill:#efb146,stroke:#a96a19,stroke-width:2px,color:#0c0f0e
+    classDef quiet fill:#1b221f,stroke:#2e3733,stroke-width:2px,color:#e7ece8
+    linkStyle default stroke:#efb146,stroke-width:2px
+    class noface,someone quiet
+
+`} />
+
+Videos are handled in the same way. Vaquero samples ten evenly spaced frames by default, and a video takes the best score across them. Sampling more frames catches someone who only appears for a moment, although the scan takes longer.
+
+<ZoomableImage
+  src="/static/images/blog/vaquero/scanning.webp"
+  alt="A scan in progress"
+  width={960}
+  height={959}
+/>
+
+Both models run on the Neural Engine and the GPU through Core ML, and reading, decoding and recognition overlap. On an M1 Max a folder of 12-megapixel JPEGs goes by at about 20 photos a second. HEIC photos take a little longer to decode.
+
+## Checking the Matches
+
+---
+
+Nothing happens to the matches until you have seen them. They are listed in the log, and every file name opens the photo or video, so a doubtful one can be checked in a click.
+
+Lookalikes are the hard part of face matching, and I did not want to hide them behind a plain yes or no. Photos of the same person usually score between 0.5 and 0.8, while different people rarely pass 0.25. The default threshold is 0.35, and the band just above it is where small, blurred or side-on faces overlap with people who simply look alike. Anything from 0.35 to 0.45 is therefore marked `review` in orange, and the clearer matches are marked `match` in green.
+
+Each match also shows how many of the individual reference photos it matches on its own. A real match usually agrees with most of them, for example `5/5`. A lookalike tends to resemble the average face while matching few of the single photos, such as `1/5`, and that is often the quickest way to tell the two apart.
+
+The threshold can also be changed after a scan, and the list updates without scanning again. Raising it drops the doubtful matches, and lowering it picks up the hard shots so you can check them by eye.
+
+## Copying or Moving Them
+
+---
+
+When the list looks right, you choose **Copy** or **Move** and click **Execute**. Copy leaves the originals where they are, which suits building an album, while Move is useful for pulling one person's photos out of a mixed folder. If a file with the same name already exists in the destination, you can keep both or overwrite it.
+
+Every copy and move is written to a journal and can be undone. Cancelling a run is also safe, since each file is either fully copied or moved and journaled, or left untouched.
+
+<ZoomableImage
+  src="/static/images/blog/vaquero/first-launch.webp"
+  alt="The face model downloading on first launch"
+  width={960}
+  height={959}
+/>
+
+The app is signed and notarized, so it opens like any other Mac app and checks for updates itself. On first launch it downloads the face model from InsightFace's own release, verifies it against a pinned checksum and keeps it in Application Support. After that, the network is only used for update checks.
+
+> [!NOTE]
+> Vaquero is free and MIT licensed. The `buffalo_l` face model belongs to InsightFace and is licensed for non-commercial research use only. It is not part of Vaquero and is not covered by its license.
+
+## The Shoebox
+
+---
+
+When Kodak sold its first camera in 1888, the slogan was "You press the button, we do the rest." For most of the following century the rest meant a print, and the prints ended up in albums and shoeboxes that someone in the family eventually sorted by hand. The sorting was tedious, but there was a natural limit to it, because a family could only afford to develop so many photos.
+
+That limit is long gone. A single phone now takes more photos in a year than most families took in a generation, and the sorting never caught up. Photo libraries do group faces, but only for the photos inside that particular library, and the services that do it best want the entire collection uploaded first. A good part of the photos I care about live on drives and backups that no library has ever indexed.
+
+Vaquero takes a narrower view of the problem. It does not try to become a photo library. It answers one question about one folder, namely where a particular person appears, and leaves everything else alone.
+
+## Conclusion
+
+---
+
+Face recognition is no longer a research problem. Open models such as ArcFace are accurate, small enough to run on a laptop and fast on Apple Silicon. What I found missing was a simple tool that applies them to the files people actually have, spread across years of backups, without sending any of it to someone else's server. Vaquero is my attempt at that. You give it a few photos and a folder, check what it found, and decide what happens to the matches.
+
+Download it at [vaquero.bitwise0x.com](https://vaquero.bitwise0x.com).

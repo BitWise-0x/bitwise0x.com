@@ -12,6 +12,17 @@ interface Project {
 
 const projectsData: Project[] = [
   {
+    title: 'Vaquero',
+    tagline: 'Find and round up every photo, by face',
+    description: `A free Mac app that learns a face from a few photos and finds every photo and video of
+    that person in a folder. You check the matches, then copy or move them. It runs on an
+    open-source face model, entirely on your Mac.`,
+    imgSrc: '/static/images/blog/vaquero/scanning.webp',
+    videoSrc: '/static/videos/projects/vaquero',
+    href: 'https://vaquero.bitwise0x.com',
+    learnMoreHref: '/blog/introducing-vaquero',
+  },
+  {
     title: 'FleetBit',
     tagline: 'Fleet orchestration platform',
     description: `A hosted platform for orchestrating your fleets. Dispatch orders, follow drivers

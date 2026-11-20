@@ -39,6 +39,7 @@ export default function ProjectsList({ title = 'Projects' }: { title?: string })
             href,
             learnMoreHref,
             comingSoon,
+            note,
           } = project
 
           return (
@@ -77,6 +78,7 @@ export default function ProjectsList({ title = 'Projects' }: { title?: string })
                       </Link>
                     )}
                     {comingSoon && <span className="meta">Article coming soon</span>}
+                    {note && <span className="meta">{note}</span>}
                     {href && (
                       <Link
                         href={href}

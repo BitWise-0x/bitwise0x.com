@@ -8,6 +8,8 @@ interface Project {
   videoSrc?: string
   learnMoreHref?: string
   comingSoon?: boolean
+  // short status shown in the card's link row
+  note?: string
 }
 
 const projectsData: Project[] = [
@@ -53,6 +55,7 @@ const projectsData: Project[] = [
     videoSrc: '/static/videos/projects/carljung-42fac55b',
     href: 'https://carljung.ai',
     learnMoreHref: '/blog/introducing-carljung-ai',
+    note: 'Voice sessions paused',
   },
   {
     title: 'Open WebUI Ultimate Stack',

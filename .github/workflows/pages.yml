@@ -18,6 +18,8 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    outputs:
+      indexnow: ${{ steps.indexnow.outputs.payload }}
     if: >-
       github.event_name == 'workflow_dispatch' ||
       contains(github.event.head_commit.message, 'deploy:')
@@ -49,6 +51,24 @@ jobs:
           NEXT_UMAMI_ID: ${{ vars.NEXT_UMAMI_ID }}
           NEXT_UMAMI_SRC: ${{ vars.NEXT_UMAMI_SRC }}
           NEXT_UMAMI_HOST_URL: ${{ vars.NEXT_UMAMI_HOST_URL }}
+      # read from the build output: Cloudflare answers runner fetches of the live sitemap with 403
+      - id: indexnow
+        env:
+          INDEXNOW_KEY: 4dd89e475d9c242c34377aada8223998
+        run: |
+          python3 - >> "$GITHUB_OUTPUT" <<'PY'
+          import json, os, datetime, xml.etree.ElementTree as ET
+          ns = {'s': 'http://www.sitemaps.org/schemas/sitemap/0.9'}
+          since = (datetime.date.today() - datetime.timedelta(days=3)).isoformat()
+          urls = ['https://bitwise0x.com/', 'https://bitwise0x.com/blog']
+          for u in ET.parse('out/sitemap.xml').getroot().findall('s:url', ns):
+              loc, mod = u.findtext('s:loc', '', ns), u.findtext('s:lastmod', '', ns)
+              if mod[:10] >= since and loc not in urls:
+                  urls.append(loc)
+          key = os.environ['INDEXNOW_KEY']
+          print('payload=' + json.dumps({'host': 'bitwise0x.com', 'key': key,
+                'keyLocation': f'https://bitwise0x.com/{key}.txt', 'urlList': urls}))
+          PY
       - uses: actions/upload-pages-artifact@v5
         with:
           path: ./out
@@ -69,21 +89,7 @@ jobs:
       - name: Notify IndexNow
         continue-on-error: true
         env:
-          INDEXNOW_KEY: 4dd89e475d9c242c34377aada8223998
+          PAYLOAD: ${{ needs.build.outputs.indexnow }}
         run: |
-          curl -fsS -A "" https://bitwise0x.com/sitemap.xml -o sitemap.xml
-          python3 - > payload.json <<'PY'
-          import json, os, datetime, xml.etree.ElementTree as ET
-          ns = {'s': 'http://www.sitemaps.org/schemas/sitemap/0.9'}
-          since = (datetime.date.today() - datetime.timedelta(days=3)).isoformat()
-          urls = ['https://bitwise0x.com/', 'https://bitwise0x.com/blog']
-          for u in ET.parse('sitemap.xml').getroot().findall('s:url', ns):
-              loc, mod = u.findtext('s:loc', '', ns), u.findtext('s:lastmod', '', ns)
-              if mod[:10] >= since and loc not in urls:
-                  urls.append(loc)
-          key = os.environ['INDEXNOW_KEY']
-          print(json.dumps({'host': 'bitwise0x.com', 'key': key,
-                            'keyLocation': f'https://bitwise0x.com/{key}.txt', 'urlList': urls}))
-          PY
-          curl -fsS -X POST https://api.indexnow.org/indexnow \
-            -H 'Content-Type: application/json; charset=utf-8' --data @payload.json
+          printf '%s' "$PAYLOAD" | curl -fsS -X POST https://api.indexnow.org/indexnow \
+            -H 'Content-Type: application/json; charset=utf-8' --data-binary @-

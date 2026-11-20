@@ -17,8 +17,8 @@ const projectsData: Project[] = [
     title: 'Vaquero',
     tagline: 'Find and round up photos\u00a0and\u00a0videos by\u00a0face',
     description: `A free Mac app that learns a face from a few photos and finds every photo and video of
-    that person in a folder. You check the matches, then copy or move them. It runs on an
-    open-source face model, entirely on your Mac.`,
+    that person in a folder. You check the matches, then copy or move them. Free, open
+    source, no account, 100% private.`,
     imgSrc: '/static/images/blog/vaquero/scanning.webp',
     videoSrc: '/static/videos/projects/vaquero',
     href: 'https://vaquero.bitwise0x.com',

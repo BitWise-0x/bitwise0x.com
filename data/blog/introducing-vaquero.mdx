@@ -1,7 +1,7 @@
 ---
 title: "Vaquero: Find and Round up Photos\u00a0and\u00a0Videos by\u00a0Face"
 date: '2026-11-19'
-lastmod: '2026-11-20'
+lastmod: '2026-11-21'
 tags: ['ai', 'projects', 'machine-learning', 'computer-vision', 'python', 'macos', 'privacy']
 draft: false
 summary: 'Finding every photo of one person across years of backups usually means scrolling by hand or uploading the whole collection to a cloud service. Vaquero learns a face from a few photos, then finds every photo & video it appears in and organizes them your way. Runs entirely offline. No photo or face ever leaves your Mac.'
@@ -96,11 +96,27 @@ Videos are handled in the same way. Vaquero samples ten evenly spaced frames by 
 
 Both models run on the Neural Engine and the GPU through Core ML, and reading, decoding and recognition overlap. On an M1 Max a folder of 12-megapixel JPEGs goes by at about 20 photos a second. HEIC photos take a little longer to decode.
 
+A long scan does not need the window to stay open. Vaquero can live in the Dock, in the menu bar or in both, and with the menu bar icon, closing the window leaves it running there. While a job runs, the icon's amber scan line sweeps, and its menu shows the progress along with **Cancel** and **Undo**, without opening the window.
+
+<ZoomableImage
+  src="/static/images/blog/vaquero/menubar.webp"
+  alt="The menu bar menu during a scan"
+  width={344}
+  height={385}
+/>
+
 ## Checking the Matches
 
 ---
 
-Nothing happens to the matches until you have seen them. They are listed in the log, and every file name opens the photo or video, so a doubtful one can be checked in a click.
+Nothing happens to the matches until you have seen them. They are listed in the log, and every file name opens the photo or video, so a doubtful one can be checked in a click. Right-clicking a name also offers **Show in Finder** and **Copy Path**.
+
+<ZoomableImage
+  src="/static/images/blog/vaquero/log-menu.png"
+  alt="The right-click menu on a file in the log"
+  width={960}
+  height={1050}
+/>
 
 Lookalikes are the hard part of face matching, and I did not want to hide them behind a plain yes or no. Photos of the same person usually score between 0.5 and 0.8, while different people rarely pass 0.25. The default threshold is 0.35, and the band just above it is where small, blurred or side-on faces overlap with people who simply look alike. Anything from 0.35 to 0.45 is therefore marked `review` in orange, and the clearer matches are marked `match` in green.
 
@@ -112,9 +128,18 @@ The threshold can also be changed after a scan, and the list updates without sca
 
 ---
 
-When the list looks right, you choose **Copy** or **Move** and click **Execute**. Copy leaves the originals where they are, which suits building an album, while Move is useful for pulling one person's photos out of a mixed folder. If a file with the same name already exists in the destination, you can keep both or overwrite it.
+When the list looks right, you choose **Copy** or **Move** and click **Execute**. Copy leaves the originals where they are, which suits building an album, while Move is useful for pulling one person's photos out of a mixed folder. If a file with the same name already exists in the destination, you can keep both or overwrite it, in which case the old file goes to the Trash on drives that have one.
 
-Every copy and move is written to a journal and can be undone. Cancelling a run is also safe, since each file is either fully copied or moved and journaled, or left untouched.
+If a run turns out to be a mistake, **Edit > Undo** takes back the last copy or move. Moved files return to where they were, copies go to the Trash, and a file that an overwrite replaced comes back.
+
+<ZoomableImage
+  src="/static/images/blog/vaquero/undo.png"
+  alt="Undo asking before it takes back the last copy"
+  width={201}
+  height={125}
+/>
+
+Cancelling a run is also safe. Every file is written to disk and checked before it takes its place, so even a full or unplugged drive never leaves a partial file behind, and a stopped copy or move picks up where it left off.
 
 <ZoomableImage
   src="/static/images/blog/vaquero/first-launch.webp"
@@ -123,7 +148,7 @@ Every copy and move is written to a journal and can be undone. Cancelling a run 
   height={938}
 />
 
-The app is signed and notarized, so it opens like any other Mac app and checks for updates itself. On first launch it downloads the face model from InsightFace's own release, verifies it against a pinned checksum and keeps it in Application Support. After that, the network is only used for update checks.
+The app is signed and notarized, so it opens like any other Mac app and checks for updates itself. Before installing an update, it confirms that the update carries Vaquero's own Developer ID signature and passes Gatekeeper. On first launch it downloads the unmodified `buffalo_l` model from Vaquero's own release on GitHub, with InsightFace's release as a fallback, verifies it against a pinned checksum and keeps it in Application Support. After that, the network is only used for update checks.
 
 > [!NOTE]
 > Vaquero is free and MIT licensed. The `buffalo_l` face model belongs to InsightFace and is licensed for non-commercial research use only. It is not part of Vaquero and is not covered by its license.

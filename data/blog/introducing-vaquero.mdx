@@ -56,7 +56,7 @@ flowchart LR
 
 Three to five clear photos of the person are enough, ideally from different angles and different years. One or two photos also work, but with less protection against a bad one.
 
-The reference photos do not have to be portraits. This matters in practice, because most of the photos I have of the people I care about have other people in them. Vaquero finds every face in every reference photo and picks the person who appears across the most of them, even when somebody else's face is bigger. In each photo it then keeps the face closest to that person. As a last check, each photo is compared with the average of the others. A photo of someone else falls far from that average, so it is dropped and named in the log.
+The reference photos do not have to be portraits. This matters in practice, because most of the photos I have of the people I care about have other people in them. Vaquero finds every face in every reference photo and picks the person who appears across the most of them, even when somebody else's face is bigger. In each photo it then keeps the face closest to that person. As a last check, each photo is compared with the average of the others, and the log lists every photo it keeps with that score. A photo of someone else falls far from the average, so it is dropped with a warning in the log.
 
 There is one case it cannot settle by itself. If every reference photo shows the same couple, the two people are equally likely, and the log warns about it. A single photo of the person alone is enough to resolve it.
 
@@ -115,7 +115,7 @@ Nothing happens to the matches until you have seen them. They are listed in the 
   src="/static/images/blog/vaquero/log-menu.png"
   alt="The right-click menu on a file in the log"
   width={960}
-  height={1050}
+  height={1180}
 />
 
 Lookalikes are the hard part of face matching, and I did not want to hide them behind a plain yes or no. Photos of the same person usually score between 0.5 and 0.8, while different people rarely pass 0.25. The default threshold is 0.35, and the band just above it is where small, blurred or side-on faces overlap with people who simply look alike. Anything from 0.35 to 0.45 is therefore marked `review` in orange, and the clearer matches are marked `match` in green.

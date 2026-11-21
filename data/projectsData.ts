@@ -15,7 +15,7 @@ interface Project {
 const projectsData: Project[] = [
   {
     title: 'Vaquero',
-    tagline: 'Find and round up photos\u00a0and\u00a0videos by\u00a0face',
+    tagline: 'Find and round up Photos\u00a0and\u00a0Videos by\u00a0Face',
     description: `Vaquero learns a face from a few photos, then finds every photo & video it appears in
     and organizes them your way. Runs entirely offline. No photo or face ever leaves your Mac.
     Free, open source, no account, 100% private.`,

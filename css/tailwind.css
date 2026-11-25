@@ -256,8 +256,11 @@ html {
   .topnav .mark .mark-text { display: flex; flex-direction: column; line-height: 1.05; min-width: 0; }
   .topnav .mark b { font-weight: 600; letter-spacing: -0.015em; font-size: 2.05rem; color: var(--fg); }
   .topnav .mark .mark-tagline {
-    font-family: var(--font-mono); font-size: var(--text-ui); letter-spacing: 0.14em;
+    font-family: var(--font-mono); font-size: var(--text-micro); letter-spacing: 0.14em;
     text-transform: uppercase; color: var(--muted); margin-top: 0.3rem;
+  }
+  @media (width >= 48rem) {
+    .topnav .mark .mark-tagline { font-size: var(--text-ui); }
   }
   .topnav nav {
     display: flex; flex-flow: row wrap; align-items: center;
